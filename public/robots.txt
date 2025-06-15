@@ -1,14 +1,77 @@
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://your-domain.com/sitemap.xml
+
+# Google specific
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
+# Bing specific
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
+# Yandex specific
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 1
+
+# Baidu specific (for international reach)
+User-agent: BaiduSpider
+Allow: /
+Crawl-delay: 2
+
+# Social media bots
 User-agent: Twitterbot
 Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
+User-agent: LinkedInBot
 Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+# Disallow admin and private areas
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+Disallow: /tmp/
+Disallow: /*.json$
+Disallow: /src/
+Disallow: /node_modules/
+
+# Allow important assets
+User-agent: *
+Allow: /assets/
+Allow: /images/
+Allow: /uploads/
+Allow: /css/
+Allow: /js/
+Allow: /fonts/
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.webp$
+Allow: /*.ico$
+Allow: /*.woff$
+Allow: /*.woff2$
+Allow: /*.ttf$
+Allow: /*.eot$
+
+# Crawl delay for better server performance
+Crawl-delay: 1
+
+# Host preference (replace with your actual domain)
+Host: https://your-domain.com
