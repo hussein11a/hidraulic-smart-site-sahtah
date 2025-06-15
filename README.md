@@ -1,73 +1,252 @@
-# Welcome to your Lovable project
 
-## Project info
+# سطحة هيدروليك - موقع خدمات احترافي
 
-**URL**: https://lovable.dev/projects/8268de36-15ec-4d7b-9aa0-017087743a4c
+موقع ويب احترافي لخدمات السطحة الهيدروليكية مع نظام إدارة محتوى متكامل وحماية شاملة.
 
-## How can I edit this code?
+## المميزات الرئيسية
 
-There are several ways of editing your application.
+### 🚀 الأداء والسرعة
+- تصميم خفيف وسريع التحميل
+- دعم PWA للعمل بدون إنترنت
+- تحسين صور تلقائي
+- تحميل كسول للمحتوى
 
-**Use Lovable**
+### 🛡️ الحماية والأمان
+- تعطيل النسخ والسحب
+- حماية من فتح أدوات المطور
+- تشفير المحتوى الحساس
+- منع سرقة الأكواد
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/8268de36-15ec-4d7b-9aa0-017087743a4c) and start prompting.
+### 📱 التصميم المتجاوب
+- دعم كامل للهواتف والأجهزة اللوحية
+- وضع ليلي ونهاري ذكي
+- تحسين للشاشات العربية (RTL)
+- خطوط عربية احترافية
 
-Changes made via Lovable will be committed automatically to this repo.
+### ⚙️ إدارة المحتوى
+- لوحة تحكم Netlify CMS
+- تحرير المحتوى بدون برمجة
+- إدارة الخدمات والإعدادات
+- رفع الصور المباشر
 
-**Use your preferred IDE**
+## التقنيات المستخدمة
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **Frontend**: React 18 + TypeScript + Vite
+- **التصميم**: Tailwind CSS + shadcn/ui
+- **إدارة المحتوى**: Netlify CMS
+- **PWA**: Service Worker + Manifest
+- **الخطوط**: Google Fonts (Tajawal)
+- **الاستضافة**: Netlify + GitHub
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## التثبيت والتشغيل
 
-Follow these steps:
+### المتطلبات
+- Node.js 18+ 
+- npm أو yarn
+- Git
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### خطوات التثبيت
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+1. **استنساخ المشروع**
+```bash
+git clone https://github.com/yourusername/hydraulic-tow-truck.git
+cd hydraulic-tow-truck
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
+2. **تثبيت التبعيات**
+```bash
+npm install
+```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+3. **تشغيل الخادم المحلي**
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+4. **بناء المشروع للإنتاج**
+```bash
+npm run build
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## النشر على Netlify
 
-**Use GitHub Codespaces**
+### 1. ربط GitHub
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+1. ادفع الكود إلى GitHub repository
+2. اذهب إلى [Netlify Dashboard](https://app.netlify.com)
+3. اضغط "New site from Git"
+4. اختر GitHub repository
+5. اتبع خطوات النشر
 
-## What technologies are used for this project?
+### 2. إعداد Netlify CMS
 
-This project is built with:
+1. **تفعيل Git Gateway**
+   - اذهب إلى Site settings > Identity
+   - اضغط "Enable Identity"
+   - في Services اختر "Enable Git Gateway"
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+2. **إعداد المصادقة**
+   - اضغط "Settings and usage"
+   - اختر "Invite users" أو "Open registration"
+   - أضف المستخدمين المصرح لهم
 
-## How can I deploy this project?
+3. **الوصول للوحة التحكم**
+   - اذهب إلى `yoursite.netlify.app/admin`
+   - سجل الدخول أو أنشئ حساب جديد
 
-Simply open [Lovable](https://lovable.dev/projects/8268de36-15ec-4d7b-9aa0-017087743a4c) and click on Share -> Publish.
+### 3. الإعدادات المتقدمة
 
-## Can I connect a custom domain to my Lovable project?
+**متغيرات البيئة (اختياري)**
+```bash
+VITE_SITE_URL=https://yoursite.netlify.app
+VITE_PHONE_NUMBER=+966501234567
+VITE_WHATSAPP_NUMBER=+966501234567
+```
 
-Yes, you can!
+**Build Settings في Netlify:**
+- Build command: `npm run build`
+- Publish directory: `dist`
+- Functions directory: `netlify/functions` (إذا احتجت)
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## إدارة المحتوى
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+### الوصول للوحة التحكم
+- URL: `yoursite.netlify.app/admin`
+- تسجيل الدخول مطلوب
+
+### الأقسام المتاحة
+
+1. **إعدادات الموقع** (`/admin/#/collections/site_settings`)
+   - عنوان الموقع والوصف
+   - أرقام التواصل
+   - إعدادات SEO
+   - ألوان الموقع
+
+2. **الخدمات** (`/admin/#/collections/services`)
+   - إضافة/تعديل/حذف الخدمات
+   - ترتيب الخدمات
+   - تفعيل/إلغاء الخدمات
+
+3. **أزرار التواصل** (`/admin/#/collections/contact_buttons`)
+   - إعدادات زر الهاتف
+   - إعدادات زر الواتساب
+   - ألوان الأزرار
+
+4. **التذييل** (`/admin/#/collections/footer`)
+   - نص حقوق الطبع
+   - الروابط الإضافية
+
+## التخصيص
+
+### تغيير الألوان
+1. اذهب للوحة التحكم > إعدادات الموقع
+2. قسم "إعدادات الألوان"
+3. اختر الألوان المطلوبة
+4. احفظ التغييرات
+
+### إضافة خدمة جديدة
+1. اذهب للوحة التحكم > الخدمات
+2. اضغط "إضافة خدمة جديدة"
+3. املأ البيانات المطلوبة
+4. احفظ ونشر
+
+### تعديل أرقام التواصل
+1. اذهب للوحة التحكم > إعدادات الموقع
+2. قسم معلومات التواصل
+3. حدث الأرقام
+4. احفظ التغييرات
+
+## الأمان والحماية
+
+### المميزات الأمنية المطبقة
+
+- ✅ تعطيل الزر الأيمن
+- ✅ منع اختصارات النسخ (Ctrl+C, Ctrl+A, etc.)
+- ✅ تعطيل أدوات المطور (F12, Ctrl+Shift+I)
+- ✅ منع سحب الصور والنصوص
+- ✅ تشفير Console في الإنتاج
+- ✅ حماية من Hotlinking
+- ✅ Headers أمنية في Netlify
+
+### إعدادات إضافية (netlify.toml)
+
+```toml
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+```
+
+## SEO والتحسين
+
+### المميزات المطبقة
+- ✅ Meta tags محسنة
+- ✅ Open Graph للشبكات الاجتماعية
+- ✅ Structured Data
+- ✅ Sitemap.xml
+- ✅ دعم RTL للعربية
+- ✅ تحسين الصور
+- ✅ خطوط محسنة
+
+### اختبار الأداء
+```bash
+# تشغيل Lighthouse
+npm run lighthouse
+
+# تحليل Bundle
+npm run analyze
+```
+
+## الدعم الفني
+
+### المشاكل الشائعة
+
+**1. لوحة التحكم لا تعمل**
+- تأكد من تفعيل Netlify Identity
+- تحقق من إعدادات Git Gateway
+- امسح cache المتصفح
+
+**2. الخطوط لا تظهر**
+- تحقق من اتصال الإنترنت
+- تأكد من تحميل Google Fonts
+
+**3. PWA لا يعمل offline**
+- تحقق من تسجيل Service Worker
+- امسح cache المتصفح
+- تأكد من إعدادات HTTPS
+
+### إعداد النطاق المخصص
+
+1. اذهب إلى Netlify Dashboard
+2. Site settings > Domain management
+3. Add custom domain
+4. اتبع تعليمات DNS
+
+### النسخ الاحتياطي
+
+```bash
+# تصدير البيانات
+npm run export-data
+
+# استيراد البيانات
+npm run import-data
+```
+
+## الترخيص
+
+هذا المشروع مرخص تحت رخصة MIT - راجع ملف [LICENSE](LICENSE) للتفاصيل.
+
+## المساهمة
+
+نرحب بالمساهمات! يرجى قراءة [دليل المساهمة](CONTRIBUTING.md) قبل البدء.
+
+---
+
+**تطوير:** [اسم المطور]  
+**التحديث الأخير:** يناير 2024  
+**الإصدار:** 1.0.0
+
+🚛 **سطحة هيدروليك - خدمتكم راحتنا**
