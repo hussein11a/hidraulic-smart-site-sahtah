@@ -11,9 +11,9 @@
     "og_image": ""
   },
   "theme": {
-    "primary_color": "#dc2626",
-    "secondary_color": "#ea580c",
-    "light_bg": "#fefefe",
+    "primary_color": "#1e40af",
+    "secondary_color": "#f59e0b",
+    "light_bg": "#f8fafc",
     "dark_bg": "#0f172a"
   }
 }

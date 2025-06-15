@@ -51,14 +51,14 @@ const Index = () => {
       text: 'اتصل الآن',
       number: '+966501234567',
       enabled: true,
-      color: '#dc2626'
+      color: '#1e40af'
     },
     whatsapp: {
       text: 'واتساب',
       number: '+966501234567',
       message: 'مرحبا، أحتاج خدمة سطحة هيدروليك',
       enabled: true,
-      color: '#10b981'
+      color: '#16a34a'
     }
   });
 
@@ -163,8 +163,8 @@ const Index = () => {
   return (
     <div className={`min-h-screen transition-all duration-500 ${
       isDarkMode 
-        ? 'bg-gradient-to-br from-slate-900 via-red-900 to-slate-800 text-white' 
-        : 'bg-gradient-to-br from-red-50 via-white to-orange-50 text-slate-800'
+        ? 'bg-gradient-to-br from-slate-900 via-blue-950 to-slate-800 text-white' 
+        : 'bg-gradient-to-br from-slate-50 via-blue-50 to-amber-50 text-slate-800'
     }`} dir="rtl">
       
       {/* Theme Toggle */}
@@ -185,11 +185,11 @@ const Index = () => {
 
       {/* Header Section */}
       <header className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-orange-500/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-700/10 to-amber-500/10"></div>
         <div className="relative container mx-auto px-4 py-16 text-center">
           <div className="flex justify-center mb-6">
             <div className={`p-4 rounded-full shadow-2xl ${
-              isDarkMode ? 'bg-red-600/20' : 'bg-red-600/10'
+              isDarkMode ? 'bg-blue-700/20' : 'bg-blue-700/10'
             }`}>
               <div className="text-6xl">🚛</div>
             </div>
@@ -197,8 +197,8 @@ const Index = () => {
           
           <h1 className={`text-5xl md:text-6xl font-bold mb-4 ${
             isDarkMode 
-              ? 'text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-400' 
-              : 'text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-600'
+              ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-amber-400' 
+              : 'text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-amber-600'
           }`}>
             {siteData.title}
           </h1>
@@ -211,13 +211,13 @@ const Index = () => {
 
           <div className="flex justify-center gap-4 mb-8">
             <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${
-              isDarkMode ? 'bg-green-600/20 text-green-400' : 'bg-green-100 text-green-600'
+              isDarkMode ? 'bg-emerald-600/20 text-emerald-400' : 'bg-emerald-100 text-emerald-700'
             }`}>
               <Shield className="h-5 w-5" />
               <span className="font-semibold">خدمة موثوقة</span>
             </div>
             <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${
-              isDarkMode ? 'bg-orange-600/20 text-orange-400' : 'bg-orange-100 text-orange-600'
+              isDarkMode ? 'bg-amber-600/20 text-amber-400' : 'bg-amber-100 text-amber-700'
             }`}>
               <Zap className="h-5 w-5" />
               <span className="font-semibold">استجابة سريعة</span>
@@ -259,9 +259,9 @@ const Index = () => {
                   </p>
                   {service.available && (
                     <div className={`inline-flex items-center gap-1 mt-4 px-3 py-1 rounded-full text-xs font-semibold ${
-                      isDarkMode ? 'bg-green-600/20 text-green-400' : 'bg-green-100 text-green-600'
+                      isDarkMode ? 'bg-emerald-600/20 text-emerald-400' : 'bg-emerald-100 text-emerald-700'
                     }`}>
-                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                      <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
                       متاح الآن
                     </div>
                   )}
@@ -275,8 +275,8 @@ const Index = () => {
       {/* CTA Section */}
       <section className={`py-16 ${
         isDarkMode 
-          ? 'bg-gradient-to-r from-red-900/50 to-slate-900/50' 
-          : 'bg-gradient-to-r from-red-600/10 to-orange-600/10'
+          ? 'bg-gradient-to-r from-blue-950/50 to-slate-900/50' 
+          : 'bg-gradient-to-r from-blue-700/10 to-amber-600/10'
       }`}>
         <div className="container mx-auto px-4 text-center">
           <h2 className={`text-3xl font-bold mb-6 ${
@@ -298,7 +298,7 @@ const Index = () => {
         {buttonsData.whatsapp?.enabled && (
           <Button
             onClick={handleWhatsApp}
-            className="w-14 h-14 rounded-full bg-green-500 hover:bg-green-600 shadow-2xl transition-all duration-300 hover:scale-110 group"
+            className="w-14 h-14 rounded-full bg-green-600 hover:bg-green-700 shadow-2xl transition-all duration-300 hover:scale-110 group"
           >
             <MessageSquare className="h-6 w-6 group-hover:scale-110 transition-transform" />
           </Button>
@@ -308,7 +308,7 @@ const Index = () => {
         {buttonsData.phone?.enabled && (
           <Button
             onClick={handlePhoneCall}
-            className="w-14 h-14 rounded-full bg-red-500 hover:bg-red-600 shadow-2xl transition-all duration-300 hover:scale-110 group"
+            className="w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 shadow-2xl transition-all duration-300 hover:scale-110 group"
           >
             <Phone className="h-6 w-6 group-hover:scale-110 transition-transform" />
           </Button>
