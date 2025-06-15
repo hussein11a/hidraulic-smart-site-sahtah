@@ -183,132 +183,156 @@ const Index = () => {
         </Button>
       </div>
 
-      {/* Header Section - Enhanced */}
-      <header className="relative overflow-hidden py-20 lg:py-32">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-transparent to-amber-600/20"></div>
+      {/* Header Section - Enhanced with better spacing */}
+      <header className="relative overflow-hidden py-24 lg:py-40">
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-800/30 via-transparent to-blue-900/30"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(15,23,42,0.1)_100%)]"></div>
         
-        <div className="relative container mx-auto px-6 text-center">
-          {/* Logo Section */}
-          <div className="flex justify-center mb-8">
-            <div className={`relative p-6 rounded-3xl shadow-2xl transform hover:scale-105 transition-all duration-300 ${
-              isDarkMode ? 'bg-gradient-to-br from-blue-700/30 to-amber-600/30' : 'bg-gradient-to-br from-blue-100 to-amber-100'
+        <div className="relative container mx-auto px-8 text-center">
+          {/* Logo Section with improved styling */}
+          <div className="flex justify-center mb-12">
+            <div className={`relative p-8 rounded-full shadow-2xl transform hover:scale-105 transition-all duration-500 border-4 ${
+              isDarkMode 
+                ? 'bg-gradient-to-br from-slate-700/40 to-blue-900/40 border-blue-400/30' 
+                : 'bg-gradient-to-br from-white to-blue-50 border-blue-200'
             }`}>
-              <div className="text-7xl lg:text-8xl">🚛</div>
-              <div className="absolute -top-2 -right-2">
-                <div className={`w-6 h-6 rounded-full animate-pulse ${
+              <div className="text-8xl lg:text-9xl">🚛</div>
+              <div className="absolute -top-3 -right-3">
+                <div className={`w-8 h-8 rounded-full animate-pulse shadow-lg ${
                   isDarkMode ? 'bg-emerald-400' : 'bg-emerald-500'
                 }`}></div>
               </div>
             </div>
           </div>
           
-          {/* Main Title */}
-          <h1 className={`text-6xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight ${
+          {/* Main Title with better typography */}
+          <h1 className={`text-7xl md:text-8xl lg:text-9xl font-black mb-8 leading-tight ${
             isDarkMode 
-              ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-amber-400' 
-              : 'text-transparent bg-clip-text bg-gradient-to-r from-blue-800 via-blue-700 to-amber-600'
+              ? 'text-transparent bg-clip-text bg-gradient-to-r from-slate-200 via-blue-300 to-slate-100' 
+              : 'text-transparent bg-clip-text bg-gradient-to-r from-slate-800 via-blue-700 to-slate-900'
           }`}>
             {siteData.title}
           </h1>
           
-          {/* Subtitle */}
-          <div className="max-w-4xl mx-auto mb-10">
-            <p className={`text-2xl md:text-3xl lg:text-4xl mb-6 font-semibold leading-relaxed ${
+          {/* Enhanced subtitle section */}
+          <div className="max-w-5xl mx-auto mb-12">
+            <p className={`text-3xl md:text-4xl lg:text-5xl mb-8 font-bold leading-relaxed ${
               isDarkMode ? 'text-slate-200' : 'text-slate-700'
             }`}>
               {siteData.subtitle}
             </p>
-            <div className={`w-24 h-1 mx-auto rounded-full ${
-              isDarkMode ? 'bg-gradient-to-r from-blue-400 to-amber-400' : 'bg-gradient-to-r from-blue-600 to-amber-600'
+            <div className={`w-32 h-2 mx-auto rounded-full shadow-lg ${
+              isDarkMode ? 'bg-gradient-to-r from-blue-400 to-slate-300' : 'bg-gradient-to-r from-blue-600 to-slate-600'
             }`}></div>
+            <p className={`text-xl md:text-2xl mt-8 leading-relaxed max-w-3xl mx-auto ${
+              isDarkMode ? 'text-slate-300' : 'text-slate-600'
+            }`}>
+              {siteData.description}
+            </p>
           </div>
 
-          {/* Trust Badges */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            <div className={`flex items-center gap-3 px-6 py-3 rounded-full border transition-all duration-300 hover:scale-105 ${
+          {/* Enhanced Trust Badges */}
+          <div className="flex flex-wrap justify-center gap-6 mb-16">
+            <div className={`flex items-center gap-4 px-8 py-4 rounded-2xl border-2 transition-all duration-300 hover:scale-105 shadow-lg ${
               isDarkMode 
-                ? 'bg-emerald-600/20 text-emerald-300 border-emerald-500/30 hover:bg-emerald-600/30' 
-                : 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
+                ? 'bg-emerald-600/20 text-emerald-300 border-emerald-400/30 hover:bg-emerald-600/30 hover:shadow-emerald-400/20' 
+                : 'bg-emerald-50 text-emerald-700 border-emerald-300 hover:bg-emerald-100 hover:shadow-emerald-200'
             }`}>
-              <Shield className="h-6 w-6" />
-              <span className="font-bold text-lg">خدمة موثوقة</span>
-              <Star className="h-5 w-5 fill-current" />
+              <Shield className="h-7 w-7" />
+              <span className="font-bold text-xl">خدمة موثوقة</span>
+              <Star className="h-6 w-6 fill-current" />
             </div>
-            <div className={`flex items-center gap-3 px-6 py-3 rounded-full border transition-all duration-300 hover:scale-105 ${
+            <div className={`flex items-center gap-4 px-8 py-4 rounded-2xl border-2 transition-all duration-300 hover:scale-105 shadow-lg ${
               isDarkMode 
-                ? 'bg-amber-600/20 text-amber-300 border-amber-500/30 hover:bg-amber-600/30' 
-                : 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100'
+                ? 'bg-blue-600/20 text-blue-300 border-blue-400/30 hover:bg-blue-600/30 hover:shadow-blue-400/20' 
+                : 'bg-blue-50 text-blue-700 border-blue-300 hover:bg-blue-100 hover:shadow-blue-200'
             }`}>
-              <Zap className="h-6 w-6" />
-              <span className="font-bold text-lg">استجابة سريعة</span>
-              <span className="text-sm opacity-80">24/7</span>
+              <Zap className="h-7 w-7" />
+              <span className="font-bold text-xl">استجابة سريعة</span>
+              <span className="text-lg font-semibold opacity-90">24/7</span>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Services Section - Enhanced */}
-      <section className="py-20 lg:py-32 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-50/50 to-transparent"></div>
-        <div className="container mx-auto px-6 relative">
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className={`text-5xl lg:text-6xl font-black mb-6 ${
+      {/* Section Divider */}
+      <div className={`w-full h-px ${isDarkMode ? 'bg-gradient-to-r from-transparent via-slate-600 to-transparent' : 'bg-gradient-to-r from-transparent via-slate-300 to-transparent'}`}></div>
+
+      {/* Services Section - Enhanced with better layout */}
+      <section className="py-24 lg:py-40 relative">
+        <div className={`absolute inset-0 ${isDarkMode ? 'bg-gradient-to-b from-slate-900/50 via-slate-800/30 to-slate-900/50' : 'bg-gradient-to-b from-slate-50/80 via-white/90 to-slate-50/80'}`}></div>
+        <div className="container mx-auto px-8 relative">
+          {/* Enhanced Section Header */}
+          <div className="text-center mb-20">
+            <div className={`inline-block px-6 py-3 rounded-full mb-6 border-2 ${
+              isDarkMode 
+                ? 'bg-slate-800/50 border-slate-600 text-slate-300' 
+                : 'bg-white border-slate-200 text-slate-600'
+            }`}>
+              <span className="text-lg font-semibold">ماذا نقدم</span>
+            </div>
+            <h2 className={`text-6xl lg:text-7xl font-black mb-8 ${
               isDarkMode ? 'text-white' : 'text-slate-800'
             }`}>
               خدماتنا المتميزة
             </h2>
-            <div className={`w-32 h-1 mx-auto rounded-full mb-8 ${
-              isDarkMode ? 'bg-gradient-to-r from-blue-400 to-amber-400' : 'bg-gradient-to-r from-blue-600 to-amber-600'
+            <div className={`w-40 h-2 mx-auto rounded-full mb-10 shadow-lg ${
+              isDarkMode ? 'bg-gradient-to-r from-blue-400 to-slate-300' : 'bg-gradient-to-r from-blue-600 to-slate-600'
             }`}></div>
-            <p className={`text-xl lg:text-2xl max-w-3xl mx-auto leading-relaxed ${
+            <p className={`text-2xl lg:text-3xl max-w-4xl mx-auto leading-relaxed font-medium ${
               isDarkMode ? 'text-slate-300' : 'text-slate-600'
             }`}>
-              نقدم مجموعة شاملة من خدمات النقل الاحترافية بأحدث التقنيات
+              نقدم مجموعة شاملة من خدمات النقل الاحترافية بأحدث التقنيات والمعدات المتطورة
             </p>
           </div>
           
-          {/* Services Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {/* Enhanced Services Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
             {services.map((service, index) => (
               <div
                 key={service.id}
-                className={`group p-8 rounded-3xl shadow-xl transition-all duration-500 hover:scale-105 hover:shadow-2xl transform hover:-translate-y-2 border-2 ${
+                className={`group p-10 rounded-3xl shadow-2xl transition-all duration-500 hover:scale-105 hover:shadow-3xl transform hover:-translate-y-3 border-2 relative overflow-hidden ${
                   isDarkMode 
-                    ? 'bg-gradient-to-br from-slate-800/80 to-slate-700/80 border-slate-600/50 hover:border-blue-400/50 hover:bg-gradient-to-br hover:from-slate-700/90 hover:to-slate-600/90' 
-                    : 'bg-gradient-to-br from-white to-slate-50 border-slate-200 hover:border-blue-300 hover:bg-gradient-to-br hover:from-blue-50 hover:to-white'
+                    ? 'bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-slate-600/50 hover:border-blue-400/50' 
+                    : 'bg-gradient-to-br from-white to-slate-50/80 border-slate-200 hover:border-blue-300 hover:shadow-blue-100/50'
                 } animate-fade-in`}
-                style={{ animationDelay: `${index * 100}ms` }}
+                style={{ animationDelay: `${index * 150}ms` }}
               >
-                <div className="text-center">
-                  {/* Service Icon */}
-                  <div className="text-6xl mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                {/* Background decoration */}
+                <div className={`absolute top-0 right-0 w-20 h-20 rounded-full opacity-10 ${
+                  isDarkMode ? 'bg-blue-400' : 'bg-blue-600'
+                } transform translate-x-8 -translate-y-8`}></div>
+                
+                <div className="text-center relative z-10">
+                  {/* Enhanced Service Icon */}
+                  <div className={`text-7xl mb-8 transform group-hover:scale-110 transition-transform duration-300 p-4 rounded-2xl ${
+                    isDarkMode ? 'group-hover:bg-blue-400/10' : 'group-hover:bg-blue-50'
+                  }`}>
                     {service.icon}
                   </div>
                   
                   {/* Service Title */}
-                  <h3 className={`text-2xl font-bold mb-4 group-hover:text-blue-500 transition-colors duration-300 ${
+                  <h3 className={`text-2xl font-bold mb-6 group-hover:text-blue-500 transition-colors duration-300 ${
                     isDarkMode ? 'text-white' : 'text-slate-800'
                   }`}>
                     {service.title}
                   </h3>
                   
                   {/* Service Description */}
-                  <p className={`text-base leading-relaxed mb-6 ${
+                  <p className={`text-lg leading-relaxed mb-8 ${
                     isDarkMode ? 'text-slate-300' : 'text-slate-600'
                   }`}>
                     {service.description}
                   </p>
                   
-                  {/* Availability Badge */}
+                  {/* Enhanced Availability Badge */}
                   {service.available && (
-                    <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold border-2 ${
+                    <div className={`inline-flex items-center gap-3 px-6 py-3 rounded-full text-base font-bold border-2 shadow-lg ${
                       isDarkMode 
                         ? 'bg-emerald-600/30 text-emerald-300 border-emerald-400/50' 
                         : 'bg-emerald-100 text-emerald-700 border-emerald-300'
                     }`}>
-                      <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
+                      <div className="w-4 h-4 bg-emerald-500 rounded-full animate-pulse shadow-lg"></div>
                       متاح الآن
                     </div>
                   )}
@@ -319,51 +343,81 @@ const Index = () => {
         </div>
       </section>
 
-      {/* CTA Section - Enhanced */}
-      <section className={`py-20 lg:py-32 relative overflow-hidden ${
+      {/* Section Divider */}
+      <div className={`w-full h-px ${isDarkMode ? 'bg-gradient-to-r from-transparent via-slate-600 to-transparent' : 'bg-gradient-to-r from-transparent via-slate-300 to-transparent'}`}></div>
+
+      {/* Enhanced CTA Section */}
+      <section className={`py-24 lg:py-40 relative overflow-hidden ${
         isDarkMode 
-          ? 'bg-gradient-to-r from-blue-950/80 via-slate-900/90 to-slate-800/80' 
-          : 'bg-gradient-to-r from-blue-50 via-white to-amber-50'
+          ? 'bg-gradient-to-r from-slate-900/90 via-slate-800/95 to-slate-900/90' 
+          : 'bg-gradient-to-r from-slate-50 via-white to-slate-50'
       }`}>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.1)_100%)]"></div>
-        <div className="container mx-auto px-6 text-center relative">
-          <div className="max-w-4xl mx-auto">
-            <h2 className={`text-5xl lg:text-6xl font-black mb-8 ${
+        
+        {/* Decorative elements */}
+        <div className={`absolute top-10 left-10 w-32 h-32 rounded-full opacity-20 ${
+          isDarkMode ? 'bg-blue-400' : 'bg-blue-600'
+        } blur-3xl`}></div>
+        <div className={`absolute bottom-10 right-10 w-40 h-40 rounded-full opacity-20 ${
+          isDarkMode ? 'bg-slate-400' : 'bg-slate-600'
+        } blur-3xl`}></div>
+        
+        <div className="container mx-auto px-8 text-center relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <div className={`inline-block px-6 py-3 rounded-full mb-8 border-2 ${
+              isDarkMode 
+                ? 'bg-slate-800/50 border-slate-600 text-slate-300' 
+                : 'bg-white border-slate-200 text-slate-600'
+            }`}>
+              <span className="text-lg font-semibold">تواصل معنا</span>
+            </div>
+            
+            <h2 className={`text-6xl lg:text-7xl font-black mb-10 ${
               isDarkMode ? 'text-white' : 'text-slate-800'
             }`}>
               تحتاج مساعدة؟
             </h2>
-            <h3 className={`text-3xl lg:text-4xl font-bold mb-8 ${
+            
+            <h3 className={`text-4xl lg:text-5xl font-bold mb-10 ${
               isDarkMode ? 'text-blue-300' : 'text-blue-700'
             }`}>
               نحن هنا من أجلك
             </h3>
-            <div className={`w-24 h-1 mx-auto rounded-full mb-10 ${
-              isDarkMode ? 'bg-gradient-to-r from-blue-400 to-amber-400' : 'bg-gradient-to-r from-blue-600 to-amber-600'
+            
+            <div className={`w-32 h-2 mx-auto rounded-full mb-12 shadow-lg ${
+              isDarkMode ? 'bg-gradient-to-r from-blue-400 to-slate-300' : 'bg-gradient-to-r from-blue-600 to-slate-600'
             }`}></div>
-            <p className={`text-2xl lg:text-3xl mb-12 leading-relaxed font-medium ${
-              isDarkMode ? 'text-slate-200' : 'text-slate-700'
-            }`}>
-              خدمة على مدار <span className={`font-black ${isDarkMode ? 'text-amber-400' : 'text-amber-600'}`}>24 ساعة</span> طوال أيام الأسبوع
-            </p>
-            <p className={`text-xl mb-16 leading-relaxed ${
-              isDarkMode ? 'text-slate-300' : 'text-slate-600'
-            }`}>
-              اتصل بنا الآن للحصول على مساعدة فورية واحترافية
-            </p>
+            
+            <div className={`p-10 rounded-3xl mb-12 border-2 ${
+              isDarkMode 
+                ? 'bg-slate-800/50 border-slate-600/50' 
+                : 'bg-white/80 border-slate-200'
+            } shadow-2xl`}>
+              <p className={`text-3xl lg:text-4xl mb-8 leading-relaxed font-bold ${
+                isDarkMode ? 'text-slate-200' : 'text-slate-700'
+              }`}>
+                خدمة على مدار <span className={`${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>24 ساعة</span> طوال أيام الأسبوع
+              </p>
+              <p className={`text-xl leading-relaxed ${
+                isDarkMode ? 'text-slate-300' : 'text-slate-600'
+              }`}>
+                اتصل بنا الآن للحصول على مساعدة فورية واحترافية في أي وقت
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Floating Action Buttons - Enhanced */}
+      {/* Enhanced Floating Action Buttons */}
       <div className="fixed bottom-8 right-8 flex flex-col gap-4 z-50">
         {/* WhatsApp Button */}
         {buttonsData.whatsapp?.enabled && (
           <Button
             onClick={handleWhatsApp}
-            className="w-16 h-16 rounded-full bg-green-600 hover:bg-green-700 shadow-2xl transition-all duration-300 hover:scale-110 group border-4 border-white/20"
+            className="w-18 h-18 rounded-full bg-green-600 hover:bg-green-700 shadow-2xl transition-all duration-300 hover:scale-110 group border-4 border-white/20 relative overflow-hidden"
           >
-            <MessageSquare className="h-7 w-7 group-hover:scale-110 transition-transform" />
+            <div className="absolute inset-0 bg-green-500 opacity-0 group-hover:opacity-20 transition-opacity rounded-full"></div>
+            <MessageSquare className="h-8 w-8 group-hover:scale-110 transition-transform relative z-10" />
           </Button>
         )}
         
@@ -371,32 +425,39 @@ const Index = () => {
         {buttonsData.phone?.enabled && (
           <Button
             onClick={handlePhoneCall}
-            className="w-16 h-16 rounded-full bg-blue-600 hover:bg-blue-700 shadow-2xl transition-all duration-300 hover:scale-110 group border-4 border-white/20 animate-pulse-glow"
+            className="w-18 h-18 rounded-full bg-blue-600 hover:bg-blue-700 shadow-2xl transition-all duration-300 hover:scale-110 group border-4 border-white/20 animate-pulse-glow relative overflow-hidden"
           >
-            <Phone className="h-7 w-7 group-hover:scale-110 transition-transform" />
+            <div className="absolute inset-0 bg-blue-500 opacity-0 group-hover:opacity-20 transition-opacity rounded-full"></div>
+            <Phone className="h-8 w-8 group-hover:scale-110 transition-transform relative z-10" />
           </Button>
         )}
       </div>
 
-      {/* Footer - Enhanced */}
-      <footer className={`py-16 mt-20 border-t-2 ${
+      {/* Enhanced Footer */}
+      <footer className={`py-20 mt-8 border-t-4 ${
         isDarkMode 
-          ? 'border-slate-700 bg-gradient-to-b from-slate-900/80 to-slate-800' 
+          ? 'border-slate-700 bg-gradient-to-b from-slate-900/90 to-slate-800' 
           : 'border-slate-200 bg-gradient-to-b from-slate-50 to-white'
       }`}>
-        <div className="container mx-auto px-6 text-center">
-          <div className="flex justify-center mb-6">
-            <div className="text-5xl">🚛</div>
+        <div className="container mx-auto px-8 text-center">
+          <div className="flex justify-center mb-8">
+            <div className={`p-6 rounded-full shadow-xl border-4 ${
+              isDarkMode 
+                ? 'bg-slate-800/50 border-slate-600' 
+                : 'bg-white border-slate-200'
+            }`}>
+              <div className="text-6xl">🚛</div>
+            </div>
           </div>
-          <h3 className={`text-3xl font-black mb-4 ${
+          <h3 className={`text-4xl font-black mb-6 ${
             isDarkMode ? 'text-white' : 'text-slate-800'
           }`}>
             سطحة هيدروليك
           </h3>
-          <div className={`w-16 h-1 mx-auto rounded-full mb-6 ${
-            isDarkMode ? 'bg-gradient-to-r from-blue-400 to-amber-400' : 'bg-gradient-to-r from-blue-600 to-amber-600'
+          <div className={`w-24 h-2 mx-auto rounded-full mb-8 shadow-lg ${
+            isDarkMode ? 'bg-gradient-to-r from-blue-400 to-slate-300' : 'bg-gradient-to-r from-blue-600 to-slate-600'
           }`}></div>
-          <p className={`text-lg font-medium ${
+          <p className={`text-xl font-semibold ${
             isDarkMode ? 'text-slate-300' : 'text-slate-600'
           }`}>
             خدمة نقل السيارات الاحترافية © 2024
