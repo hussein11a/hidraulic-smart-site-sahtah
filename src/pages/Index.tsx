@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -41,7 +42,40 @@ interface ButtonsData {
 
 const Index = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [services, setServices] = useState<Service[]>([]);
+  const [services, setServices] = useState<Service[]>([
+    {
+      id: 1,
+      title: 'نقل السيارات المعطلة',
+      description: 'خدمة نقل السيارات المعطلة بأحدث المعدات الهيدروليكية',
+      icon: '🚛',
+      available: true,
+      sort_order: 1
+    },
+    {
+      id: 2,
+      title: 'مساعدة على الطريق',
+      description: 'خدمة المساعدة الفورية على الطريق 24/7',
+      icon: '🔧',
+      available: true,
+      sort_order: 2
+    },
+    {
+      id: 3,
+      title: 'نقل المركبات الثقيلة',
+      description: 'نقل آمن للمركبات الثقيلة والحافلات',
+      icon: '🚚',
+      available: true,
+      sort_order: 3
+    },
+    {
+      id: 4,
+      title: 'خدمة الطوارئ',
+      description: 'استجابة سريعة في حالات الطوارئ',
+      icon: '🚨',
+      available: true,
+      sort_order: 4
+    }
+  ]);
   const [siteData, setSiteData] = useState<SiteData>({
     title: 'سطحة هيدروليك',
     subtitle: 'خدمة نقل السيارات الاحترافية - سريع، آمن، موثوق',
@@ -64,6 +98,8 @@ const Index = () => {
       color: '#16a34a'
     }
   });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   // Smart theme detection based on time
   useEffect(() => {
@@ -72,78 +108,124 @@ const Index = () => {
     setIsDarkMode(isNightTime);
   }, []);
 
-  // Load JSON data
+  // Load JSON data with better error handling
   useEffect(() => {
     const loadData = async () => {
+      setIsLoading(true);
+      setError(null);
+      
       try {
-        // Load services data
-        const servicesResponse = await fetch('/src/data/services.json');
-        const servicesData = await servicesResponse.json();
-        setServices(servicesData.services.sort((a: Service, b: Service) => a.sort_order - b.sort_order));
+        console.log('بدء تحميل البيانات...');
+        
+        // Try to load services data
+        try {
+          const servicesResponse = await fetch('/src/data/services.json');
+          if (servicesResponse.ok) {
+            const servicesData = await servicesResponse.json();
+            if (servicesData?.services) {
+              setServices(servicesData.services.sort((a: Service, b: Service) => a.sort_order - b.sort_order));
+              console.log('تم تحميل بيانات الخدمات بنجاح');
+            }
+          } else {
+            console.log('لم يتم العثور على ملف الخدمات، استخدام البيانات الافتراضية');
+          }
+        } catch (servicesError) {
+          console.log('خطأ في تحميل بيانات الخدمات:', servicesError);
+        }
 
-        // Load site data
-        const siteResponse = await fetch('/src/data/site.json');
-        const siteInfo = await siteResponse.json();
-        setSiteData(siteInfo);
+        // Try to load site data
+        try {
+          const siteResponse = await fetch('/src/data/site.json');
+          if (siteResponse.ok) {
+            const siteInfo = await siteResponse.json();
+            setSiteData(siteInfo);
+            console.log('تم تحميل بيانات الموقع بنجاح');
+          } else {
+            console.log('لم يتم العثور على ملف بيانات الموقع، استخدام البيانات الافتراضية');
+          }
+        } catch (siteError) {
+          console.log('خطأ في تحميل بيانات الموقع:', siteError);
+        }
 
-        // Load buttons data
-        const buttonsResponse = await fetch('/src/data/buttons.json');
-        const buttonsInfo = await buttonsResponse.json();
-        setButtonsData(buttonsInfo);
+        // Try to load buttons data
+        try {
+          const buttonsResponse = await fetch('/src/data/buttons.json');
+          if (buttonsResponse.ok) {
+            const buttonsInfo = await buttonsResponse.json();
+            setButtonsData(buttonsInfo);
+            console.log('تم تحميل بيانات الأزرار بنجاح');
+          } else {
+            console.log('لم يتم العثور على ملف بيانات الأزرار، استخدام البيانات الافتراضية');
+          }
+        } catch (buttonsError) {
+          console.log('خطأ في تحميل بيانات الأزرار:', buttonsError);
+        }
+
+        console.log('تم الانتهاء من تحميل البيانات');
       } catch (error) {
-        console.error('Error loading data:', error);
-        // Keep default data if loading fails
+        console.error('خطأ عام في تحميل البيانات:', error);
+        setError('حدث خطأ في تحميل البيانات، يتم استخدام البيانات الافتراضية');
+      } finally {
+        setIsLoading(false);
       }
     };
 
     loadData();
   }, []);
 
-  // Security measures
+  // Security measures with better error handling
   useEffect(() => {
-    // Disable right-click
-    const handleContextMenu = (e) => {
-      e.preventDefault();
-      return false;
-    };
-
-    // Disable text selection and copy shortcuts
-    const handleKeyDown = (e) => {
-      if (
-        e.ctrlKey && (
-          e.keyCode === 67 || // Ctrl+C
-          e.keyCode === 65 || // Ctrl+A
-          e.keyCode === 85 || // Ctrl+U
-          e.keyCode === 83 || // Ctrl+S
-          e.keyCode === 80    // Ctrl+P
-        )
-      ) {
+    try {
+      // Disable right-click
+      const handleContextMenu = (e: Event) => {
         e.preventDefault();
         return false;
+      };
+
+      // Disable text selection and copy shortcuts
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (
+          e.ctrlKey && (
+            e.keyCode === 67 || // Ctrl+C
+            e.keyCode === 65 || // Ctrl+A
+            e.keyCode === 85 || // Ctrl+U
+            e.keyCode === 83 || // Ctrl+S
+            e.keyCode === 80    // Ctrl+P
+          )
+        ) {
+          e.preventDefault();
+          return false;
+        }
+      };
+
+      // Disable drag
+      const handleDragStart = (e: Event) => {
+        e.preventDefault();
+        return false;
+      };
+
+      document.addEventListener('contextmenu', handleContextMenu);
+      document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('dragstart', handleDragStart);
+
+      // Disable text selection
+      if (document.body.style) {
+        document.body.style.userSelect = 'none';
+        document.body.style.webkitUserSelect = 'none';
       }
-    };
 
-    // Disable drag
-    const handleDragStart = (e) => {
-      e.preventDefault();
-      return false;
-    };
-
-    document.addEventListener('contextmenu', handleContextMenu);
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('dragstart', handleDragStart);
-
-    // Disable text selection
-    document.body.style.userSelect = 'none';
-    document.body.style.webkitUserSelect = 'none';
-
-    return () => {
-      document.removeEventListener('contextmenu', handleContextMenu);
-      document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('dragstart', handleDragStart);
-      document.body.style.userSelect = '';
-      document.body.style.webkitUserSelect = '';
-    };
+      return () => {
+        document.removeEventListener('contextmenu', handleContextMenu);
+        document.removeEventListener('keydown', handleKeyDown);
+        document.removeEventListener('dragstart', handleDragStart);
+        if (document.body.style) {
+          document.body.style.userSelect = '';
+          document.body.style.webkitUserSelect = '';
+        }
+      };
+    } catch (error) {
+      console.error('خطأ في إعداد إجراءات الأمان:', error);
+    }
   }, []);
 
   const toggleTheme = () => {
@@ -151,17 +233,38 @@ const Index = () => {
   };
 
   const handlePhoneCall = () => {
-    if (buttonsData.phone?.enabled) {
-      window.location.href = `tel:${buttonsData.phone.number}`;
+    try {
+      if (buttonsData.phone?.enabled && buttonsData.phone?.number) {
+        window.location.href = `tel:${buttonsData.phone.number}`;
+      }
+    } catch (error) {
+      console.error('خطأ في فتح تطبيق الهاتف:', error);
     }
   };
 
   const handleWhatsApp = () => {
-    if (buttonsData.whatsapp?.enabled) {
-      const message = encodeURIComponent(buttonsData.whatsapp.message || 'مرحبا');
-      window.open(`https://wa.me/${buttonsData.whatsapp.number.replace('+', '')}?text=${message}`, '_blank');
+    try {
+      if (buttonsData.whatsapp?.enabled && buttonsData.whatsapp?.number) {
+        const message = encodeURIComponent(buttonsData.whatsapp.message || 'مرحبا');
+        const cleanNumber = buttonsData.whatsapp.number.replace(/\+/g, '');
+        window.open(`https://wa.me/${cleanNumber}?text=${message}`, '_blank', 'noopener,noreferrer');
+      }
+    } catch (error) {
+      console.error('خطأ في فتح واتساب:', error);
     }
   };
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-white">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-amber-600 mx-auto mb-4"></div>
+          <p className="text-xl text-slate-600">جاري التحميل...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`min-h-screen transition-all duration-500 relative ${
@@ -172,6 +275,15 @@ const Index = () => {
       
       {/* Advanced Background Effects */}
       <AdvancedEffects isDarkMode={isDarkMode} />
+      
+      {/* Error Display */}
+      {error && (
+        <div className={`fixed top-4 right-4 left-4 z-50 p-4 rounded-lg shadow-lg ${
+          isDarkMode ? 'bg-red-800 text-red-200' : 'bg-red-100 text-red-800'
+        }`}>
+          <p className="text-sm">{error}</p>
+        </div>
+      )}
       
       {/* Enhanced Theme Toggle */}
       <div className="fixed top-6 left-6 z-50">
