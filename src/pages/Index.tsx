@@ -1,13 +1,65 @@
-
 import React, { useState, useEffect } from 'react';
 import { Phone, MessageSquare, Moon, Sun, Shield, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+interface Service {
+  id: number;
+  title: string;
+  description: string;
+  icon: string;
+  available: boolean;
+  sort_order: number;
+}
+
+interface SiteData {
+  title: string;
+  subtitle: string;
+  description: string;
+  phone: string;
+  whatsapp: string;
+}
+
+interface ButtonsData {
+  phone: {
+    text: string;
+    number: string;
+    enabled: boolean;
+    color: string;
+  };
+  whatsapp: {
+    text: string;
+    number: string;
+    message: string;
+    enabled: boolean;
+    color: string;
+  };
+}
+
 const Index = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [services, setServices] = useState([]);
-  const [siteData, setSiteData] = useState({});
-  const [buttonsData, setButtonsData] = useState({});
+  const [services, setServices] = useState<Service[]>([]);
+  const [siteData, setSiteData] = useState<SiteData>({
+    title: 'سطحة هيدروليك',
+    subtitle: 'خدمة نقل السيارات الاحترافية - سريع، آمن، موثوق',
+    description: 'نحن نقدم خدمات نقل السيارات المعطلة والمساعدة على الطريق بأحدث المعدات الهيدروليكية',
+    phone: '+966501234567',
+    whatsapp: '+966501234567'
+  });
+  const [buttonsData, setButtonsData] = useState<ButtonsData>({
+    phone: {
+      text: 'اتصل الآن',
+      number: '+966501234567',
+      enabled: true,
+      color: '#3b82f6'
+    },
+    whatsapp: {
+      text: 'واتساب',
+      number: '+966501234567',
+      message: 'مرحبا، أحتاج خدمة سطحة هيدروليك',
+      enabled: true,
+      color: '#10b981'
+    }
+  });
 
   // Smart theme detection based on time
   useEffect(() => {
@@ -18,68 +70,25 @@ const Index = () => {
 
   // Load JSON data
   useEffect(() => {
-    // Load services data
     const loadData = async () => {
       try {
-        // Simulated data - in production, these would be loaded from JSON files
-        const servicesData = [
-          {
-            id: 1,
-            title: "نقل السيارات المعطلة",
-            description: "خدمة نقل سريعة وآمنة للسيارات المعطلة على الطرق",
-            icon: "🚗",
-            available: true
-          },
-          {
-            id: 2,
-            title: "مساعدة على الطريق",
-            description: "خدمة مساعدة فورية للسيارات المعطلة في أي مكان",
-            icon: "🛠️",
-            available: true
-          },
-          {
-            id: 3,
-            title: "نقل السيارات الفاخرة",
-            description: "خدمة متخصصة لنقل السيارات الفاخرة بعناية قصوى",
-            icon: "🏎️",
-            available: true
-          },
-          {
-            id: 4,
-            title: "خدمة 24 ساعة",
-            description: "متاحون على مدار الساعة لخدمتكم في أي وقت",
-            icon: "⏰",
-            available: true
-          }
-        ];
+        // Load services data
+        const servicesResponse = await fetch('/src/data/services.json');
+        const servicesData = await servicesResponse.json();
+        setServices(servicesData.services.sort((a: Service, b: Service) => a.sort_order - b.sort_order));
 
-        const siteInfo = {
-          title: "سطحة هيدروليك",
-          subtitle: "خدمة نقل السيارات الاحترافية - سريع، آمن، موثوق",
-          description: "نحن نقدم خدمات نقل السيارات المعطلة والمساعدة على الطريق بأحدث المعدات الهيدروليكية",
-          phone: "+966501234567",
-          whatsapp: "+966501234567"
-        };
-
-        const buttonsInfo = {
-          phone: {
-            text: "اتصل الآن",
-            number: "+966501234567",
-            enabled: true
-          },
-          whatsapp: {
-            text: "واتساب",
-            number: "+966501234567",
-            message: "مرحبا، أحتاج خدمة سطحة هيدروليك",
-            enabled: true
-          }
-        };
-
-        setServices(servicesData);
+        // Load site data
+        const siteResponse = await fetch('/src/data/site.json');
+        const siteInfo = await siteResponse.json();
         setSiteData(siteInfo);
+
+        // Load buttons data
+        const buttonsResponse = await fetch('/src/data/buttons.json');
+        const buttonsInfo = await buttonsResponse.json();
         setButtonsData(buttonsInfo);
       } catch (error) {
         console.error('Error loading data:', error);
+        // Keep default data if loading fails
       }
     };
 
@@ -190,13 +199,13 @@ const Index = () => {
               ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-orange-400' 
               : 'text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-orange-600'
           }`}>
-            {siteData.title || 'سطحة هيدروليك'}
+            {siteData.title}
           </h1>
           
           <p className={`text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed ${
             isDarkMode ? 'text-slate-300' : 'text-slate-600'
           }`}>
-            {siteData.subtitle || 'خدمة نقل السيارات الاحترافية - سريع، آمن، موثوق'}
+            {siteData.subtitle}
           </p>
 
           <div className="flex justify-center gap-4 mb-8">
@@ -225,7 +234,7 @@ const Index = () => {
             خدماتنا
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {services.map((service) => (
               <div
                 key={service.id}
