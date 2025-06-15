@@ -1,0 +1,18 @@
+
+# SPA fallback
+/*    /index.html   200
+
+# API endpoints
+/api/*  /.netlify/functions/:splat  200
+
+# Admin panel
+/admin/*  /admin/index.html  200
+
+# SEO-friendly redirects
+/services  /#services  301
+/contact   /#contact   301
+/about     /#about     301
+
+# Old URLs (if migrating from another site)
+/ar/*  /:splat  301
+/saudi-tow-truck/*  /:splat  301

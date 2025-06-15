@@ -133,26 +133,39 @@ const SEOOptimizer: React.FC<SEOOptimizerProps> = ({
     
   }, [title, description, keywords, image, url, type, author, locale, siteName]);
 
-  // Performance monitoring
+  // Performance monitoring (fixed TypeScript errors)
   useEffect(() => {
-    // Monitor Core Web Vitals
-    const observer = new PerformanceObserver((list) => {
-      for (const entry of list.getEntries()) {
-        if (entry.entryType === 'largest-contentful-paint') {
-          console.log('LCP:', entry.startTime);
+    // Monitor Core Web Vitals with proper type checking
+    if ('PerformanceObserver' in window) {
+      const observer = new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          // Type guard for LCP
+          if (entry.entryType === 'largest-contentful-paint') {
+            console.log('LCP:', entry.startTime);
+          }
+          // Type guard for FID with proper interface
+          if (entry.entryType === 'first-input' && 'processingStart' in entry) {
+            const fidEntry = entry as PerformanceEventTiming;
+            console.log('FID:', fidEntry.processingStart - fidEntry.startTime);
+          }
+          // Type guard for CLS
+          if (entry.entryType === 'layout-shift' && 'value' in entry) {
+            const clsEntry = entry as any;
+            console.log('CLS:', clsEntry.value);
+          }
         }
-        if (entry.entryType === 'first-input') {
-          console.log('FID:', entry.processingStart - entry.startTime);
-        }
-        if (entry.entryType === 'layout-shift') {
-          console.log('CLS:', entry.value);
-        }
+      });
+
+      try {
+        observer.observe({ 
+          entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'] 
+        });
+      } catch (error) {
+        console.log('Performance observer not supported');
       }
-    });
 
-    observer.observe({ entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'] });
-
-    return () => observer.disconnect();
+      return () => observer.disconnect();
+    }
   }, []);
 
   return null;
