@@ -1,0 +1,34 @@
+
+{
+  "site_notifications": [
+    {
+      "message": "🎉 خصم 20% على جميع خدمات النقل لفترة محدودة!",
+      "type": "success",
+      "enabled": false,
+      "start_date": "2024-01-01T00:00:00.000Z",
+      "end_date": "2024-12-31T23:59:59.000Z",
+      "dismissible": true
+    },
+    {
+      "message": "⚠️ نعتذر عن التأخير المؤقت في الخدمة بسبب الظروف الجوية",
+      "type": "warning",
+      "enabled": false,
+      "start_date": "2024-01-01T00:00:00.000Z",
+      "end_date": "2024-12-31T23:59:59.000Z",
+      "dismissible": true
+    },
+    {
+      "message": "ℹ️ يمكنك الآن تتبع موقع السطحة مباشرة عبر الواتساب",
+      "type": "info",
+      "enabled": false,
+      "start_date": "2024-01-01T00:00:00.000Z",
+      "end_date": "2024-12-31T23:59:59.000Z",
+      "dismissible": true
+    }
+  ],
+  "auto_updates": {
+    "content_updates": true,
+    "new_content_notifications": true,
+    "update_interval": 30
+  }
+}

@@ -10,61 +10,218 @@ locale: 'ar'
 display_url: https://your-site.netlify.app
 logo_url: https://your-site.netlify.app/icon-192x192.png
 
+# إعدادات التحرير
+editor:
+  preview: true
+  frame: true
+
+# إعدادات الواجهة
+slug:
+  encoding: "unicode"
+  clean_accents: true
+  sanitize_replacement: "-"
+
 collections:
+  # ===== إعدادات الموقع العامة =====
   - name: "site_settings"
-    label: "إعدادات الموقع"
+    label: "⚙️ إعدادات الموقع"
     files:
       - file: "src/data/site.json"
-        label: "معلومات الموقع الأساسية"
+        label: "🏠 معلومات الموقع الأساسية"
         name: "site_info"
         fields:
-          - {label: "عنوان الموقع", name: "title", widget: "string", default: "سطحة هيدروليك"}
-          - {label: "العنوان الفرعي", name: "subtitle", widget: "text", default: "خدمة نقل السيارات الاحترافية - سريع، آمن، موثوق"}
-          - {label: "وصف الموقع", name: "description", widget: "text", default: "نحن نقدم خدمات نقل السيارات المعطلة والمساعدة على الطريق بأحدث المعدات الهيدروليكية"}
-          - {label: "رقم الهاتف", name: "phone", widget: "string", default: "+966501234567"}
-          - {label: "رقم الواتساب", name: "whatsapp", widget: "string", default: "+966501234567"}
-          - label: "إعدادات SEO"
+          - label: "📄 معلومات أساسية"
+            name: "basic_info"
+            widget: "object"
+            collapsed: false
+            fields:
+              - {label: "عنوان الموقع", name: "title", widget: "string", default: "سطحة هيدروليك"}
+              - {label: "العنوان الفرعي", name: "subtitle", widget: "text", default: "خدمة نقل السيارات الاحترافية - سريع، آمن، موثوق"}
+              - {label: "وصف الموقع", name: "description", widget: "text", default: "نحن نقدم خدمات نقل السيارات المعطلة والمساعدة على الطريق بأحدث المعدات الهيدروليكية"}
+              - {label: "شعار الموقع", name: "logo", widget: "image", required: false}
+              - {label: "أيقونة الموقع", name: "favicon", widget: "image", required: false}
+          
+          - label: "📞 بيانات الاتصال"
+            name: "contact_info"
+            widget: "object"
+            collapsed: false
+            fields:
+              - {label: "رقم الهاتف", name: "phone", widget: "string", default: "+966501234567"}
+              - {label: "رقم الواتساب", name: "whatsapp", widget: "string", default: "+966501234567"}
+              - {label: "البريد الإلكتروني", name: "email", widget: "string", required: false}
+              - {label: "العنوان", name: "address", widget: "text", required: false}
+              - label: "ساعات العمل"
+                name: "working_hours"
+                widget: "object"
+                fields:
+                  - {label: "من", name: "from", widget: "string", default: "24"}
+                  - {label: "إلى", name: "to", widget: "string", default: "7"}
+                  - {label: "نص ساعات العمل", name: "text", widget: "string", default: "خدمة 24/7"}
+          
+          - label: "🎨 إعدادات الألوان والمظهر"
+            name: "theme"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "اللون الأساسي", name: "primary_color", widget: "color", default: "#2563eb"}
+              - {label: "اللون الثانوي", name: "secondary_color", widget: "color", default: "#f97316"}
+              - {label: "لون النجاح", name: "success_color", widget: "color", default: "#10b981"}
+              - {label: "لون التحذير", name: "warning_color", widget: "color", default: "#f59e0b"}
+              - {label: "لون الخطر", name: "danger_color", widget: "color", default: "#ef4444"}
+              - {label: "لون الخلفية الفاتح", name: "light_bg", widget: "color", default: "#ffffff"}
+              - {label: "لون الخلفية الغامق", name: "dark_bg", widget: "color", default: "#1e293b"}
+              - {label: "خط النصوص الأساسي", name: "font_family", widget: "select", options: ["Cairo", "Tajawal", "Almarai", "IBM Plex Sans Arabic"], default: "Cairo"}
+          
+          - label: "🔍 إعدادات SEO"
             name: "seo"
             widget: "object"
+            collapsed: true
             fields:
               - {label: "الكلمات المفتاحية", name: "keywords", widget: "string", default: "سطحة, هيدروليك, نقل سيارات, مساعدة طريق"}
               - {label: "وصف Meta", name: "meta_description", widget: "text"}
               - {label: "صورة Open Graph", name: "og_image", widget: "image", required: false}
-          - label: "إعدادات الألوان"
-            name: "theme"
+              - {label: "Google Analytics ID", name: "ga_id", widget: "string", required: false}
+              - {label: "Google Search Console", name: "gsc_verification", widget: "string", required: false}
+              - {label: "Facebook Pixel ID", name: "fb_pixel", widget: "string", required: false}
+
+  # ===== إدارة الصفحة الرئيسية =====
+  - name: "homepage"
+    label: "🏠 الصفحة الرئيسية"
+    files:
+      - file: "src/data/homepage.json"
+        label: "🎯 محتوى الصفحة الرئيسية"
+        name: "homepage_content"
+        fields:
+          - label: "🎬 قسم البطل (Hero Section)"
+            name: "hero"
             widget: "object"
             fields:
-              - {label: "اللون الأساسي", name: "primary_color", widget: "color", default: "#2563eb"}
-              - {label: "اللون الثانوي", name: "secondary_color", widget: "color", default: "#f97316"}
-              - {label: "لون الخلفية الفاتح", name: "light_bg", widget: "color", default: "#ffffff"}
-              - {label: "لون الخلفية الغامق", name: "dark_bg", widget: "color", default: "#1e293b"}
+              - {label: "مفعل؟", name: "enabled", widget: "boolean", default: true}
+              - {label: "العنوان الرئيسي", name: "title", widget: "string"}
+              - {label: "العنوان الفرعي", name: "subtitle", widget: "text"}
+              - {label: "نص الوصف", name: "description", widget: "text"}
+              - {label: "صورة الخلفية", name: "background_image", widget: "image", required: false}
+              - {label: "فيديو الخلفية", name: "background_video", widget: "file", required: false}
+              - label: "الأزرار"
+                name: "buttons"
+                widget: "list"
+                fields:
+                  - {label: "نص الزر", name: "text", widget: "string"}
+                  - {label: "رابط الزر", name: "url", widget: "string"}
+                  - {label: "نوع الزر", name: "type", widget: "select", options: ["primary", "secondary", "outline"], default: "primary"}
+                  - {label: "أيقونة", name: "icon", widget: "string", required: false}
 
+          - label: "📊 قسم الإحصائيات"
+            name: "statistics"
+            widget: "object"
+            fields:
+              - {label: "مفعل؟", name: "enabled", widget: "boolean", default: true}
+              - {label: "عنوان القسم", name: "title", widget: "string", default: "إحصائياتنا"}
+              - label: "الإحصائيات"
+                name: "stats"
+                widget: "list"
+                fields:
+                  - {label: "الرقم", name: "value", widget: "number"}
+                  - {label: "اللاحقة", name: "suffix", widget: "string", required: false}
+                  - {label: "التسمية", name: "label", widget: "string"}
+                  - {label: "أيقونة", name: "icon", widget: "string"}
+                  - {label: "اللون", name: "color", widget: "color"}
+
+          - label: "✨ قسم المميزات"
+            name: "features"
+            widget: "object"
+            fields:
+              - {label: "مفعل؟", name: "enabled", widget: "boolean", default: true}
+              - {label: "عنوان القسم", name: "title", widget: "string", default: "مميزاتنا"}
+              - {label: "وصف القسم", name: "description", widget: "text", required: false}
+              - label: "المميزات"
+                name: "features_list"
+                widget: "list"
+                fields:
+                  - {label: "العنوان", name: "title", widget: "string"}
+                  - {label: "الوصف", name: "description", widget: "text"}
+                  - {label: "أيقونة", name: "icon", widget: "string"}
+                  - {label: "اللون", name: "color", widget: "color"}
+
+          - label: "💬 قسم آراء العملاء"
+            name: "testimonials"
+            widget: "object"
+            fields:
+              - {label: "مفعل؟", name: "enabled", widget: "boolean", default: true}
+              - {label: "عنوان القسم", name: "title", widget: "string", default: "آراء عملائنا"}
+              - label: "الآراء"
+                name: "testimonials_list"
+                widget: "list"
+                fields:
+                  - {label: "اسم العميل", name: "name", widget: "string"}
+                  - {label: "التعليق", name: "comment", widget: "text"}
+                  - {label: "التقييم", name: "rating", widget: "number", min: 1, max: 5, default: 5}
+                  - {label: "صورة العميل", name: "avatar", widget: "image", required: false}
+                  - {label: "المنصب", name: "position", widget: "string", required: false}
+
+  # ===== إدارة الخدمات =====
   - name: "services"
-    label: "الخدمات"
+    label: "🛠️ الخدمات"
     files:
       - file: "src/data/services.json"
-        label: "قائمة الخدمات"
+        label: "📋 قائمة الخدمات"
         name: "services_list"
         fields:
-          - label: "الخدمات"
+          - label: "⚙️ إعدادات قسم الخدمات"
+            name: "settings"
+            widget: "object"
+            fields:
+              - {label: "مفعل؟", name: "enabled", widget: "boolean", default: true}
+              - {label: "عنوان القسم", name: "title", widget: "string", default: "خدماتنا"}
+              - {label: "وصف القسم", name: "description", widget: "text", required: false}
+              - {label: "عدد الأعمدة", name: "columns", widget: "select", options: ["2", "3", "4"], default: "3"}
+          
+          - label: "🛠️ الخدمات"
             name: "services"
             widget: "list"
             fields:
               - {label: "ID", name: "id", widget: "number"}
               - {label: "عنوان الخدمة", name: "title", widget: "string"}
-              - {label: "وصف الخدمة", name: "description", widget: "text"}
-              - {label: "أيقونة الخدمة", name: "icon", widget: "string", default: "🚗", hint: "استخدم إيموجي واحد"}
+              - {label: "وصف مختصر", name: "description", widget: "text"}
+              - {label: "وصف مفصل", name: "detailed_description", widget: "markdown", required: false}
+              - {label: "أيقونة الخدمة", name: "icon", widget: "string", default: "🚗", hint: "استخدم إيموجي أو اسم أيقونة Lucide"}
+              - {label: "صورة الخدمة", name: "image", widget: "image", required: false}
               - {label: "متاحة؟", name: "available", widget: "boolean", default: true}
+              - {label: "مميزة؟", name: "featured", widget: "boolean", default: false}
+              - {label: "السعر", name: "price", widget: "string", required: false}
+              - {label: "وحدة السعر", name: "price_unit", widget: "string", required: false, default: "ريال"}
               - {label: "ترتيب العرض", name: "sort_order", widget: "number", default: 1}
+              - label: "مميزات الخدمة"
+                name: "features"
+                widget: "list"
+                required: false
+                fields:
+                  - {label: "المميزة", name: "feature", widget: "string"}
+              - label: "معرض الصور"
+                name: "gallery"
+                widget: "list"
+                required: false
+                fields:
+                  - {label: "الصورة", name: "image", widget: "image"}
+                  - {label: "الوصف", name: "caption", widget: "string", required: false}
 
+  # ===== أزرار التواصل العائمة =====
   - name: "contact_buttons"
-    label: "أزرار التواصل"
+    label: "📞 أزرار التواصل"
     files:
       - file: "src/data/buttons.json"
-        label: "إعدادات أزرار التواصل العائمة"
+        label: "🔘 إعدادات أزرار التواصل العائمة"
         name: "floating_buttons"
         fields:
-          - label: "زر الهاتف"
+          - label: "⚙️ إعدادات عامة"
+            name: "settings"
+            widget: "object"
+            fields:
+              - {label: "مفعل؟", name: "enabled", widget: "boolean", default: true}
+              - {label: "الموضع", name: "position", widget: "select", options: ["bottom-right", "bottom-left", "top-right", "top-left"], default: "bottom-right"}
+              - {label: "إخفاء على الشاشات الصغيرة؟", name: "hide_on_mobile", widget: "boolean", default: false}
+          
+          - label: "📞 زر الهاتف"
             name: "phone"
             widget: "object"
             fields:
@@ -72,7 +229,10 @@ collections:
               - {label: "رقم الهاتف", name: "number", widget: "string", default: "+966501234567"}
               - {label: "مفعل؟", name: "enabled", widget: "boolean", default: true}
               - {label: "لون الزر", name: "color", widget: "color", default: "#3b82f6"}
-          - label: "زر الواتساب"
+              - {label: "أيقونة", name: "icon", widget: "string", default: "phone"}
+              - {label: "ترتيب الظهور", name: "order", widget: "number", default: 1}
+          
+          - label: "💬 زر الواتساب"
             name: "whatsapp"
             widget: "object"
             fields:
@@ -81,17 +241,42 @@ collections:
               - {label: "الرسالة الافتراضية", name: "message", widget: "text", default: "مرحبا، أحتاج خدمة سطحة هيدروليك"}
               - {label: "مفعل؟", name: "enabled", widget: "boolean", default: true}
               - {label: "لون الزر", name: "color", widget: "color", default: "#10b981"}
+              - {label: "أيقونة", name: "icon", widget: "string", default: "message-circle"}
+              - {label: "ترتيب الظهور", name: "order", widget: "number", default: 2}
+          
+          - label: "✉️ زر البريد الإلكتروني"
+            name: "email"
+            widget: "object"
+            required: false
+            fields:
+              - {label: "نص الزر", name: "text", widget: "string", default: "راسلنا"}
+              - {label: "البريد الإلكتروني", name: "address", widget: "string"}
+              - {label: "موضوع الرسالة", name: "subject", widget: "string", default: "استفسار من الموقع"}
+              - {label: "مفعل؟", name: "enabled", widget: "boolean", default: false}
+              - {label: "لون الزر", name: "color", widget: "color", default: "#6366f1"}
+              - {label: "أيقونة", name: "icon", widget: "string", default: "mail"}
+              - {label: "ترتيب الظهور", name: "order", widget: "number", default: 3}
 
+  # ===== تذييل الموقع =====
   - name: "footer"
-    label: "تذييل الموقع"
+    label: "🦶 تذييل الموقع"
     files:
       - file: "src/data/footer.json"
-        label: "محتوى التذييل"
+        label: "📄 محتوى التذييل"
         name: "footer_content"
         fields:
+          - label: "⚙️ إعدادات التذييل"
+            name: "settings"
+            widget: "object"
+            fields:
+              - {label: "مفعل؟", name: "enabled", widget: "boolean", default: true}
+              - {label: "لون الخلفية", name: "background_color", widget: "color", default: "#1e293b"}
+              - {label: "نمط التخطيط", name: "layout", widget: "select", options: ["simple", "columns", "advanced"], default: "simple"}
+          
           - {label: "نص حقوق الطبع", name: "copyright", widget: "string", default: "خدمة نقل السيارات الاحترافية © 2024"}
           - {label: "وصف مختصر", name: "description", widget: "text", required: false}
-          - label: "روابط إضافية"
+          
+          - label: "🔗 روابط إضافية"
             name: "links"
             widget: "list"
             required: false
@@ -99,14 +284,167 @@ collections:
               - {label: "نص الرابط", name: "text", widget: "string"}
               - {label: "URL الرابط", name: "url", widget: "string"}
               - {label: "فتح في نافذة جديدة؟", name: "external", widget: "boolean", default: false}
+              - {label: "أيقونة", name: "icon", widget: "string", required: false}
+          
+          - label: "📱 روابط وسائل التواصل"
+            name: "social_links"
+            widget: "list"
+            required: false
+            fields:
+              - {label: "المنصة", name: "platform", widget: "select", options: ["facebook", "twitter", "instagram", "linkedin", "youtube", "tiktok", "snapchat"]}
+              - {label: "الرابط", name: "url", widget: "string"}
+              - {label: "مفعل؟", name: "enabled", widget: "boolean", default: true}
 
+  # ===== إدارة الصفحات =====
   - name: "pages"
-    label: "الصفحات"
+    label: "📄 الصفحات"
     folder: "src/data/pages"
     create: true
     slug: "{{slug}}"
     fields:
       - {label: "عنوان الصفحة", name: "title", widget: "string"}
+      - {label: "رابط الصفحة", name: "slug", widget: "string"}
+      - {label: "وصف مختصر", name: "description", widget: "text", required: false}
       - {label: "المحتوى", name: "body", widget: "markdown"}
+      - {label: "صورة مميزة", name: "featured_image", widget: "image", required: false}
       - {label: "تاريخ النشر", name: "date", widget: "datetime"}
       - {label: "منشورة؟", name: "published", widget: "boolean", default: true}
+      - {label: "مميزة؟", name: "featured", widget: "boolean", default: false}
+      - label: "إعدادات SEO"
+        name: "seo"
+        widget: "object"
+        required: false
+        fields:
+          - {label: "عنوان SEO", name: "title", widget: "string", required: false}
+          - {label: "وصف SEO", name: "description", widget: "text", required: false}
+          - {label: "الكلمات المفتاحية", name: "keywords", widget: "string", required: false}
+
+  # ===== إدارة المدونة =====
+  - name: "blog"
+    label: "📝 المدونة"
+    folder: "src/data/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "عنوان المقال", name: "title", widget: "string"}
+      - {label: "رابط المقال", name: "slug", widget: "string"}
+      - {label: "الملخص", name: "excerpt", widget: "text"}
+      - {label: "المحتوى", name: "body", widget: "markdown"}
+      - {label: "صورة المقال", name: "featured_image", widget: "image"}
+      - {label: "تاريخ النشر", name: "date", widget: "datetime"}
+      - {label: "الكاتب", name: "author", widget: "string", default: "فريق العمل"}
+      - {label: "منشور؟", name: "published", widget: "boolean", default: true}
+      - {label: "مميز؟", name: "featured", widget: "boolean", default: false}
+      - label: "التصنيفات"
+        name: "categories"
+        widget: "list"
+        required: false
+        fields:
+          - {label: "التصنيف", name: "category", widget: "string"}
+      - label: "الكلمات المفتاحية"
+        name: "tags"
+        widget: "list"
+        required: false
+        fields:
+          - {label: "الكلمة المفتاحية", name: "tag", widget: "string"}
+
+  # ===== إعدادات متقدمة =====
+  - name: "advanced_settings"
+    label: "⚡ إعدادات متقدمة"
+    files:
+      - file: "src/data/advanced.json"
+        label: "🔧 إعدادات متقدمة"
+        name: "advanced_config"
+        fields:
+          - label: "🎨 تخصيص CSS"
+            name: "custom_css"
+            widget: "object"
+            fields:
+              - {label: "مفعل؟", name: "enabled", widget: "boolean", default: false}
+              - {label: "كود CSS المخصص", name: "css_code", widget: "code", default_language: "css", required: false}
+          
+          - label: "📜 تخصيص JavaScript"
+            name: "custom_js"
+            widget: "object"
+            fields:
+              - {label: "مفعل؟", name: "enabled", widget: "boolean", default: false}
+              - {label: "كود JavaScript المخصص", name: "js_code", widget: "code", default_language: "javascript", required: false}
+          
+          - label: "🚀 إعدادات الأداء"
+            name: "performance"
+            widget: "object"
+            fields:
+              - {label: "تفعيل التخزين المؤقت", name: "cache_enabled", widget: "boolean", default: true}
+              - {label: "ضغط الصور", name: "image_compression", widget: "boolean", default: true}
+              - {label: "تحميل كسول للصور", name: "lazy_loading", widget: "boolean", default: true}
+              - {label: "تحسين الخطوط", name: "font_optimization", widget: "boolean", default: true}
+          
+          - label: "🔐 إعدادات الأمان"
+            name: "security"
+            widget: "object"
+            fields:
+              - {label: "حماية من البريد العشوائي", name: "spam_protection", widget: "boolean", default: true}
+              - {label: "تشفير النماذج", name: "form_encryption", widget: "boolean", default: true}
+              - {label: "حماية الصور", name: "image_protection", widget: "boolean", default: false}
+
+  # ===== إدارة النماذج =====
+  - name: "forms"
+    label: "📋 النماذج"
+    files:
+      - file: "src/data/forms.json"
+        label: "📝 إعدادات النماذج"
+        name: "forms_config"
+        fields:
+          - label: "📞 نموذج الاتصال"
+            name: "contact_form"
+            widget: "object"
+            fields:
+              - {label: "مفعل؟", name: "enabled", widget: "boolean", default: true}
+              - {label: "عنوان النموذج", name: "title", widget: "string", default: "تواصل معنا"}
+              - {label: "وصف النموذج", name: "description", widget: "text", required: false}
+              - {label: "بريد الاستقبال", name: "recipient_email", widget: "string"}
+              - {label: "رسالة الشكر", name: "thank_you_message", widget: "text", default: "شكراً لك! سنتواصل معك قريباً"}
+              - label: "الحقول"
+                name: "fields"
+                widget: "list"
+                fields:
+                  - {label: "اسم الحقل", name: "name", widget: "string"}
+                  - {label: "تسمية الحقل", name: "label", widget: "string"}
+                  - {label: "نوع الحقل", name: "type", widget: "select", options: ["text", "email", "tel", "textarea", "select", "checkbox"]}
+                  - {label: "مطلوب؟", name: "required", widget: "boolean", default: true}
+                  - {label: "نص المساعدة", name: "placeholder", widget: "string", required: false}
+                  - label: "خيارات (للقوائم المنسدلة)"
+                    name: "options"
+                    widget: "list"
+                    required: false
+                    fields:
+                      - {label: "القيمة", name: "value", widget: "string"}
+                      - {label: "النص", name: "label", widget: "string"}
+
+  # ===== إدارة الإشعارات =====
+  - name: "notifications"
+    label: "🔔 الإشعارات"
+    files:
+      - file: "src/data/notifications.json"
+        label: "📢 إعدادات الإشعارات"
+        name: "notifications_config"
+        fields:
+          - label: "📱 إشعارات الموقع"
+            name: "site_notifications"
+            widget: "list"
+            required: false
+            fields:
+              - {label: "نص الإشعار", name: "message", widget: "text"}
+              - {label: "نوع الإشعار", name: "type", widget: "select", options: ["info", "success", "warning", "error"], default: "info"}
+              - {label: "مفعل؟", name: "enabled", widget: "boolean", default: true}
+              - {label: "تاريخ البداية", name: "start_date", widget: "datetime", required: false}
+              - {label: "تاريخ الانتهاء", name: "end_date", widget: "datetime", required: false}
+              - {label: "قابل للإغلاق؟", name: "dismissible", widget: "boolean", default: true}
+          
+          - label: "🔄 إعدادات التحديثات التلقائية"
+            name: "auto_updates"
+            widget: "object"
+            fields:
+              - {label: "تحديث المحتوى تلقائياً", name: "content_updates", widget: "boolean", default: true}
+              - {label: "إشعارات المحتوى الجديد", name: "new_content_notifications", widget: "boolean", default: true}
+              - {label: "فترة التحديث (بالدقائق)", name: "update_interval", widget: "number", default: 30}

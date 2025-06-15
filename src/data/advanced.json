@@ -1,0 +1,22 @@
+
+{
+  "custom_css": {
+    "enabled": false,
+    "css_code": "/* أضف كود CSS المخصص هنا */\n\n.custom-button {\n  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n  border: none;\n  border-radius: 25px;\n  padding: 1rem 2rem;\n  color: white;\n  font-weight: bold;\n  transition: transform 0.3s ease;\n}\n\n.custom-button:hover {\n  transform: translateY(-2px);\n}"
+  },
+  "custom_js": {
+    "enabled": false,
+    "js_code": "// أضف كود JavaScript المخصص هنا\n\n// مثال: تتبع النقرات\nfunction trackButtonClick(buttonName) {\n  console.log('تم النقر على الزر:', buttonName);\n  // يمكنك إضافة كود التتبع هنا\n}\n\n// مثال: تحسين الأداء\nwindow.addEventListener('load', function() {\n  console.log('تم تحميل الصفحة بنجاح');\n});"
+  },
+  "performance": {
+    "cache_enabled": true,
+    "image_compression": true,
+    "lazy_loading": true,
+    "font_optimization": true
+  },
+  "security": {
+    "spam_protection": true,
+    "form_encryption": true,
+    "image_protection": false
+  }
+}

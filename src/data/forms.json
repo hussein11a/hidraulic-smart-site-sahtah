@@ -1,0 +1,77 @@
+
+{
+  "contact_form": {
+    "enabled": true,
+    "title": "تواصل معنا",
+    "description": "نحن هنا لمساعدتك، أرسل لنا رسالة وسنرد عليك في أقرب وقت",
+    "recipient_email": "info@your-site.com",
+    "thank_you_message": "شكراً لك! تم إرسال رسالتك بنجاح وسنتواصل معك قريباً",
+    "fields": [
+      {
+        "name": "name",
+        "label": "الاسم الكامل",
+        "type": "text",
+        "required": true,
+        "placeholder": "أدخل اسمك الكامل"
+      },
+      {
+        "name": "phone",
+        "label": "رقم الهاتف",
+        "type": "tel",
+        "required": true,
+        "placeholder": "+966 5xxxxxxxx"
+      },
+      {
+        "name": "email",
+        "label": "البريد الإلكتروني",
+        "type": "email",
+        "required": false,
+        "placeholder": "example@domain.com"
+      },
+      {
+        "name": "service",
+        "label": "نوع الخدمة المطلوبة",
+        "type": "select",
+        "required": true,
+        "options": [
+          {
+            "value": "towing",
+            "label": "نقل سيارة معطلة"
+          },
+          {
+            "value": "roadside",
+            "label": "مساعدة على الطريق"
+          },
+          {
+            "value": "emergency",
+            "label": "خدمة طوارئ"
+          },
+          {
+            "value": "other",
+            "label": "خدمة أخرى"
+          }
+        ]
+      },
+      {
+        "name": "location",
+        "label": "موقعك الحالي",
+        "type": "text",
+        "required": true,
+        "placeholder": "أدخل موقعك أو المنطقة"
+      },
+      {
+        "name": "message",
+        "label": "تفاصيل إضافية",
+        "type": "textarea",
+        "required": false,
+        "placeholder": "أضف أي تفاصيل إضافية تساعدنا في خدمتك بشكل أفضل"
+      },
+      {
+        "name": "urgent",
+        "label": "هل هذه حالة طوارئ؟",
+        "type": "checkbox",
+        "required": false
+      }
+    ]
+  }
+}

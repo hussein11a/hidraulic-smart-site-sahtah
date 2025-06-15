@@ -4,33 +4,82 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>إدارة المحتوى - سطحة هيدروليك</title>
+  <title>🎛️ لوحة التحكم الشاملة - سطحة هيدروليك</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    :root {
+      --primary-color: #2563eb;
+      --secondary-color: #f97316;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --danger-color: #ef4444;
+      --light-bg: #ffffff;
+      --dark-bg: #1e293b;
+      --border-color: #e2e8f0;
+      --text-color: #1e293b;
+      --text-muted: #64748b;
+    }
+    
+    * {
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 16px;
+      line-height: 1.6;
+      color: white;
     }
     
     .loading-container {
       text-align: center;
-      color: white;
+      background: white;
+      padding: 3rem 2rem;
+      border-radius: 20px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+      max-width: 400px;
+      width: 90%;
+      color: var(--text-color);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .loading-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--success-color));
+      background-size: 200% 100%;
+      animation: gradient-flow 3s ease-in-out infinite;
+    }
+    
+    @keyframes gradient-flow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
     }
     
     .loading-spinner {
-      border: 4px solid rgba(255, 255, 255, 0.3);
+      border: 4px solid var(--border-color);
       border-radius: 50%;
-      border-top: 4px solid white;
+      border-top: 4px solid var(--primary-color);
+      border-right: 4px solid var(--secondary-color);
       width: 60px;
       height: 60px;
-      animation: spin 2s linear infinite;
-      margin: 0 auto 20px;
+      animation: spin 1.5s linear infinite;
+      margin: 0 auto 1.5rem;
     }
     
     @keyframes spin {
@@ -40,79 +89,481 @@
     
     .loading-text {
       font-size: 18px;
-      margin: 10px 0;
+      margin: 1rem 0;
+      font-weight: 600;
+      color: var(--text-color);
     }
     
     .admin-title {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 10px;
+      font-size: 28px;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+    
+    .features-list {
+      text-align: right;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f8fafc;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+    
+    .features-list h4 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--text-color);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .features-list ul {
+      list-style: none;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    
+    .features-list li {
+      padding: 0.25rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .features-list li::before {
+      content: '✨';
+      font-size: 12px;
+    }
+    
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #166534;
+      font-weight: 600;
+    }
+    
+    .status-indicator::before {
+      content: '🟢';
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    .cms-preview {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      color: white;
+      font-size: 13px;
+      text-align: center;
+    }
+    
+    /* تحسينات للشاشات الصغيرة */
+    @media (max-width: 480px) {
+      .loading-container {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+      }
+      
+      .admin-title {
+        font-size: 24px;
+      }
+      
+      .loading-text {
+        font-size: 16px;
+      }
+    }
+    
+    /* تأثيرات حركية إضافية */
+    .loading-container {
+      animation: fadeInUp 0.8s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
   <div class="loading-container">
     <div class="loading-spinner"></div>
-    <div class="admin-title">لوحة إدارة المحتوى</div>
+    <div class="admin-title">🎛️ لوحة التحكم الشاملة</div>
+    <div class="subtitle">نظام إدارة المحتوى المتطور</div>
     <div class="loading-text">جاري تحميل النظام...</div>
-    <div style="font-size: 14px; opacity: 0.8;">سطحة هيدروليك - نظام إدارة المحتوى</div>
+    
+    <div class="features-list">
+      <h4>🚀 المميزات المتاحة:</h4>
+      <ul>
+        <li>إدارة شاملة لجميع أقسام الموقع</li>
+        <li>معاينة فورية ومتطورة للمحتوى</li>
+        <li>تحكم كامل في التصميم والألوان</li>
+        <li>إدارة الخدمات والمنتجات</li>
+        <li>إنشاء وتعديل الصفحات بسهولة</li>
+        <li>إدارة المدونة والمقالات</li>
+        <li>تخصيص النماذج والإشعارات</li>
+        <li>إعدادات SEO متقدمة</li>
+        <li>تحليلات وإحصائيات شاملة</li>
+      </ul>
+    </div>
+    
+    <div class="status-indicator">
+      النظام جاهز للاستخدام
+    </div>
+    
+    <div class="cms-preview">
+      🎨 واجهة عربية متطورة مع معاينة فورية
+    </div>
   </div>
   
   <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
   
   <script>
-    // تخصيص إعدادات النظام
+    // إعدادات النظام المتقدمة
     CMS.init({
       config: {
         load_config_file: true,
         display_url: window.location.origin,
-        locale: 'ar'
+        locale: 'ar',
+        show_preview_links: true,
+        editor: {
+          preview: true,
+          frame: true
+        }
       }
     });
     
-    // تسجيل معاينات مخصصة
+    // تخصيص معاينة معلومات الموقع
     CMS.registerPreviewTemplate('site_info', ({ entry, widgetFor, widgetsFor }) => {
-      return `
-        <div style="padding: 20px; font-family: Arial, sans-serif; direction: rtl;">
-          <h1 style="color: #2563eb;">${entry.getIn(['data', 'title'])}</h1>
-          <p style="font-size: 18px; color: #666;">${entry.getIn(['data', 'subtitle'])}</p>
-          <p>${entry.getIn(['data', 'description'])}</p>
-          <div style="margin-top: 20px;">
-            <strong>الهاتف:</strong> ${entry.getIn(['data', 'phone'])}<br>
-            <strong>الواتساب:</strong> ${entry.getIn(['data', 'whatsapp'])}
-          </div>
-        </div>
-      `;
-    });
-    
-    // معاينة الخدمات
-    CMS.registerPreviewTemplate('services_list', ({ entry, widgetFor, widgetsFor }) => {
-      const services = entry.getIn(['data', 'services']);
-      if (!services) return '<p>لا توجد خدمات</p>';
+      const basicInfo = entry.getIn(['data', 'basic_info']);
+      const contactInfo = entry.getIn(['data', 'contact_info']);
+      const theme = entry.getIn(['data', 'theme']);
       
       return `
-        <div style="padding: 20px; font-family: Arial, sans-serif; direction: rtl;">
-          <h2>الخدمات المتاحة</h2>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-            ${services.map(service => `
-              <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; text-align: center;">
-                <div style="font-size: 40px; margin-bottom: 10px;">${service.get('icon')}</div>
-                <h3 style="color: #2563eb; margin: 10px 0;">${service.get('title')}</h3>
-                <p style="color: #666; font-size: 14px;">${service.get('description')}</p>
-                <div style="margin-top: 10px;">
-                  <span style="background: ${service.get('available') ? '#10b981' : '#ef4444'}; color: white; padding: 4px 8px; border-radius: 12px; font-size: 12px;">
-                    ${service.get('available') ? 'متاح' : 'غير متاح'}
-                  </span>
-                </div>
-              </div>
-            `).join('')}
+        <div style="padding: 2rem; font-family: 'Cairo', Arial, sans-serif; direction: rtl; background: ${theme?.get('light_bg') || '#ffffff'}; color: ${theme?.get('dark_bg') || '#1e293b'}; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+          <div style="text-align: center; margin-bottom: 2rem;">
+            <h1 style="color: ${theme?.get('primary_color') || '#2563eb'}; font-size: 2.5rem; font-weight: 900; margin-bottom: 0.5rem;">
+              ${basicInfo?.get('title') || 'عنوان الموقع'}
+            </h1>
+            <p style="font-size: 1.25rem; color: ${theme?.get('secondary_color') || '#f97316'}; font-weight: 600; margin-bottom: 1rem;">
+              ${basicInfo?.get('subtitle') || 'العنوان الفرعي'}
+            </p>
+            <p style="font-size: 1rem; line-height: 1.6; color: #64748b;">
+              ${basicInfo?.get('description') || 'وصف الموقع'}
+            </p>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
+            <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; border-right: 4px solid ${theme?.get('primary_color') || '#2563eb'};">
+              <strong style="color: ${theme?.get('primary_color') || '#2563eb'};">📞 الهاتف:</strong><br>
+              <span style="font-size: 1.1rem;">${contactInfo?.get('phone') || 'رقم الهاتف'}</span>
+            </div>
+            <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; border-right: 4px solid ${theme?.get('success_color') || '#10b981'};">
+              <strong style="color: ${theme?.get('success_color') || '#10b981'};">💬 الواتساب:</strong><br>
+              <span style="font-size: 1.1rem;">${contactInfo?.get('whatsapp') || 'رقم الواتساب'}</span>
+            </div>
+          </div>
+          
+          <div style="margin-top: 2rem; padding: 1rem; background: linear-gradient(135deg, ${theme?.get('primary_color') || '#2563eb'}, ${theme?.get('secondary_color') || '#f97316'}); border-radius: 8px; color: white; text-align: center;">
+            <strong>🎨 معاينة الألوان والمظهر</strong>
           </div>
         </div>
       `;
     });
     
-    console.log('نظام إدارة المحتوى جاهز للاستخدام');
+    // معاينة الصفحة الرئيسية
+    CMS.registerPreviewTemplate('homepage_content', ({ entry, widgetFor, widgetsFor }) => {
+      const hero = entry.getIn(['data', 'hero']);
+      const statistics = entry.getIn(['data', 'statistics']);
+      const features = entry.getIn(['data', 'features']);
+      
+      return `
+        <div style="font-family: 'Cairo', Arial, sans-serif; direction: rtl; line-height: 1.6;">
+          <!-- قسم البطل -->
+          ${hero?.get('enabled') ? `
+            <div style="background: linear-gradient(135deg, #2563eb, #f97316); padding: 4rem 2rem; border-radius: 12px; color: white; text-align: center; margin-bottom: 2rem;">
+              <h1 style="font-size: 3rem; font-weight: 900; margin-bottom: 1rem;">${hero.get('title') || 'العنوان الرئيسي'}</h1>
+              <p style="font-size: 1.25rem; margin-bottom: 1rem; opacity: 0.9;">${hero.get('subtitle') || 'العنوان الفرعي'}</p>
+              <p style="margin-bottom: 2rem; opacity: 0.8;">${hero.get('description') || 'وصف الخدمة'}</p>
+              <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                ${hero.get('buttons') ? hero.get('buttons').map(button => `
+                  <button style="padding: 1rem 2rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; background: ${button.get('type') === 'primary' ? 'white' : 'transparent'}; color: ${button.get('type') === 'primary' ? '#2563eb' : 'white'}; border: 2px solid white;">
+                    ${button.get('text')}
+                  </button>
+                `).join('') : ''}
+              </div>
+            </div>
+          ` : ''}
+          
+          <!-- قسم الإحصائيات -->
+          ${statistics?.get('enabled') ? `
+            <div style="margin: 2rem 0;">
+              <h2 style="text-align: center; font-size: 2.5rem; font-weight: 900; margin-bottom: 2rem; color: #2563eb;">
+                ${statistics.get('title') || 'إحصائياتنا'}
+              </h2>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                ${statistics.get('stats') ? statistics.get('stats').map(stat => `
+                  <div style="text-align: center; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-top: 4px solid ${stat.get('color')};">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">${stat.get('icon')}</div>
+                    <div style="font-size: 2.5rem; font-weight: 900; color: ${stat.get('color')}; margin-bottom: 0.5rem;">
+                      ${stat.get('value')}${stat.get('suffix') || ''}
+                    </div>
+                    <div style="font-weight: 600; color: #64748b;">${stat.get('label')}</div>
+                  </div>
+                `).join('') : ''}
+              </div>
+            </div>
+          ` : ''}
+          
+          <!-- قسم المميزات -->
+          ${features?.get('enabled') ? `
+            <div style="margin: 2rem 0;">
+              <h2 style="text-align: center; font-size: 2.5rem; font-weight: 900; margin-bottom: 2rem; color: #2563eb;">
+                ${features.get('title') || 'مميزاتنا'}
+              </h2>
+              ${features.get('description') ? `<p style="text-align: center; color: #64748b; margin-bottom: 2rem;">${features.get('description')}</p>` : ''}
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                ${features.get('features_list') ? features.get('features_list').map(feature => `
+                  <div style="text-align: center; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s;">
+                    <div style="width: 4rem; height: 4rem; background: ${feature.get('color')}; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 1.5rem;">
+                      ${feature.get('icon')}
+                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; color: #1e293b;">${feature.get('title')}</h3>
+                    <p style="color: #64748b; line-height: 1.6;">${feature.get('description')}</p>
+                  </div>
+                `).join('') : ''}
+              </div>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    });
+    
+    // معاينة الخدمات المتطورة
+    CMS.registerPreviewTemplate('services_list', ({ entry, widgetFor, widgetsFor }) => {
+      const settings = entry.getIn(['data', 'settings']);
+      const services = entry.getIn(['data', 'services']);
+      
+      if (!services) return '<p style="text-align: center; color: #64748b;">لا توجد خدمات محددة</p>';
+      
+      return `
+        <div style="padding: 2rem; font-family: 'Cairo', Arial, sans-serif; direction: rtl;">
+          ${settings?.get('enabled') ? `
+            <div style="text-align: center; margin-bottom: 3rem;">
+              <h2 style="font-size: 3rem; font-weight: 900; color: #2563eb; margin-bottom: 1rem;">
+                ${settings.get('title') || 'خدماتنا'}
+              </h2>
+              ${settings.get('description') ? `
+                <p style="font-size: 1.1rem; color: #64748b; max-width: 600px; margin: 0 auto;">
+                  ${settings.get('description')}
+                </p>
+              ` : ''}
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(${settings.get('columns') || '3'}, 1fr); gap: 2rem;">
+              ${services.map(service => `
+                <div style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; border: ${service.get('featured') ? '3px solid #f97316' : '1px solid #e2e8f0'}; position: relative;">
+                  ${service.get('featured') ? '<div style="position: absolute; top: 1rem; right: 1rem; background: #f97316; color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">مميزة ⭐</div>' : ''}
+                  
+                  <div style="padding: 2rem; text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">${service.get('icon')}</div>
+                    <h3 style="color: #2563eb; margin: 1rem 0; font-size: 1.5rem; font-weight: 700;">
+                      ${service.get('title')}
+                    </h3>
+                    <p style="color: #64748b; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">
+                      ${service.get('description')}
+                    </p>
+                    
+                    ${service.get('price') ? `
+                      <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <span style="font-size: 1.5rem; font-weight: 900; color: #2563eb;">
+                          ${service.get('price')} ${service.get('price_unit') || 'ريال'}
+                        </span>
+                      </div>
+                    ` : ''}
+                    
+                    ${service.get('features') ? `
+                      <div style="text-align: right; margin: 1rem 0;">
+                        <strong style="color: #1e293b; display: block; margin-bottom: 0.5rem;">المميزات:</strong>
+                        <ul style="list-style: none; padding: 0;">
+                          ${service.get('features').map(feature => `
+                            <li style="padding: 0.25rem 0; color: #64748b; font-size: 0.9rem;">
+                              ✨ ${feature.get('feature')}
+                            </li>
+                          `).join('')}
+                        </ul>
+                      </div>
+                    ` : ''}
+                    
+                    <div style="margin-top: 1.5rem;">
+                      <span style="background: ${service.get('available') ? '#10b981' : '#ef4444'}; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                        ${service.get('available') ? '✅ متاح' : '❌ غير متاح'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          ` : '<p style="text-align: center; color: #64748b;">قسم الخدمات غير مفعل</p>'}
+        </div>
+      `;
+    });
+    
+    // معاينة أزرار التواصل
+    CMS.registerPreviewTemplate('floating_buttons', ({ entry, widgetFor, widgetsFor }) => {
+      const settings = entry.getIn(['data', 'settings']);
+      const phone = entry.getIn(['data', 'phone']);
+      const whatsapp = entry.getIn(['data', 'whatsapp']);
+      const email = entry.getIn(['data', 'email']);
+      
+      const buttons = [
+        phone?.get('enabled') && { ...phone.toJS(), type: 'phone' },
+        whatsapp?.get('enabled') && { ...whatsapp.toJS(), type: 'whatsapp' },
+        email?.get('enabled') && { ...email.toJS(), type: 'email' }
+      ].filter(Boolean).sort((a, b) => (a.order || 1) - (b.order || 1));
+      
+      return `
+        <div style="padding: 2rem; font-family: 'Cairo', Arial, sans-serif; direction: rtl; background: #f8fafc; min-height: 400px; position: relative; border-radius: 12px;">
+          <h3 style="text-align: center; color: #2563eb; margin-bottom: 2rem; font-size: 1.5rem; font-weight: 700;">
+            معاينة أزرار التواصل العائمة
+          </h3>
+          
+          ${settings?.get('enabled') ? `
+            <div style="position: absolute; ${settings.get('position') === 'bottom-right' ? 'bottom: 2rem; left: 2rem;' : settings.get('position') === 'bottom-left' ? 'bottom: 2rem; right: 2rem;' : settings.get('position') === 'top-right' ? 'top: 2rem; left: 2rem;' : 'top: 2rem; right: 2rem;'} display: flex; flex-direction: column; gap: 1rem; z-index: 1000;">
+              ${buttons.map(button => `
+                <div style="background: ${button.color}; color: white; padding: 1rem; border-radius: 50px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: transform 0.3s; min-width: 150px;">
+                  <span style="font-size: 1.25rem;">
+                    ${button.type === 'phone' ? '📞' : button.type === 'whatsapp' ? '💬' : '✉️'}
+                  </span>
+                  <span style="font-weight: 600; font-size: 0.9rem;">${button.text}</span>
+                </div>
+              `).join('')}
+            </div>
+            
+            <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 2rem;">
+              <h4 style="color: #1e293b; margin-bottom: 1rem; font-weight: 700;">تفاصيل الأزرار:</h4>
+              ${buttons.map(button => `
+                <div style="padding: 1rem; margin-bottom: 1rem; border-right: 4px solid ${button.color}; background: #f8fafc; border-radius: 8px;">
+                  <strong style="color: ${button.color};">${button.text}</strong><br>
+                  <span style="color: #64748b; font-size: 0.9rem;">
+                    ${button.type === 'phone' ? `📞 ${button.number}` : 
+                      button.type === 'whatsapp' ? `💬 ${button.number} - "${button.message}"` : 
+                      `✉️ ${button.address} - "${button.subject}"`}
+                  </span>
+                </div>
+              `).join('')}
+            </div>
+          ` : '<p style="text-align: center; color: #64748b;">أزرار التواصل غير مفعلة</p>'}
+        </div>
+      `;
+    });
+    
+    // معاينة التذييل
+    CMS.registerPreviewTemplate('footer_content', ({ entry, widgetFor, widgetsFor }) => {
+      const settings = entry.getIn(['data', 'settings']);
+      const copyright = entry.getIn(['data', 'copyright']);
+      const description = entry.getIn(['data', 'description']);
+      const links = entry.getIn(['data', 'links']);
+      const socialLinks = entry.getIn(['data', 'social_links']);
+      
+      return `
+        <div style="font-family: 'Cairo', Arial, sans-serif; direction: rtl;">
+          ${settings?.get('enabled') ? `
+            <footer style="background: ${settings.get('background_color') || '#1e293b'}; color: white; padding: 3rem 2rem 1rem; border-radius: 12px 12px 0 0;">
+              <div style="max-width: 1200px; margin: 0 auto;">
+                ${settings.get('layout') === 'columns' ? `
+                  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                    <div>
+                      <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: #f97316;">سطحة هيدروليك</h3>
+                      ${description ? `<p style="line-height: 1.6; opacity: 0.8;">${description}</p>` : ''}
+                    </div>
+                    
+                    ${links ? `
+                      <div>
+                        <h4 style="font-weight: 600; margin-bottom: 1rem; color: #f97316;">روابط مهمة</h4>
+                        <ul style="list-style: none; padding: 0;">
+                          ${links.map(link => `
+                            <li style="margin-bottom: 0.5rem;">
+                              <a href="${link.get('url')}" style="color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s;" ${link.get('external') ? 'target="_blank"' : ''}>
+                                ${link.get('icon') ? `${link.get('icon')} ` : ''}${link.get('text')}
+                              </a>
+                            </li>
+                          `).join('')}
+                        </ul>
+                      </div>
+                    ` : ''}
+                    
+                    ${socialLinks ? `
+                      <div>
+                        <h4 style="font-weight: 600; margin-bottom: 1rem; color: #f97316;">تابعنا</h4>
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                          ${socialLinks.filter(social => social.get('enabled')).map(social => `
+                            <a href="${social.get('url')}" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; color: white; text-decoration: none; transition: background 0.3s;" target="_blank">
+                              ${social.get('platform') === 'facebook' ? '📘' : 
+                                social.get('platform') === 'twitter' ? '🐦' : 
+                                social.get('platform') === 'instagram' ? '📷' : 
+                                social.get('platform') === 'linkedin' ? '💼' : 
+                                social.get('platform') === 'youtube' ? '📺' : 
+                                social.get('platform') === 'tiktok' ? '🎵' : 
+                                social.get('platform') === 'snapchat' ? '👻' : '🔗'}
+                            </a>
+                          `).join('')}
+                        </div>
+                      </div>
+                    ` : ''}
+                  </div>
+                ` : `
+                  <div style="text-align: center; margin-bottom: 2rem;">
+                    <h3 style="font-size: 2rem; font-weight: 900; margin-bottom: 1rem; color: #f97316;">سطحة هيدروليك</h3>
+                    ${description ? `<p style="font-size: 1.1rem; line-height: 1.6; opacity: 0.9; max-width: 600px; margin: 0 auto;">${description}</p>` : ''}
+                  </div>
+                `}
+                
+                <hr style="border: none; height: 1px; background: rgba(255,255,255,0.2); margin: 2rem 0;">
+                
+                <div style="text-align: center;">
+                  <p style="margin: 0; opacity: 0.8; font-weight: 500;">
+                    ${copyright || 'خدمة نقل السيارات الاحترافية © 2024'}
+                  </p>
+                </div>
+              </div>
+            </footer>
+          ` : '<p style="text-align: center; color: #64748b; padding: 2rem;">التذييل غير مفعل</p>'}
+        </div>
+      `;
+    });
+    
+    console.log('🎛️ نظام إدارة المحتوى الشامل جاهز للاستخدام');
   </script>
 </body>
 </html>
-</tml>
