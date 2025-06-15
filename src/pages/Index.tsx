@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Phone, MessageSquare, Moon, Sun, Shield, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -50,7 +51,7 @@ const Index = () => {
       text: 'اتصل الآن',
       number: '+966501234567',
       enabled: true,
-      color: '#3b82f6'
+      color: '#dc2626'
     },
     whatsapp: {
       text: 'واتساب',
@@ -162,8 +163,8 @@ const Index = () => {
   return (
     <div className={`min-h-screen transition-all duration-500 ${
       isDarkMode 
-        ? 'bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white' 
-        : 'bg-gradient-to-br from-blue-50 via-white to-orange-50 text-slate-800'
+        ? 'bg-gradient-to-br from-slate-900 via-red-900 to-slate-800 text-white' 
+        : 'bg-gradient-to-br from-red-50 via-white to-orange-50 text-slate-800'
     }`} dir="rtl">
       
       {/* Theme Toggle */}
@@ -184,11 +185,11 @@ const Index = () => {
 
       {/* Header Section */}
       <header className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-orange-500/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-orange-500/10"></div>
         <div className="relative container mx-auto px-4 py-16 text-center">
           <div className="flex justify-center mb-6">
             <div className={`p-4 rounded-full shadow-2xl ${
-              isDarkMode ? 'bg-blue-600/20' : 'bg-blue-600/10'
+              isDarkMode ? 'bg-red-600/20' : 'bg-red-600/10'
             }`}>
               <div className="text-6xl">🚛</div>
             </div>
@@ -196,8 +197,8 @@ const Index = () => {
           
           <h1 className={`text-5xl md:text-6xl font-bold mb-4 ${
             isDarkMode 
-              ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-orange-400' 
-              : 'text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-orange-600'
+              ? 'text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-400' 
+              : 'text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-600'
           }`}>
             {siteData.title}
           </h1>
@@ -274,8 +275,8 @@ const Index = () => {
       {/* CTA Section */}
       <section className={`py-16 ${
         isDarkMode 
-          ? 'bg-gradient-to-r from-blue-900/50 to-slate-900/50' 
-          : 'bg-gradient-to-r from-blue-600/10 to-orange-600/10'
+          ? 'bg-gradient-to-r from-red-900/50 to-slate-900/50' 
+          : 'bg-gradient-to-r from-red-600/10 to-orange-600/10'
       }`}>
         <div className="container mx-auto px-4 text-center">
           <h2 className={`text-3xl font-bold mb-6 ${
@@ -307,7 +308,7 @@ const Index = () => {
         {buttonsData.phone?.enabled && (
           <Button
             onClick={handlePhoneCall}
-            className="w-14 h-14 rounded-full bg-blue-500 hover:bg-blue-600 shadow-2xl transition-all duration-300 hover:scale-110 group"
+            className="w-14 h-14 rounded-full bg-red-500 hover:bg-red-600 shadow-2xl transition-all duration-300 hover:scale-110 group"
           >
             <Phone className="h-6 w-6 group-hover:scale-110 transition-transform" />
           </Button>
