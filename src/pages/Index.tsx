@@ -1,13 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import FloatingNavigation from '@/components/FloatingNavigation';
 import AdvancedHero from '@/components/AdvancedHero';
-import PricingSection from '@/components/PricingSection';
 import ProcessSection from '@/components/ProcessSection';
 import ContactMethods from '@/components/ContactMethods';
-import FAQ from '@/components/FAQ';
 import FloatingElements from '@/components/FloatingElements';
 import AnimatedCounter from '@/components/AnimatedCounter';
 import LoadingSpinner from '@/components/LoadingSpinner';
@@ -433,12 +430,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-
-      {/* Pricing Section */}
-      <PricingSection isDarkMode={isDarkMode} onContact={handlePhoneCall} />
-
-      {/* FAQ Section */}
-      <FAQ isDarkMode={isDarkMode} />
 
       {/* Contact Methods Section */}
       <ContactMethods 
