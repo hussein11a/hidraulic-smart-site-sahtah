@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import InteractiveServices from '@/components/InteractiveServices';
-import TestimonialsSection from '@/components/TestimonialsSection';
 import AdvancedContactSection from '@/components/AdvancedContactSection';
 import FloatingNavigation from '@/components/FloatingNavigation';
 import AdvancedEffects from '@/components/AdvancedEffects';
@@ -282,12 +281,6 @@ const Index = () => {
 
       {/* Interactive Services Section */}
       <InteractiveServices services={services} isDarkMode={isDarkMode} />
-
-      {/* Enhanced Section Divider */}
-      <div className={`w-full h-2 ${isDarkMode ? 'bg-gradient-to-r from-transparent via-blue-400/60 to-transparent' : 'bg-gradient-to-r from-transparent via-blue-500/60 to-transparent'} shadow-lg`}></div>
-
-      {/* Testimonials Section */}
-      <TestimonialsSection isDarkMode={isDarkMode} />
 
       {/* Enhanced Section Divider */}
       <div className={`w-full h-2 ${isDarkMode ? 'bg-gradient-to-r from-transparent via-amber-400/60 to-transparent' : 'bg-gradient-to-r from-transparent via-amber-500/60 to-transparent'} shadow-lg`}></div>
