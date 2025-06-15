@@ -1,7 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun } from 'lucide-react';
+import { Moon, Sun, Star, Shield, Clock, Users, Award, Zap, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import FloatingNavigation from '@/components/FloatingNavigation';
+import { usePerformanceOptimization } from '@/hooks/usePerformanceOptimization';
 
 interface Service {
   id: number;
@@ -38,40 +40,7 @@ interface ButtonsData {
 
 const Index = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [services, setServices] = useState<Service[]>([
-    {
-      id: 1,
-      title: 'نقل السيارات المعطلة',
-      description: 'خدمة نقل السيارات المعطلة بأحدث المعدات الهيدروليكية',
-      icon: '🚛',
-      available: true,
-      sort_order: 1
-    },
-    {
-      id: 2,
-      title: 'مساعدة على الطريق',
-      description: 'خدمة المساعدة الفورية على الطريق 24/7',
-      icon: '🔧',
-      available: true,
-      sort_order: 2
-    },
-    {
-      id: 3,
-      title: 'نقل المركبات الثقيلة',
-      description: 'نقل آمن للمركبات الثقيلة والحافلات',
-      icon: '🚚',
-      available: true,
-      sort_order: 3
-    },
-    {
-      id: 4,
-      title: 'خدمة الطوارئ',
-      description: 'استجابة سريعة في حالات الطوارئ',
-      icon: '🚨',
-      available: true,
-      sort_order: 4
-    }
-  ]);
+  const [services, setServices] = useState<Service[]>([]);
   const [siteData] = useState<SiteData>({
     title: 'سطحة هيدروليك',
     subtitle: 'خدمة نقل السيارات الاحترافية - سريع، آمن، موثوق',
@@ -95,35 +64,51 @@ const Index = () => {
     }
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
-  // Smart theme detection based on time
+  // Use performance optimization hook
+  usePerformanceOptimization();
+
+  // Smart theme detection
   useEffect(() => {
     const hour = new Date().getHours();
     const isNightTime = hour < 6 || hour > 20;
     setIsDarkMode(isNightTime);
   }, []);
 
-  // Load JSON data safely
+  // Load services data
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
       
       try {
-        // Try to load services data
-        try {
-          const servicesResponse = await fetch('/src/data/services.json');
-          if (servicesResponse.ok) {
-            const servicesData = await servicesResponse.json();
-            if (servicesData?.services && Array.isArray(servicesData.services)) {
-              setServices(servicesData.services.sort((a: Service, b: Service) => a.sort_order - b.sort_order));
-              console.log('تم تحميل بيانات الخدمات بنجاح');
-            }
+        const servicesResponse = await fetch('/src/data/services.json');
+        if (servicesResponse.ok) {
+          const servicesData = await servicesResponse.json();
+          if (servicesData?.services && Array.isArray(servicesData.services)) {
+            setServices(servicesData.services.sort((a: Service, b: Service) => a.sort_order - b.sort_order));
           }
-        } catch (error) {
-          console.log('استخدام البيانات الافتراضية للخدمات');
         }
       } catch (error) {
-        console.error('خطأ في تحميل البيانات:', error);
+        console.log('Using default services data');
+        setServices([
+          {
+            id: 1,
+            title: 'نقل السيارات المعطلة',
+            description: 'خدمة نقل السيارات المعطلة بأحدث المعدات الهيدروليكية',
+            icon: '🚛',
+            available: true,
+            sort_order: 1
+          },
+          {
+            id: 2,
+            title: 'مساعدة على الطريق',
+            description: 'خدمة المساعدة الفورية على الطريق 24/7',
+            icon: '🔧',
+            available: true,
+            sort_order: 2
+          }
+        ]);
       } finally {
         setIsLoading(false);
       }
@@ -132,51 +117,13 @@ const Index = () => {
     loadData();
   }, []);
 
-  // Security measures
+  // Testimonials rotation
   useEffect(() => {
-    const handleContextMenu = (e: Event) => {
-      e.preventDefault();
-      return false;
-    };
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (
-        e.ctrlKey && (
-          e.keyCode === 67 || // Ctrl+C
-          e.keyCode === 65 || // Ctrl+A
-          e.keyCode === 85 || // Ctrl+U
-          e.keyCode === 83 || // Ctrl+S
-          e.keyCode === 80    // Ctrl+P
-        )
-      ) {
-        e.preventDefault();
-        return false;
-      }
-    };
-
-    const handleDragStart = (e: Event) => {
-      e.preventDefault();
-      return false;
-    };
-
-    document.addEventListener('contextmenu', handleContextMenu);
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('dragstart', handleDragStart);
-
-    if (document.body.style) {
-      document.body.style.userSelect = 'none';
-      document.body.style.webkitUserSelect = 'none';
-    }
-
-    return () => {
-      document.removeEventListener('contextmenu', handleContextMenu);
-      document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('dragstart', handleDragStart);
-      if (document.body.style) {
-        document.body.style.userSelect = '';
-        document.body.style.webkitUserSelect = '';
-      }
-    };
+    const testimonials = [0, 1, 2];
+    const interval = setInterval(() => {
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 4000);
+    return () => clearInterval(interval);
   }, []);
 
   const toggleTheme = () => {
@@ -205,7 +152,64 @@ const Index = () => {
     }
   };
 
-  // Show loading state
+  // Statistics data
+  const statistics = [
+    { icon: Users, value: '2500+', label: 'عميل راضٍ', color: 'text-blue-500' },
+    { icon: Clock, value: '24/7', label: 'خدمة مستمرة', color: 'text-green-500' },
+    { icon: Award, value: '5+', label: 'سنوات خبرة', color: 'text-amber-500' },
+    { icon: CheckCircle, value: '99%', label: 'نسبة نجاح', color: 'text-emerald-500' }
+  ];
+
+  // Testimonials data
+  const testimonials = [
+    {
+      name: 'أحمد محمد',
+      rating: 5,
+      comment: 'خدمة ممتازة وسريعة، وصلوا في خلال 15 دقيقة ونقلوا السيارة بكل احترافية',
+      avatar: '👨'
+    },
+    {
+      name: 'فاطمة العلي',
+      rating: 5,
+      comment: 'تعاملهم راقي جداً والأسعار معقولة، أنصح بهم بشدة',
+      avatar: '👩'
+    },
+    {
+      name: 'محمد السعود',
+      rating: 5,
+      comment: 'فريق محترف ومعدات حديثة، حافظوا على سيارتي تماماً',
+      avatar: '👨‍💼'
+    }
+  ];
+
+  // Features data
+  const features = [
+    {
+      icon: Shield,
+      title: 'ضمان شامل',
+      description: 'نضمن سلامة سيارتك أثناء النقل',
+      color: 'bg-blue-500'
+    },
+    {
+      icon: Zap,
+      title: 'استجابة فورية',
+      description: 'نصل إليك في أسرع وقت ممكن',
+      color: 'bg-green-500'
+    },
+    {
+      icon: Award,
+      title: 'فريق محترف',
+      description: 'سائقين ذوي خبرة عالية ومدربين',
+      color: 'bg-amber-500'
+    },
+    {
+      icon: Star,
+      title: 'جودة عالية',
+      description: 'معدات حديثة ومعايير عالمية',
+      color: 'bg-purple-500'
+    }
+  ];
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-white">
@@ -239,131 +243,204 @@ const Index = () => {
           onClick={toggleTheme}
           variant="outline"
           size="sm"
-          className={`rounded-full p-5 shadow-2xl backdrop-blur-sm transition-all duration-500 border-3 hover:scale-125 transform ${
+          className={`rounded-full p-3 shadow-lg backdrop-blur-sm transition-all duration-500 hover:scale-110 ${
             isDarkMode 
-              ? 'bg-slate-800/90 border-amber-400/60 hover:bg-slate-700 hover:border-amber-400 hover:shadow-amber-400/30' 
-              : 'bg-white/90 border-amber-300/60 hover:bg-amber-50 hover:border-amber-400 hover:shadow-amber-200/50'
+              ? 'bg-slate-800/90 border-amber-400/60 hover:bg-slate-700' 
+              : 'bg-white/90 border-amber-300/60 hover:bg-amber-50'
           }`}
         >
           {isDarkMode ? 
-            <Sun className="h-7 w-7 text-amber-400 animate-pulse" /> : 
-            <Moon className="h-7 w-7 text-slate-600 animate-pulse" />
+            <Sun className="h-5 w-5 text-amber-400" /> : 
+            <Moon className="h-5 w-5 text-slate-600" />
           }
         </Button>
       </div>
 
       {/* Header Section */}
-      <header className="relative overflow-hidden py-32 lg:py-56" id="home">
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-800/20 via-transparent to-amber-900/20"></div>
-        
-        <div className="relative container mx-auto px-8 text-center z-10">
+      <header className="relative overflow-hidden py-20 lg:py-32" id="home">
+        <div className="relative container mx-auto px-6 text-center z-10">
           {/* Logo Section */}
-          <div className="flex justify-center mb-20">
-            <div className={`relative p-16 rounded-full shadow-4xl transform hover:scale-110 transition-all duration-1000 border-4 ${
+          <div className="flex justify-center mb-12">
+            <div className={`relative p-8 rounded-full shadow-2xl transform hover:scale-105 transition-all duration-700 border-2 ${
               isDarkMode 
-                ? 'bg-gradient-to-br from-slate-700/70 to-amber-900/70 border-amber-400/50 shadow-amber-400/30' 
-                : 'bg-gradient-to-br from-white to-amber-50 border-amber-300/70 shadow-amber-200/50'
+                ? 'bg-gradient-to-br from-slate-700/70 to-amber-900/70 border-amber-400/50' 
+                : 'bg-gradient-to-br from-white to-amber-50 border-amber-300/70'
             }`}>
-              <div className="text-[10rem] lg:text-[14rem] animate-pulse">🚛</div>
-              
-              {/* Floating Elements */}
-              <div className="absolute -top-6 -right-6 animate-bounce">
-                <div className={`w-16 h-16 rounded-full shadow-2xl ${
-                  isDarkMode ? 'bg-amber-400 shadow-amber-400/60' : 'bg-amber-500 shadow-amber-300/60'
-                }`}></div>
-              </div>
-              <div className="absolute -bottom-6 -left-6 animate-bounce" style={{ animationDelay: '1s' }}>
-                <div className={`w-12 h-12 rounded-full shadow-xl ${
-                  isDarkMode ? 'bg-slate-400' : 'bg-slate-500'
-                }`}></div>
-              </div>
+              <div className="text-6xl lg:text-8xl animate-pulse">🚛</div>
             </div>
           </div>
           
           {/* Main Title */}
-          <h1 className={`text-9xl md:text-[12rem] lg:text-[14rem] font-black mb-16 leading-none ${
+          <h1 className={`text-4xl md:text-6xl lg:text-8xl font-black mb-8 leading-tight ${
             isDarkMode 
-              ? 'text-transparent bg-clip-text bg-gradient-to-r from-slate-200 via-amber-300 via-blue-300 to-slate-100' 
-              : 'text-transparent bg-clip-text bg-gradient-to-r from-slate-800 via-amber-600 via-blue-600 to-slate-900'
-          } drop-shadow-2xl animate-pulse`}>
+              ? 'text-transparent bg-clip-text bg-gradient-to-r from-slate-200 via-amber-300 to-slate-100' 
+              : 'text-transparent bg-clip-text bg-gradient-to-r from-slate-800 via-amber-600 to-slate-900'
+          } drop-shadow-lg`}>
             {siteData.title}
           </h1>
           
-          {/* Subtitle section */}
-          <div className="max-w-7xl mx-auto mb-20">
-            <p className={`text-5xl md:text-6xl lg:text-7xl mb-16 font-bold leading-relaxed ${
+          {/* Subtitle */}
+          <div className="max-w-4xl mx-auto mb-12">
+            <p className={`text-xl md:text-2xl lg:text-3xl mb-8 font-semibold leading-relaxed ${
               isDarkMode ? 'text-slate-200' : 'text-slate-700'
             }`}>
               {siteData.subtitle}
             </p>
-            <div className={`w-56 h-4 mx-auto rounded-full shadow-2xl mb-6 ${
-              isDarkMode ? 'bg-gradient-to-r from-amber-400 via-blue-400 to-slate-300' : 'bg-gradient-to-r from-amber-500 via-blue-500 to-slate-600'
+            <div className={`w-32 h-1 mx-auto rounded-full mb-6 ${
+              isDarkMode ? 'bg-gradient-to-r from-amber-400 to-blue-400' : 'bg-gradient-to-r from-amber-500 to-blue-500'
             }`}></div>
-            <p className={`text-3xl md:text-4xl mt-16 leading-relaxed max-w-5xl mx-auto ${
+            <p className={`text-lg md:text-xl mt-8 leading-relaxed max-w-3xl mx-auto ${
               isDarkMode ? 'text-slate-300' : 'text-slate-600'
             }`}>
               {siteData.description}
             </p>
           </div>
 
+          {/* CTA Buttons */}
+          <div className="flex flex-col md:flex-row gap-4 justify-center items-center mb-16">
+            <Button
+              onClick={handlePhoneCall}
+              className="px-8 py-4 text-lg font-bold rounded-2xl bg-blue-600 hover:bg-blue-700 text-white border-2 border-blue-500 hover:border-blue-400 transition-all duration-300 hover:scale-105 shadow-lg"
+            >
+              📞 {buttonsData.phone.text}
+            </Button>
+            <Button
+              onClick={handleWhatsApp}
+              className="px-8 py-4 text-lg font-bold rounded-2xl bg-green-600 hover:bg-green-700 text-white border-2 border-green-500 hover:border-green-400 transition-all duration-300 hover:scale-105 shadow-lg"
+            >
+              💬 {buttonsData.whatsapp.text}
+            </Button>
+          </div>
+
           {/* Trust Badges */}
-          <div className="flex flex-wrap justify-center gap-12 mb-24">
-            <div className={`flex items-center gap-8 px-16 py-8 rounded-3xl border-4 transition-all duration-700 hover:scale-115 shadow-3xl animate-bounce ${
+          <div className="flex flex-wrap justify-center gap-6 mb-12">
+            <div className={`flex items-center gap-3 px-6 py-3 rounded-xl border-2 transition-all duration-500 hover:scale-105 shadow-lg ${
               isDarkMode 
-                ? 'bg-emerald-600/40 text-emerald-300 border-emerald-400/50 hover:bg-emerald-600/50 hover:shadow-emerald-400/40' 
-                : 'bg-emerald-50 text-emerald-700 border-emerald-300 hover:bg-emerald-100 hover:shadow-emerald-200'
+                ? 'bg-emerald-600/40 text-emerald-300 border-emerald-400/50' 
+                : 'bg-emerald-50 text-emerald-700 border-emerald-300'
             }`}>
-              <div className="text-5xl">🛡️</div>
-              <span className="font-bold text-3xl">خدمة موثوقة</span>
-              <div className="text-3xl">⭐</div>
+              <Shield className="h-5 w-5" />
+              <span className="font-bold">خدمة موثوقة</span>
+              <Star className="h-4 w-4" />
             </div>
-            <div className={`flex items-center gap-8 px-16 py-8 rounded-3xl border-4 transition-all duration-700 hover:scale-115 shadow-3xl animate-pulse ${
+            <div className={`flex items-center gap-3 px-6 py-3 rounded-xl border-2 transition-all duration-500 hover:scale-105 shadow-lg ${
               isDarkMode 
-                ? 'bg-amber-600/40 text-amber-300 border-amber-400/50 hover:bg-amber-600/50 hover:shadow-amber-400/40' 
-                : 'bg-amber-50 text-amber-700 border-amber-300 hover:bg-amber-100 hover:shadow-amber-200'
+                ? 'bg-amber-600/40 text-amber-300 border-amber-400/50' 
+                : 'bg-amber-50 text-amber-700 border-amber-300'
             }`}>
-              <div className="text-5xl">⚡</div>
-              <span className="font-bold text-3xl">استجابة سريعة</span>
-              <span className="text-2xl font-semibold opacity-90">24/7</span>
+              <Zap className="h-5 w-5" />
+              <span className="font-bold">استجابة سريعة</span>
+              <Clock className="h-4 w-4" />
             </div>
           </div>
         </div>
       </header>
 
-      {/* Services Section */}
-      <section className={`py-32 ${
-        isDarkMode ? 'bg-slate-800/30' : 'bg-white/50'
-      }`}>
-        <div className="container mx-auto px-8">
-          <div className="text-center mb-20">
-            <h2 className={`text-6xl md:text-8xl font-black mb-8 ${
+      {/* Statistics Section */}
+      <section className={`py-16 ${isDarkMode ? 'bg-slate-800/30' : 'bg-white/50'}`} id="statistics">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {statistics.map((stat, index) => (
+              <div
+                key={index}
+                className={`text-center p-6 rounded-2xl shadow-lg transition-all duration-500 hover:scale-105 border ${
+                  isDarkMode
+                    ? 'bg-slate-700/60 border-slate-600 hover:bg-slate-600/70'
+                    : 'bg-white border-slate-200 hover:bg-slate-50'
+                }`}
+              >
+                <stat.icon className={`h-8 w-8 mx-auto mb-3 ${stat.color}`} />
+                <div className={`text-2xl md:text-3xl font-black mb-2 ${
+                  isDarkMode ? 'text-white' : 'text-slate-800'
+                }`}>
+                  {stat.value}
+                </div>
+                <div className={`text-sm font-semibold ${
+                  isDarkMode ? 'text-slate-300' : 'text-slate-600'
+                }`}>
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className={`py-16 ${isDarkMode ? 'bg-slate-900/50' : 'bg-slate-50'}`} id="features">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className={`text-3xl md:text-5xl font-black mb-6 ${
               isDarkMode ? 'text-white' : 'text-slate-800'
             }`}>
-              خدماتنا
+              مميزاتنا
             </h2>
-            <div className={`w-32 h-3 mx-auto rounded-full mb-8 ${
+            <div className={`w-20 h-1 mx-auto rounded-full ${
               isDarkMode ? 'bg-gradient-to-r from-amber-400 to-blue-400' : 'bg-gradient-to-r from-amber-500 to-blue-500'
             }`}></div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className={`group p-6 rounded-2xl shadow-lg transition-all duration-500 hover:scale-105 border text-center ${
+                  isDarkMode
+                    ? 'bg-slate-700/60 border-slate-600 hover:bg-slate-600/70'
+                    : 'bg-white border-slate-200 hover:bg-slate-50'
+                }`}
+              >
+                <div className={`w-16 h-16 ${feature.color} rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                  <feature.icon className="h-8 w-8 text-white" />
+                </div>
+                <h3 className={`text-xl font-bold mb-3 ${
+                  isDarkMode ? 'text-white' : 'text-slate-800'
+                }`}>
+                  {feature.title}
+                </h3>
+                <p className={`text-sm leading-relaxed ${
+                  isDarkMode ? 'text-slate-300' : 'text-slate-600'
+                }`}>
+                  {feature.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className={`py-16 ${isDarkMode ? 'bg-slate-800/30' : 'bg-white/50'}`} id="services">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className={`text-3xl md:text-5xl font-black mb-6 ${
+              isDarkMode ? 'text-white' : 'text-slate-800'
+            }`}>
+              خدماتنا
+            </h2>
+            <div className={`w-20 h-1 mx-auto rounded-full ${
+              isDarkMode ? 'bg-gradient-to-r from-amber-400 to-blue-400' : 'bg-gradient-to-r from-amber-500 to-blue-500'
+            }`}></div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {services.map((service) => (
               <div
                 key={service.id}
-                className={`group relative overflow-hidden rounded-3xl shadow-2xl transition-all duration-700 hover:scale-105 border-2 ${
+                className={`group relative overflow-hidden rounded-2xl shadow-lg transition-all duration-500 hover:scale-105 border ${
                   isDarkMode
-                    ? 'bg-slate-700/60 border-slate-600 hover:bg-slate-600/70 hover:border-amber-400/50'
-                    : 'bg-white border-slate-200 hover:bg-amber-50 hover:border-amber-300'
+                    ? 'bg-slate-700/60 border-slate-600 hover:bg-slate-600/70'
+                    : 'bg-white border-slate-200 hover:bg-amber-50'
                 }`}
               >
-                <div className="p-8">
-                  <div className="text-6xl mb-6 text-center">{service.icon}</div>
-                  <h3 className={`text-2xl font-bold mb-4 text-center ${
+                <div className="p-6">
+                  <div className="text-4xl mb-4 text-center">{service.icon}</div>
+                  <h3 className={`text-lg font-bold mb-3 text-center ${
                     isDarkMode ? 'text-white' : 'text-slate-800'
                   }`}>
                     {service.title}
                   </h3>
-                  <p className={`text-lg leading-relaxed text-center ${
+                  <p className={`text-sm leading-relaxed text-center ${
                     isDarkMode ? 'text-slate-300' : 'text-slate-600'
                   }`}>
                     {service.description}
@@ -375,107 +452,122 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <section className={`py-16 ${isDarkMode ? 'bg-slate-900/50' : 'bg-slate-50'}`} id="testimonials">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className={`text-3xl md:text-5xl font-black mb-6 ${
+              isDarkMode ? 'text-white' : 'text-slate-800'
+            }`}>
+              آراء عملائنا
+            </h2>
+            <div className={`w-20 h-1 mx-auto rounded-full ${
+              isDarkMode ? 'bg-gradient-to-r from-amber-400 to-blue-400' : 'bg-gradient-to-r from-amber-500 to-blue-500'
+            }`}></div>
+          </div>
+          
+          <div className="max-w-4xl mx-auto">
+            <div className={`p-8 rounded-2xl shadow-lg border text-center transition-all duration-500 ${
+              isDarkMode
+                ? 'bg-slate-700/60 border-slate-600'
+                : 'bg-white border-slate-200'
+            }`}>
+              <div className="text-4xl mb-4">{testimonials[currentTestimonial].avatar}</div>
+              <div className="flex justify-center mb-4">
+                {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
+                  <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+                ))}
+              </div>
+              <p className={`text-lg mb-4 italic ${
+                isDarkMode ? 'text-slate-300' : 'text-slate-600'
+              }`}>
+                "{testimonials[currentTestimonial].comment}"
+              </p>
+              <h4 className={`text-xl font-bold ${
+                isDarkMode ? 'text-white' : 'text-slate-800'
+              }`}>
+                {testimonials[currentTestimonial].name}
+              </h4>
+            </div>
+            
+            {/* Testimonial indicators */}
+            <div className="flex justify-center mt-6 gap-2">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentTestimonial(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    index === currentTestimonial
+                      ? isDarkMode ? 'bg-amber-400' : 'bg-amber-500'
+                      : isDarkMode ? 'bg-slate-600' : 'bg-slate-300'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
-      <section className={`py-32 ${
-        isDarkMode ? 'bg-slate-900/50' : 'bg-slate-50'
-      }`}>
-        <div className="container mx-auto px-8 text-center">
-          <h2 className={`text-6xl md:text-8xl font-black mb-12 ${
+      <section className={`py-16 ${isDarkMode ? 'bg-slate-800/30' : 'bg-white/50'}`} id="contact">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className={`text-3xl md:text-5xl font-black mb-8 ${
             isDarkMode ? 'text-white' : 'text-slate-800'
           }`}>
             تواصل معنا
           </h2>
           
-          <div className="flex flex-col md:flex-row gap-8 justify-center items-center max-w-4xl mx-auto">
-            {/* Phone Button */}
-            {buttonsData.phone.enabled && (
-              <button
-                onClick={handlePhoneCall}
-                className={`group relative overflow-hidden rounded-3xl px-16 py-8 text-3xl font-bold transition-all duration-700 hover:scale-110 shadow-2xl border-4 min-w-[300px] ${
-                  isDarkMode
-                    ? 'bg-blue-600 hover:bg-blue-500 text-white border-blue-400 hover:border-blue-300 hover:shadow-blue-400/50'
-                    : 'bg-blue-600 hover:bg-blue-700 text-white border-blue-500 hover:border-blue-400 hover:shadow-blue-200'
-                }`}
-              >
-                <span className="relative z-10 flex items-center justify-center gap-4">
-                  📞 {buttonsData.phone.text}
-                </span>
-              </button>
-            )}
+          <div className="flex flex-col md:flex-row gap-6 justify-center items-center max-w-2xl mx-auto">
+            <Button
+              onClick={handlePhoneCall}
+              className="w-full md:w-auto px-8 py-4 text-lg font-bold rounded-2xl bg-blue-600 hover:bg-blue-700 text-white border-2 border-blue-500 hover:border-blue-400 transition-all duration-300 hover:scale-105 shadow-lg"
+            >
+              📞 {buttonsData.phone.text}
+            </Button>
 
-            {/* WhatsApp Button */}
-            {buttonsData.whatsapp.enabled && (
-              <button
-                onClick={handleWhatsApp}
-                className={`group relative overflow-hidden rounded-3xl px-16 py-8 text-3xl font-bold transition-all duration-700 hover:scale-110 shadow-2xl border-4 min-w-[300px] ${
-                  isDarkMode
-                    ? 'bg-green-600 hover:bg-green-500 text-white border-green-400 hover:border-green-300 hover:shadow-green-400/50'
-                    : 'bg-green-600 hover:bg-green-700 text-white border-green-500 hover:border-green-400 hover:shadow-green-200'
-                }`}
-              >
-                <span className="relative z-10 flex items-center justify-center gap-4">
-                  💬 {buttonsData.whatsapp.text}
-                </span>
-              </button>
-            )}
+            <Button
+              onClick={handleWhatsApp}
+              className="w-full md:w-auto px-8 py-4 text-lg font-bold rounded-2xl bg-green-600 hover:bg-green-700 text-white border-2 border-green-500 hover:border-green-400 transition-all duration-300 hover:scale-105 shadow-lg"
+            >
+              💬 {buttonsData.whatsapp.text}
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* Floating Action Buttons */}
-      <div className="fixed bottom-8 right-8 flex flex-col gap-4 z-50">
-        {buttonsData.phone.enabled && (
-          <button
-            onClick={handlePhoneCall}
-            className={`w-16 h-16 rounded-full shadow-2xl transition-all duration-500 hover:scale-125 ${
-              isDarkMode
-                ? 'bg-blue-600 hover:bg-blue-500 text-white hover:shadow-blue-400/50'
-                : 'bg-blue-600 hover:bg-blue-700 text-white hover:shadow-blue-200'
-            }`}
-          >
-            📞
-          </button>
-        )}
-        
-        {buttonsData.whatsapp.enabled && (
-          <button
-            onClick={handleWhatsApp}
-            className={`w-16 h-16 rounded-full shadow-2xl transition-all duration-500 hover:scale-125 ${
-              isDarkMode
-                ? 'bg-green-600 hover:bg-green-500 text-white hover:shadow-green-400/50'
-                : 'bg-green-600 hover:bg-green-700 text-white hover:shadow-green-200'
-            }`}
-          >
-            💬
-          </button>
-        )}
-      </div>
+      {/* Floating Navigation */}
+      <FloatingNavigation
+        isDarkMode={isDarkMode}
+        buttonsData={buttonsData}
+        handlePhoneCall={handlePhoneCall}
+        handleWhatsApp={handleWhatsApp}
+      />
 
       {/* Footer */}
-      <footer className={`py-32 mt-16 border-t-4 ${
+      <footer className={`py-16 mt-8 border-t-2 ${
         isDarkMode 
           ? 'border-amber-400/60 bg-gradient-to-b from-slate-900/98 to-slate-800' 
           : 'border-amber-300/60 bg-gradient-to-b from-amber-50/60 to-white'
       }`}>
-        <div className="container mx-auto px-8 text-center">
-          <div className="flex justify-center mb-12">
-            <div className={`p-10 rounded-full shadow-3xl border-4 transition-all duration-700 hover:scale-110 ${
+        <div className="container mx-auto px-6 text-center">
+          <div className="flex justify-center mb-8">
+            <div className={`p-6 rounded-full shadow-lg border-2 transition-all duration-500 hover:scale-105 ${
               isDarkMode 
                 ? 'bg-slate-800/60 border-slate-600' 
                 : 'bg-white border-slate-200'
             }`}>
-              <div className="text-8xl animate-pulse">🚛</div>
+              <div className="text-4xl animate-pulse">🚛</div>
             </div>
           </div>
-          <h3 className={`text-6xl font-black mb-8 ${
+          <h3 className={`text-3xl font-black mb-4 ${
             isDarkMode ? 'text-white' : 'text-slate-800'
           }`}>
             سطحة هيدروليك
           </h3>
-          <div className={`w-32 h-3 mx-auto rounded-full mb-12 shadow-2xl ${
-            isDarkMode ? 'bg-gradient-to-r from-blue-400 via-amber-400 to-slate-300' : 'bg-gradient-to-r from-blue-600 via-amber-500 to-slate-600'
+          <div className={`w-20 h-1 mx-auto rounded-full mb-6 ${
+            isDarkMode ? 'bg-gradient-to-r from-blue-400 to-amber-400' : 'bg-gradient-to-r from-blue-600 to-amber-500'
           }`}></div>
-          <p className={`text-2xl font-semibold ${
+          <p className={`text-lg font-semibold ${
             isDarkMode ? 'text-slate-300' : 'text-slate-600'
           }`}>
             خدمة نقل السيارات الاحترافية © 2024
