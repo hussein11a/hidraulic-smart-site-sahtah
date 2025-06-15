@@ -133,25 +133,28 @@ const SEOOptimizer: React.FC<SEOOptimizerProps> = ({
     
   }, [title, description, keywords, image, url, type, author, locale, siteName]);
 
-  // Performance monitoring (fixed TypeScript errors)
+  // Performance monitoring with proper TypeScript types
   useEffect(() => {
-    // Monitor Core Web Vitals with proper type checking
     if ('PerformanceObserver' in window) {
       const observer = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
-          // Type guard for LCP
+          // Monitor LCP
           if (entry.entryType === 'largest-contentful-paint') {
             console.log('LCP:', entry.startTime);
           }
-          // Type guard for FID with proper interface
-          if (entry.entryType === 'first-input' && 'processingStart' in entry) {
+          
+          // Monitor FID
+          if (entry.entryType === 'first-input') {
             const fidEntry = entry as PerformanceEventTiming;
             console.log('FID:', fidEntry.processingStart - fidEntry.startTime);
           }
-          // Type guard for CLS
-          if (entry.entryType === 'layout-shift' && 'value' in entry) {
-            const clsEntry = entry as any;
-            console.log('CLS:', clsEntry.value);
+          
+          // Monitor CLS
+          if (entry.entryType === 'layout-shift') {
+            const clsEntry = entry as PerformanceEntry & { value?: number };
+            if (clsEntry.value) {
+              console.log('CLS:', clsEntry.value);
+            }
           }
         }
       });
