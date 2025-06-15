@@ -122,7 +122,7 @@ const SEOOptimizer: React.FC<SEOOptimizerProps> = ({
     };
     
     // Update or create JSON-LD script
-    let jsonLdScript = document.querySelector('script[type="application/ld+json"]#page-data');
+    let jsonLdScript = document.querySelector('script[type="application/ld+json"]#page-data') as HTMLScriptElement;
     if (!jsonLdScript) {
       jsonLdScript = document.createElement('script');
       jsonLdScript.type = 'application/ld+json';
@@ -175,3 +175,4 @@ const SEOOptimizer: React.FC<SEOOptimizerProps> = ({
 };
 
 export default SEOOptimizer;
+
