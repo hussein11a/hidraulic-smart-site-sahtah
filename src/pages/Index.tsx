@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Phone, MessageSquare, Moon, Sun, Shield, Zap } from 'lucide-react';
+import { Phone, MessageSquare, Moon, Sun, Shield, Zap, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface Service {
@@ -163,105 +163,152 @@ const Index = () => {
   return (
     <div className={`min-h-screen transition-all duration-500 ${
       isDarkMode 
-        ? 'bg-gradient-to-br from-slate-900 via-blue-950 to-slate-800 text-white' 
-        : 'bg-gradient-to-br from-slate-50 via-blue-50 to-amber-50 text-slate-800'
+        ? 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white' 
+        : 'bg-gradient-to-br from-slate-50 via-white to-slate-100 text-slate-800'
     }`} dir="rtl">
       
       {/* Theme Toggle */}
-      <div className="fixed top-4 left-4 z-50">
+      <div className="fixed top-6 left-6 z-50">
         <Button
           onClick={toggleTheme}
           variant="outline"
           size="sm"
-          className={`rounded-full p-3 shadow-lg backdrop-blur-sm transition-all duration-300 ${
+          className={`rounded-full p-3 shadow-xl backdrop-blur-sm transition-all duration-300 border-2 ${
             isDarkMode 
-              ? 'bg-slate-800/80 border-slate-600 hover:bg-slate-700' 
-              : 'bg-white/80 border-slate-200 hover:bg-slate-50'
+              ? 'bg-slate-800/90 border-slate-600 hover:bg-slate-700 hover:border-slate-500' 
+              : 'bg-white/90 border-slate-300 hover:bg-slate-50 hover:border-slate-400'
           }`}
         >
-          {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
         </Button>
       </div>
 
-      {/* Header Section */}
-      <header className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-700/10 to-amber-500/10"></div>
-        <div className="relative container mx-auto px-4 py-16 text-center">
-          <div className="flex justify-center mb-6">
-            <div className={`p-4 rounded-full shadow-2xl ${
-              isDarkMode ? 'bg-blue-700/20' : 'bg-blue-700/10'
+      {/* Header Section - Enhanced */}
+      <header className="relative overflow-hidden py-20 lg:py-32">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-transparent to-amber-600/20"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(15,23,42,0.1)_100%)]"></div>
+        
+        <div className="relative container mx-auto px-6 text-center">
+          {/* Logo Section */}
+          <div className="flex justify-center mb-8">
+            <div className={`relative p-6 rounded-3xl shadow-2xl transform hover:scale-105 transition-all duration-300 ${
+              isDarkMode ? 'bg-gradient-to-br from-blue-700/30 to-amber-600/30' : 'bg-gradient-to-br from-blue-100 to-amber-100'
             }`}>
-              <div className="text-6xl">🚛</div>
+              <div className="text-7xl lg:text-8xl">🚛</div>
+              <div className="absolute -top-2 -right-2">
+                <div className={`w-6 h-6 rounded-full animate-pulse ${
+                  isDarkMode ? 'bg-emerald-400' : 'bg-emerald-500'
+                }`}></div>
+              </div>
             </div>
           </div>
           
-          <h1 className={`text-5xl md:text-6xl font-bold mb-4 ${
+          {/* Main Title */}
+          <h1 className={`text-6xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight ${
             isDarkMode 
-              ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-amber-400' 
-              : 'text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-amber-600'
+              ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-amber-400' 
+              : 'text-transparent bg-clip-text bg-gradient-to-r from-blue-800 via-blue-700 to-amber-600'
           }`}>
             {siteData.title}
           </h1>
           
-          <p className={`text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed ${
-            isDarkMode ? 'text-slate-300' : 'text-slate-600'
-          }`}>
-            {siteData.subtitle}
-          </p>
+          {/* Subtitle */}
+          <div className="max-w-4xl mx-auto mb-10">
+            <p className={`text-2xl md:text-3xl lg:text-4xl mb-6 font-semibold leading-relaxed ${
+              isDarkMode ? 'text-slate-200' : 'text-slate-700'
+            }`}>
+              {siteData.subtitle}
+            </p>
+            <div className={`w-24 h-1 mx-auto rounded-full ${
+              isDarkMode ? 'bg-gradient-to-r from-blue-400 to-amber-400' : 'bg-gradient-to-r from-blue-600 to-amber-600'
+            }`}></div>
+          </div>
 
-          <div className="flex justify-center gap-4 mb-8">
-            <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${
-              isDarkMode ? 'bg-emerald-600/20 text-emerald-400' : 'bg-emerald-100 text-emerald-700'
+          {/* Trust Badges */}
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            <div className={`flex items-center gap-3 px-6 py-3 rounded-full border transition-all duration-300 hover:scale-105 ${
+              isDarkMode 
+                ? 'bg-emerald-600/20 text-emerald-300 border-emerald-500/30 hover:bg-emerald-600/30' 
+                : 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
             }`}>
-              <Shield className="h-5 w-5" />
-              <span className="font-semibold">خدمة موثوقة</span>
+              <Shield className="h-6 w-6" />
+              <span className="font-bold text-lg">خدمة موثوقة</span>
+              <Star className="h-5 w-5 fill-current" />
             </div>
-            <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${
-              isDarkMode ? 'bg-amber-600/20 text-amber-400' : 'bg-amber-100 text-amber-700'
+            <div className={`flex items-center gap-3 px-6 py-3 rounded-full border transition-all duration-300 hover:scale-105 ${
+              isDarkMode 
+                ? 'bg-amber-600/20 text-amber-300 border-amber-500/30 hover:bg-amber-600/30' 
+                : 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100'
             }`}>
-              <Zap className="h-5 w-5" />
-              <span className="font-semibold">استجابة سريعة</span>
+              <Zap className="h-6 w-6" />
+              <span className="font-bold text-lg">استجابة سريعة</span>
+              <span className="text-sm opacity-80">24/7</span>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Services Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className={`text-4xl font-bold text-center mb-12 ${
-            isDarkMode ? 'text-white' : 'text-slate-800'
-          }`}>
-            خدماتنا
-          </h2>
+      {/* Services Section - Enhanced */}
+      <section className="py-20 lg:py-32 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-50/50 to-transparent"></div>
+        <div className="container mx-auto px-6 relative">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <h2 className={`text-5xl lg:text-6xl font-black mb-6 ${
+              isDarkMode ? 'text-white' : 'text-slate-800'
+            }`}>
+              خدماتنا المتميزة
+            </h2>
+            <div className={`w-32 h-1 mx-auto rounded-full mb-8 ${
+              isDarkMode ? 'bg-gradient-to-r from-blue-400 to-amber-400' : 'bg-gradient-to-r from-blue-600 to-amber-600'
+            }`}></div>
+            <p className={`text-xl lg:text-2xl max-w-3xl mx-auto leading-relaxed ${
+              isDarkMode ? 'text-slate-300' : 'text-slate-600'
+            }`}>
+              نقدم مجموعة شاملة من خدمات النقل الاحترافية بأحدث التقنيات
+            </p>
+          </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {services.map((service) => (
+          {/* Services Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {services.map((service, index) => (
               <div
                 key={service.id}
-                className={`p-6 rounded-2xl shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl ${
+                className={`group p-8 rounded-3xl shadow-xl transition-all duration-500 hover:scale-105 hover:shadow-2xl transform hover:-translate-y-2 border-2 ${
                   isDarkMode 
-                    ? 'bg-slate-800/50 border border-slate-700 hover:bg-slate-700/50' 
-                    : 'bg-white border border-slate-200 hover:bg-slate-50'
-                }`}
+                    ? 'bg-gradient-to-br from-slate-800/80 to-slate-700/80 border-slate-600/50 hover:border-blue-400/50 hover:bg-gradient-to-br hover:from-slate-700/90 hover:to-slate-600/90' 
+                    : 'bg-gradient-to-br from-white to-slate-50 border-slate-200 hover:border-blue-300 hover:bg-gradient-to-br hover:from-blue-50 hover:to-white'
+                } animate-fade-in`}
+                style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="text-center">
-                  <div className="text-4xl mb-4">{service.icon}</div>
-                  <h3 className={`text-xl font-bold mb-3 ${
+                  {/* Service Icon */}
+                  <div className="text-6xl mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                    {service.icon}
+                  </div>
+                  
+                  {/* Service Title */}
+                  <h3 className={`text-2xl font-bold mb-4 group-hover:text-blue-500 transition-colors duration-300 ${
                     isDarkMode ? 'text-white' : 'text-slate-800'
                   }`}>
                     {service.title}
                   </h3>
-                  <p className={`text-sm leading-relaxed ${
+                  
+                  {/* Service Description */}
+                  <p className={`text-base leading-relaxed mb-6 ${
                     isDarkMode ? 'text-slate-300' : 'text-slate-600'
                   }`}>
                     {service.description}
                   </p>
+                  
+                  {/* Availability Badge */}
                   {service.available && (
-                    <div className={`inline-flex items-center gap-1 mt-4 px-3 py-1 rounded-full text-xs font-semibold ${
-                      isDarkMode ? 'bg-emerald-600/20 text-emerald-400' : 'bg-emerald-100 text-emerald-700'
+                    <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold border-2 ${
+                      isDarkMode 
+                        ? 'bg-emerald-600/30 text-emerald-300 border-emerald-400/50' 
+                        : 'bg-emerald-100 text-emerald-700 border-emerald-300'
                     }`}>
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                      <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
                       متاح الآن
                     </div>
                   )}
@@ -272,35 +319,51 @@ const Index = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className={`py-16 ${
+      {/* CTA Section - Enhanced */}
+      <section className={`py-20 lg:py-32 relative overflow-hidden ${
         isDarkMode 
-          ? 'bg-gradient-to-r from-blue-950/50 to-slate-900/50' 
-          : 'bg-gradient-to-r from-blue-700/10 to-amber-600/10'
+          ? 'bg-gradient-to-r from-blue-950/80 via-slate-900/90 to-slate-800/80' 
+          : 'bg-gradient-to-r from-blue-50 via-white to-amber-50'
       }`}>
-        <div className="container mx-auto px-4 text-center">
-          <h2 className={`text-3xl font-bold mb-6 ${
-            isDarkMode ? 'text-white' : 'text-slate-800'
-          }`}>
-            تحتاج مساعدة؟ نحن هنا من أجلك
-          </h2>
-          <p className={`text-lg mb-8 max-w-2xl mx-auto ${
-            isDarkMode ? 'text-slate-300' : 'text-slate-600'
-          }`}>
-            خدمة على مدار 24 ساعة طوال أيام الأسبوع. اتصل بنا الآن للحصول على مساعدة فورية
-          </p>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.1)_100%)]"></div>
+        <div className="container mx-auto px-6 text-center relative">
+          <div className="max-w-4xl mx-auto">
+            <h2 className={`text-5xl lg:text-6xl font-black mb-8 ${
+              isDarkMode ? 'text-white' : 'text-slate-800'
+            }`}>
+              تحتاج مساعدة؟
+            </h2>
+            <h3 className={`text-3xl lg:text-4xl font-bold mb-8 ${
+              isDarkMode ? 'text-blue-300' : 'text-blue-700'
+            }`}>
+              نحن هنا من أجلك
+            </h3>
+            <div className={`w-24 h-1 mx-auto rounded-full mb-10 ${
+              isDarkMode ? 'bg-gradient-to-r from-blue-400 to-amber-400' : 'bg-gradient-to-r from-blue-600 to-amber-600'
+            }`}></div>
+            <p className={`text-2xl lg:text-3xl mb-12 leading-relaxed font-medium ${
+              isDarkMode ? 'text-slate-200' : 'text-slate-700'
+            }`}>
+              خدمة على مدار <span className={`font-black ${isDarkMode ? 'text-amber-400' : 'text-amber-600'}`}>24 ساعة</span> طوال أيام الأسبوع
+            </p>
+            <p className={`text-xl mb-16 leading-relaxed ${
+              isDarkMode ? 'text-slate-300' : 'text-slate-600'
+            }`}>
+              اتصل بنا الآن للحصول على مساعدة فورية واحترافية
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* Floating Action Buttons */}
-      <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
+      {/* Floating Action Buttons - Enhanced */}
+      <div className="fixed bottom-8 right-8 flex flex-col gap-4 z-50">
         {/* WhatsApp Button */}
         {buttonsData.whatsapp?.enabled && (
           <Button
             onClick={handleWhatsApp}
-            className="w-14 h-14 rounded-full bg-green-600 hover:bg-green-700 shadow-2xl transition-all duration-300 hover:scale-110 group"
+            className="w-16 h-16 rounded-full bg-green-600 hover:bg-green-700 shadow-2xl transition-all duration-300 hover:scale-110 group border-4 border-white/20"
           >
-            <MessageSquare className="h-6 w-6 group-hover:scale-110 transition-transform" />
+            <MessageSquare className="h-7 w-7 group-hover:scale-110 transition-transform" />
           </Button>
         )}
         
@@ -308,30 +371,33 @@ const Index = () => {
         {buttonsData.phone?.enabled && (
           <Button
             onClick={handlePhoneCall}
-            className="w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 shadow-2xl transition-all duration-300 hover:scale-110 group"
+            className="w-16 h-16 rounded-full bg-blue-600 hover:bg-blue-700 shadow-2xl transition-all duration-300 hover:scale-110 group border-4 border-white/20 animate-pulse-glow"
           >
-            <Phone className="h-6 w-6 group-hover:scale-110 transition-transform" />
+            <Phone className="h-7 w-7 group-hover:scale-110 transition-transform" />
           </Button>
         )}
       </div>
 
-      {/* Footer */}
-      <footer className={`py-8 mt-16 border-t ${
+      {/* Footer - Enhanced */}
+      <footer className={`py-16 mt-20 border-t-2 ${
         isDarkMode 
-          ? 'border-slate-700 bg-slate-900/50' 
-          : 'border-slate-200 bg-slate-50'
+          ? 'border-slate-700 bg-gradient-to-b from-slate-900/80 to-slate-800' 
+          : 'border-slate-200 bg-gradient-to-b from-slate-50 to-white'
       }`}>
-        <div className="container mx-auto px-4 text-center">
-          <div className="flex justify-center mb-4">
-            <div className="text-3xl">🚛</div>
+        <div className="container mx-auto px-6 text-center">
+          <div className="flex justify-center mb-6">
+            <div className="text-5xl">🚛</div>
           </div>
-          <h3 className={`text-lg font-bold mb-2 ${
+          <h3 className={`text-3xl font-black mb-4 ${
             isDarkMode ? 'text-white' : 'text-slate-800'
           }`}>
             سطحة هيدروليك
           </h3>
-          <p className={`text-sm ${
-            isDarkMode ? 'text-slate-400' : 'text-slate-600'
+          <div className={`w-16 h-1 mx-auto rounded-full mb-6 ${
+            isDarkMode ? 'bg-gradient-to-r from-blue-400 to-amber-400' : 'bg-gradient-to-r from-blue-600 to-amber-600'
+          }`}></div>
+          <p className={`text-lg font-medium ${
+            isDarkMode ? 'text-slate-300' : 'text-slate-600'
           }`}>
             خدمة نقل السيارات الاحترافية © 2024
           </p>
