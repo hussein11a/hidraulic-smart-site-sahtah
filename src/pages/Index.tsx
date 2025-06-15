@@ -2,10 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import InteractiveServices from '@/components/InteractiveServices';
-import AdvancedContactSection from '@/components/AdvancedContactSection';
-import FloatingNavigation from '@/components/FloatingNavigation';
-import AdvancedEffects from '@/components/AdvancedEffects';
 
 interface Service {
   id: number;
@@ -76,14 +72,14 @@ const Index = () => {
       sort_order: 4
     }
   ]);
-  const [siteData, setSiteData] = useState<SiteData>({
+  const [siteData] = useState<SiteData>({
     title: 'سطحة هيدروليك',
     subtitle: 'خدمة نقل السيارات الاحترافية - سريع، آمن، موثوق',
     description: 'نحن نقدم خدمات نقل السيارات المعطلة والمساعدة على الطريق بأحدث المعدات الهيدروليكية',
     phone: '+966501234567',
     whatsapp: '+966501234567'
   });
-  const [buttonsData, setButtonsData] = useState<ButtonsData>({
+  const [buttonsData] = useState<ButtonsData>({
     phone: {
       text: 'اتصل الآن',
       number: '+966501234567',
@@ -99,7 +95,6 @@ const Index = () => {
     }
   });
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   // Smart theme detection based on time
   useEffect(() => {
@@ -108,63 +103,27 @@ const Index = () => {
     setIsDarkMode(isNightTime);
   }, []);
 
-  // Load JSON data with better error handling
+  // Load JSON data safely
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
-      setError(null);
       
       try {
-        console.log('بدء تحميل البيانات...');
-        
         // Try to load services data
         try {
           const servicesResponse = await fetch('/src/data/services.json');
           if (servicesResponse.ok) {
             const servicesData = await servicesResponse.json();
-            if (servicesData?.services) {
+            if (servicesData?.services && Array.isArray(servicesData.services)) {
               setServices(servicesData.services.sort((a: Service, b: Service) => a.sort_order - b.sort_order));
               console.log('تم تحميل بيانات الخدمات بنجاح');
             }
-          } else {
-            console.log('لم يتم العثور على ملف الخدمات، استخدام البيانات الافتراضية');
           }
-        } catch (servicesError) {
-          console.log('خطأ في تحميل بيانات الخدمات:', servicesError);
+        } catch (error) {
+          console.log('استخدام البيانات الافتراضية للخدمات');
         }
-
-        // Try to load site data
-        try {
-          const siteResponse = await fetch('/src/data/site.json');
-          if (siteResponse.ok) {
-            const siteInfo = await siteResponse.json();
-            setSiteData(siteInfo);
-            console.log('تم تحميل بيانات الموقع بنجاح');
-          } else {
-            console.log('لم يتم العثور على ملف بيانات الموقع، استخدام البيانات الافتراضية');
-          }
-        } catch (siteError) {
-          console.log('خطأ في تحميل بيانات الموقع:', siteError);
-        }
-
-        // Try to load buttons data
-        try {
-          const buttonsResponse = await fetch('/src/data/buttons.json');
-          if (buttonsResponse.ok) {
-            const buttonsInfo = await buttonsResponse.json();
-            setButtonsData(buttonsInfo);
-            console.log('تم تحميل بيانات الأزرار بنجاح');
-          } else {
-            console.log('لم يتم العثور على ملف بيانات الأزرار، استخدام البيانات الافتراضية');
-          }
-        } catch (buttonsError) {
-          console.log('خطأ في تحميل بيانات الأزرار:', buttonsError);
-        }
-
-        console.log('تم الانتهاء من تحميل البيانات');
       } catch (error) {
-        console.error('خطأ عام في تحميل البيانات:', error);
-        setError('حدث خطأ في تحميل البيانات، يتم استخدام البيانات الافتراضية');
+        console.error('خطأ في تحميل البيانات:', error);
       } finally {
         setIsLoading(false);
       }
@@ -173,59 +132,51 @@ const Index = () => {
     loadData();
   }, []);
 
-  // Security measures with better error handling
+  // Security measures
   useEffect(() => {
-    try {
-      // Disable right-click
-      const handleContextMenu = (e: Event) => {
+    const handleContextMenu = (e: Event) => {
+      e.preventDefault();
+      return false;
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.ctrlKey && (
+          e.keyCode === 67 || // Ctrl+C
+          e.keyCode === 65 || // Ctrl+A
+          e.keyCode === 85 || // Ctrl+U
+          e.keyCode === 83 || // Ctrl+S
+          e.keyCode === 80    // Ctrl+P
+        )
+      ) {
         e.preventDefault();
         return false;
-      };
-
-      // Disable text selection and copy shortcuts
-      const handleKeyDown = (e: KeyboardEvent) => {
-        if (
-          e.ctrlKey && (
-            e.keyCode === 67 || // Ctrl+C
-            e.keyCode === 65 || // Ctrl+A
-            e.keyCode === 85 || // Ctrl+U
-            e.keyCode === 83 || // Ctrl+S
-            e.keyCode === 80    // Ctrl+P
-          )
-        ) {
-          e.preventDefault();
-          return false;
-        }
-      };
-
-      // Disable drag
-      const handleDragStart = (e: Event) => {
-        e.preventDefault();
-        return false;
-      };
-
-      document.addEventListener('contextmenu', handleContextMenu);
-      document.addEventListener('keydown', handleKeyDown);
-      document.addEventListener('dragstart', handleDragStart);
-
-      // Disable text selection
-      if (document.body.style) {
-        document.body.style.userSelect = 'none';
-        document.body.style.webkitUserSelect = 'none';
       }
+    };
 
-      return () => {
-        document.removeEventListener('contextmenu', handleContextMenu);
-        document.removeEventListener('keydown', handleKeyDown);
-        document.removeEventListener('dragstart', handleDragStart);
-        if (document.body.style) {
-          document.body.style.userSelect = '';
-          document.body.style.webkitUserSelect = '';
-        }
-      };
-    } catch (error) {
-      console.error('خطأ في إعداد إجراءات الأمان:', error);
+    const handleDragStart = (e: Event) => {
+      e.preventDefault();
+      return false;
+    };
+
+    document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('dragstart', handleDragStart);
+
+    if (document.body.style) {
+      document.body.style.userSelect = 'none';
+      document.body.style.webkitUserSelect = 'none';
     }
+
+    return () => {
+      document.removeEventListener('contextmenu', handleContextMenu);
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('dragstart', handleDragStart);
+      if (document.body.style) {
+        document.body.style.userSelect = '';
+        document.body.style.webkitUserSelect = '';
+      }
+    };
   }, []);
 
   const toggleTheme = () => {
@@ -273,19 +224,16 @@ const Index = () => {
         : 'bg-gradient-to-br from-slate-50 via-white to-slate-100 text-slate-800'
     }`} dir="rtl">
       
-      {/* Advanced Background Effects */}
-      <AdvancedEffects isDarkMode={isDarkMode} />
+      {/* Background Effects */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className={`absolute inset-0 ${
+          isDarkMode 
+            ? 'bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.3),transparent)] opacity-30' 
+            : 'bg-[radial-gradient(circle_at_50%_50%,rgba(251,191,36,0.2),transparent)] opacity-40'
+        }`}></div>
+      </div>
       
-      {/* Error Display */}
-      {error && (
-        <div className={`fixed top-4 right-4 left-4 z-50 p-4 rounded-lg shadow-lg ${
-          isDarkMode ? 'bg-red-800 text-red-200' : 'bg-red-100 text-red-800'
-        }`}>
-          <p className="text-sm">{error}</p>
-        </div>
-      )}
-      
-      {/* Enhanced Theme Toggle */}
+      {/* Theme Toggle */}
       <div className="fixed top-6 left-6 z-50">
         <Button
           onClick={toggleTheme}
@@ -304,13 +252,12 @@ const Index = () => {
         </Button>
       </div>
 
-      {/* Enhanced Header Section */}
+      {/* Header Section */}
       <header className="relative overflow-hidden py-32 lg:py-56" id="home">
         <div className="absolute inset-0 bg-gradient-to-r from-slate-800/20 via-transparent to-amber-900/20"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(15,23,42,0.1)_100%)]"></div>
         
         <div className="relative container mx-auto px-8 text-center z-10">
-          {/* Ultra Enhanced Logo Section */}
+          {/* Logo Section */}
           <div className="flex justify-center mb-20">
             <div className={`relative p-16 rounded-full shadow-4xl transform hover:scale-110 transition-all duration-1000 border-4 ${
               isDarkMode 
@@ -330,15 +277,10 @@ const Index = () => {
                   isDarkMode ? 'bg-slate-400' : 'bg-slate-500'
                 }`}></div>
               </div>
-              <div className="absolute top-4 left-4 animate-pulse" style={{ animationDelay: '2s' }}>
-                <div className={`w-8 h-8 rounded-full shadow-lg ${
-                  isDarkMode ? 'bg-blue-400' : 'bg-blue-500'
-                }`}></div>
-              </div>
             </div>
           </div>
           
-          {/* Ultra Enhanced Main Title */}
+          {/* Main Title */}
           <h1 className={`text-9xl md:text-[12rem] lg:text-[14rem] font-black mb-16 leading-none ${
             isDarkMode 
               ? 'text-transparent bg-clip-text bg-gradient-to-r from-slate-200 via-amber-300 via-blue-300 to-slate-100' 
@@ -347,7 +289,7 @@ const Index = () => {
             {siteData.title}
           </h1>
           
-          {/* Ultra Enhanced subtitle section */}
+          {/* Subtitle section */}
           <div className="max-w-7xl mx-auto mb-20">
             <p className={`text-5xl md:text-6xl lg:text-7xl mb-16 font-bold leading-relaxed ${
               isDarkMode ? 'text-slate-200' : 'text-slate-700'
@@ -364,7 +306,7 @@ const Index = () => {
             </p>
           </div>
 
-          {/* Ultra Enhanced Trust Badges */}
+          {/* Trust Badges */}
           <div className="flex flex-wrap justify-center gap-12 mb-24">
             <div className={`flex items-center gap-8 px-16 py-8 rounded-3xl border-4 transition-all duration-700 hover:scale-115 shadow-3xl animate-bounce ${
               isDarkMode 
@@ -388,32 +330,128 @@ const Index = () => {
         </div>
       </header>
 
-      {/* Enhanced Section Divider */}
-      <div className={`w-full h-2 ${isDarkMode ? 'bg-gradient-to-r from-transparent via-amber-400/60 to-transparent' : 'bg-gradient-to-r from-transparent via-amber-500/60 to-transparent'} shadow-lg`}></div>
+      {/* Services Section */}
+      <section className={`py-32 ${
+        isDarkMode ? 'bg-slate-800/30' : 'bg-white/50'
+      }`}>
+        <div className="container mx-auto px-8">
+          <div className="text-center mb-20">
+            <h2 className={`text-6xl md:text-8xl font-black mb-8 ${
+              isDarkMode ? 'text-white' : 'text-slate-800'
+            }`}>
+              خدماتنا
+            </h2>
+            <div className={`w-32 h-3 mx-auto rounded-full mb-8 ${
+              isDarkMode ? 'bg-gradient-to-r from-amber-400 to-blue-400' : 'bg-gradient-to-r from-amber-500 to-blue-500'
+            }`}></div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {services.map((service) => (
+              <div
+                key={service.id}
+                className={`group relative overflow-hidden rounded-3xl shadow-2xl transition-all duration-700 hover:scale-105 border-2 ${
+                  isDarkMode
+                    ? 'bg-slate-700/60 border-slate-600 hover:bg-slate-600/70 hover:border-amber-400/50'
+                    : 'bg-white border-slate-200 hover:bg-amber-50 hover:border-amber-300'
+                }`}
+              >
+                <div className="p-8">
+                  <div className="text-6xl mb-6 text-center">{service.icon}</div>
+                  <h3 className={`text-2xl font-bold mb-4 text-center ${
+                    isDarkMode ? 'text-white' : 'text-slate-800'
+                  }`}>
+                    {service.title}
+                  </h3>
+                  <p className={`text-lg leading-relaxed text-center ${
+                    isDarkMode ? 'text-slate-300' : 'text-slate-600'
+                  }`}>
+                    {service.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      {/* Interactive Services Section */}
-      <InteractiveServices services={services} isDarkMode={isDarkMode} />
+      {/* Contact Section */}
+      <section className={`py-32 ${
+        isDarkMode ? 'bg-slate-900/50' : 'bg-slate-50'
+      }`}>
+        <div className="container mx-auto px-8 text-center">
+          <h2 className={`text-6xl md:text-8xl font-black mb-12 ${
+            isDarkMode ? 'text-white' : 'text-slate-800'
+          }`}>
+            تواصل معنا
+          </h2>
+          
+          <div className="flex flex-col md:flex-row gap-8 justify-center items-center max-w-4xl mx-auto">
+            {/* Phone Button */}
+            {buttonsData.phone.enabled && (
+              <button
+                onClick={handlePhoneCall}
+                className={`group relative overflow-hidden rounded-3xl px-16 py-8 text-3xl font-bold transition-all duration-700 hover:scale-110 shadow-2xl border-4 min-w-[300px] ${
+                  isDarkMode
+                    ? 'bg-blue-600 hover:bg-blue-500 text-white border-blue-400 hover:border-blue-300 hover:shadow-blue-400/50'
+                    : 'bg-blue-600 hover:bg-blue-700 text-white border-blue-500 hover:border-blue-400 hover:shadow-blue-200'
+                }`}
+              >
+                <span className="relative z-10 flex items-center justify-center gap-4">
+                  📞 {buttonsData.phone.text}
+                </span>
+              </button>
+            )}
 
-      {/* Enhanced Section Divider */}
-      <div className={`w-full h-2 ${isDarkMode ? 'bg-gradient-to-r from-transparent via-amber-400/60 to-transparent' : 'bg-gradient-to-r from-transparent via-amber-500/60 to-transparent'} shadow-lg`}></div>
+            {/* WhatsApp Button */}
+            {buttonsData.whatsapp.enabled && (
+              <button
+                onClick={handleWhatsApp}
+                className={`group relative overflow-hidden rounded-3xl px-16 py-8 text-3xl font-bold transition-all duration-700 hover:scale-110 shadow-2xl border-4 min-w-[300px] ${
+                  isDarkMode
+                    ? 'bg-green-600 hover:bg-green-500 text-white border-green-400 hover:border-green-300 hover:shadow-green-400/50'
+                    : 'bg-green-600 hover:bg-green-700 text-white border-green-500 hover:border-green-400 hover:shadow-green-200'
+                }`}
+              >
+                <span className="relative z-10 flex items-center justify-center gap-4">
+                  💬 {buttonsData.whatsapp.text}
+                </span>
+              </button>
+            )}
+          </div>
+        </div>
+      </section>
 
-      {/* Advanced Contact Section */}
-      <AdvancedContactSection
-        isDarkMode={isDarkMode}
-        buttonsData={buttonsData}
-        handlePhoneCall={handlePhoneCall}
-        handleWhatsApp={handleWhatsApp}
-      />
+      {/* Floating Action Buttons */}
+      <div className="fixed bottom-8 right-8 flex flex-col gap-4 z-50">
+        {buttonsData.phone.enabled && (
+          <button
+            onClick={handlePhoneCall}
+            className={`w-16 h-16 rounded-full shadow-2xl transition-all duration-500 hover:scale-125 ${
+              isDarkMode
+                ? 'bg-blue-600 hover:bg-blue-500 text-white hover:shadow-blue-400/50'
+                : 'bg-blue-600 hover:bg-blue-700 text-white hover:shadow-blue-200'
+            }`}
+          >
+            📞
+          </button>
+        )}
+        
+        {buttonsData.whatsapp.enabled && (
+          <button
+            onClick={handleWhatsApp}
+            className={`w-16 h-16 rounded-full shadow-2xl transition-all duration-500 hover:scale-125 ${
+              isDarkMode
+                ? 'bg-green-600 hover:bg-green-500 text-white hover:shadow-green-400/50'
+                : 'bg-green-600 hover:bg-green-700 text-white hover:shadow-green-200'
+            }`}
+          >
+            💬
+          </button>
+        )}
+      </div>
 
-      {/* Enhanced Floating Navigation */}
-      <FloatingNavigation
-        isDarkMode={isDarkMode}
-        buttonsData={buttonsData}
-        handlePhoneCall={handlePhoneCall}
-        handleWhatsApp={handleWhatsApp}
-      />
-
-      {/* Ultra Enhanced Footer */}
+      {/* Footer */}
       <footer className={`py-32 mt-16 border-t-4 ${
         isDarkMode 
           ? 'border-amber-400/60 bg-gradient-to-b from-slate-900/98 to-slate-800' 
