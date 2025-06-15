@@ -1,9 +1,18 @@
 
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, Star, Shield, Clock, Users, Award, Zap, CheckCircle } from 'lucide-react';
+import { Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import FloatingNavigation from '@/components/FloatingNavigation';
+import AdvancedHero from '@/components/AdvancedHero';
+import PricingSection from '@/components/PricingSection';
+import ProcessSection from '@/components/ProcessSection';
+import ContactMethods from '@/components/ContactMethods';
+import FAQ from '@/components/FAQ';
+import FloatingElements from '@/components/FloatingElements';
+import AnimatedCounter from '@/components/AnimatedCounter';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { usePerformanceOptimization } from '@/hooks/usePerformanceOptimization';
+import { Star, Shield, Clock, Users, Award, Zap, CheckCircle } from 'lucide-react';
 
 interface Service {
   id: number;
@@ -154,10 +163,10 @@ const Index = () => {
 
   // Statistics data
   const statistics = [
-    { icon: Users, value: '2500+', label: 'عميل راضٍ', color: 'text-blue-500' },
-    { icon: Clock, value: '24/7', label: 'خدمة مستمرة', color: 'text-green-500' },
-    { icon: Award, value: '5+', label: 'سنوات خبرة', color: 'text-amber-500' },
-    { icon: CheckCircle, value: '99%', label: 'نسبة نجاح', color: 'text-emerald-500' }
+    { icon: Users, value: 2500, label: 'عميل راضٍ', color: 'text-blue-500', suffix: '+' },
+    { icon: Clock, value: 24, label: 'خدمة مستمرة', color: 'text-green-500', suffix: '/7' },
+    { icon: Award, value: 5, label: 'سنوات خبرة', color: 'text-amber-500', suffix: '+' },
+    { icon: CheckCircle, value: 99, label: 'نسبة نجاح', color: 'text-emerald-500', suffix: '%' }
   ];
 
   // Testimonials data
@@ -211,14 +220,7 @@ const Index = () => {
   ];
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-white">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-amber-600 mx-auto mb-4"></div>
-          <p className="text-xl text-slate-600">جاري التحميل...</p>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner isDarkMode={isDarkMode} />;
   }
 
   return (
@@ -228,14 +230,8 @@ const Index = () => {
         : 'bg-gradient-to-br from-slate-50 via-white to-slate-100 text-slate-800'
     }`} dir="rtl">
       
-      {/* Background Effects */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className={`absolute inset-0 ${
-          isDarkMode 
-            ? 'bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.3),transparent)] opacity-30' 
-            : 'bg-[radial-gradient(circle_at_50%_50%,rgba(251,191,36,0.2),transparent)] opacity-40'
-        }`}></div>
-      </div>
+      {/* Floating Background Elements */}
+      <FloatingElements isDarkMode={isDarkMode} />
       
       {/* Theme Toggle */}
       <div className="fixed top-6 left-6 z-50">
@@ -256,85 +252,13 @@ const Index = () => {
         </Button>
       </div>
 
-      {/* Header Section */}
-      <header className="relative overflow-hidden py-20 lg:py-32" id="home">
-        <div className="relative container mx-auto px-6 text-center z-10">
-          {/* Logo Section */}
-          <div className="flex justify-center mb-12">
-            <div className={`relative p-8 rounded-full shadow-2xl transform hover:scale-105 transition-all duration-700 border-2 ${
-              isDarkMode 
-                ? 'bg-gradient-to-br from-slate-700/70 to-amber-900/70 border-amber-400/50' 
-                : 'bg-gradient-to-br from-white to-amber-50 border-amber-300/70'
-            }`}>
-              <div className="text-6xl lg:text-8xl animate-pulse">🚛</div>
-            </div>
-          </div>
-          
-          {/* Main Title */}
-          <h1 className={`text-4xl md:text-6xl lg:text-8xl font-black mb-8 leading-tight ${
-            isDarkMode 
-              ? 'text-transparent bg-clip-text bg-gradient-to-r from-slate-200 via-amber-300 to-slate-100' 
-              : 'text-transparent bg-clip-text bg-gradient-to-r from-slate-800 via-amber-600 to-slate-900'
-          } drop-shadow-lg`}>
-            {siteData.title}
-          </h1>
-          
-          {/* Subtitle */}
-          <div className="max-w-4xl mx-auto mb-12">
-            <p className={`text-xl md:text-2xl lg:text-3xl mb-8 font-semibold leading-relaxed ${
-              isDarkMode ? 'text-slate-200' : 'text-slate-700'
-            }`}>
-              {siteData.subtitle}
-            </p>
-            <div className={`w-32 h-1 mx-auto rounded-full mb-6 ${
-              isDarkMode ? 'bg-gradient-to-r from-amber-400 to-blue-400' : 'bg-gradient-to-r from-amber-500 to-blue-500'
-            }`}></div>
-            <p className={`text-lg md:text-xl mt-8 leading-relaxed max-w-3xl mx-auto ${
-              isDarkMode ? 'text-slate-300' : 'text-slate-600'
-            }`}>
-              {siteData.description}
-            </p>
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col md:flex-row gap-4 justify-center items-center mb-16">
-            <Button
-              onClick={handlePhoneCall}
-              className="px-8 py-4 text-lg font-bold rounded-2xl bg-blue-600 hover:bg-blue-700 text-white border-2 border-blue-500 hover:border-blue-400 transition-all duration-300 hover:scale-105 shadow-lg"
-            >
-              📞 {buttonsData.phone.text}
-            </Button>
-            <Button
-              onClick={handleWhatsApp}
-              className="px-8 py-4 text-lg font-bold rounded-2xl bg-green-600 hover:bg-green-700 text-white border-2 border-green-500 hover:border-green-400 transition-all duration-300 hover:scale-105 shadow-lg"
-            >
-              💬 {buttonsData.whatsapp.text}
-            </Button>
-          </div>
-
-          {/* Trust Badges */}
-          <div className="flex flex-wrap justify-center gap-6 mb-12">
-            <div className={`flex items-center gap-3 px-6 py-3 rounded-xl border-2 transition-all duration-500 hover:scale-105 shadow-lg ${
-              isDarkMode 
-                ? 'bg-emerald-600/40 text-emerald-300 border-emerald-400/50' 
-                : 'bg-emerald-50 text-emerald-700 border-emerald-300'
-            }`}>
-              <Shield className="h-5 w-5" />
-              <span className="font-bold">خدمة موثوقة</span>
-              <Star className="h-4 w-4" />
-            </div>
-            <div className={`flex items-center gap-3 px-6 py-3 rounded-xl border-2 transition-all duration-500 hover:scale-105 shadow-lg ${
-              isDarkMode 
-                ? 'bg-amber-600/40 text-amber-300 border-amber-400/50' 
-                : 'bg-amber-50 text-amber-700 border-amber-300'
-            }`}>
-              <Zap className="h-5 w-5" />
-              <span className="font-bold">استجابة سريعة</span>
-              <Clock className="h-4 w-4" />
-            </div>
-          </div>
-        </div>
-      </header>
+      {/* Advanced Hero Section */}
+      <AdvancedHero
+        isDarkMode={isDarkMode}
+        siteData={siteData}
+        onPhoneCall={handlePhoneCall}
+        onWhatsApp={handleWhatsApp}
+      />
 
       {/* Statistics Section */}
       <section className={`py-16 ${isDarkMode ? 'bg-slate-800/30' : 'bg-white/50'}`} id="statistics">
@@ -353,7 +277,7 @@ const Index = () => {
                 <div className={`text-2xl md:text-3xl font-black mb-2 ${
                   isDarkMode ? 'text-white' : 'text-slate-800'
                 }`}>
-                  {stat.value}
+                  <AnimatedCounter end={stat.value} suffix={stat.suffix} />
                 </div>
                 <div className={`text-sm font-semibold ${
                   isDarkMode ? 'text-slate-300' : 'text-slate-600'
@@ -452,6 +376,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Process Section */}
+      <ProcessSection isDarkMode={isDarkMode} />
+
       {/* Testimonials Section */}
       <section className={`py-16 ${isDarkMode ? 'bg-slate-900/50' : 'bg-slate-50'}`} id="testimonials">
         <div className="container mx-auto px-6">
@@ -490,7 +417,6 @@ const Index = () => {
               </h4>
             </div>
             
-            {/* Testimonial indicators */}
             <div className="flex justify-center mt-6 gap-2">
               {testimonials.map((_, index) => (
                 <button
@@ -508,32 +434,18 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className={`py-16 ${isDarkMode ? 'bg-slate-800/30' : 'bg-white/50'}`} id="contact">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className={`text-3xl md:text-5xl font-black mb-8 ${
-            isDarkMode ? 'text-white' : 'text-slate-800'
-          }`}>
-            تواصل معنا
-          </h2>
-          
-          <div className="flex flex-col md:flex-row gap-6 justify-center items-center max-w-2xl mx-auto">
-            <Button
-              onClick={handlePhoneCall}
-              className="w-full md:w-auto px-8 py-4 text-lg font-bold rounded-2xl bg-blue-600 hover:bg-blue-700 text-white border-2 border-blue-500 hover:border-blue-400 transition-all duration-300 hover:scale-105 shadow-lg"
-            >
-              📞 {buttonsData.phone.text}
-            </Button>
+      {/* Pricing Section */}
+      <PricingSection isDarkMode={isDarkMode} onContact={handlePhoneCall} />
 
-            <Button
-              onClick={handleWhatsApp}
-              className="w-full md:w-auto px-8 py-4 text-lg font-bold rounded-2xl bg-green-600 hover:bg-green-700 text-white border-2 border-green-500 hover:border-green-400 transition-all duration-300 hover:scale-105 shadow-lg"
-            >
-              💬 {buttonsData.whatsapp.text}
-            </Button>
-          </div>
-        </div>
-      </section>
+      {/* FAQ Section */}
+      <FAQ isDarkMode={isDarkMode} />
+
+      {/* Contact Methods Section */}
+      <ContactMethods 
+        isDarkMode={isDarkMode}
+        onPhoneCall={handlePhoneCall}
+        onWhatsApp={handleWhatsApp}
+      />
 
       {/* Floating Navigation */}
       <FloatingNavigation
