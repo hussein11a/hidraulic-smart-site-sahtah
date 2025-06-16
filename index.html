@@ -355,6 +355,10 @@
         <p style="margin-top: 1rem; color: #6b7280;">جاري التحميل...</p>
       </div>
     </div>
+    
+    <!-- Netlify Identity Widget -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    
     <script type="module" src="/src/main.tsx"></script>
     
     <!-- PWA Service Worker Registration -->
@@ -368,6 +372,17 @@
             .catch(registrationError => {
               console.log('SW registration failed: ', registrationError);
             });
+        });
+      }
+
+      // Netlify Identity initialization
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
         });
       }
     </script>
