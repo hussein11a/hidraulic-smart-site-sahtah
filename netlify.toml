@@ -7,26 +7,19 @@
   NODE_VERSION = "18"
   NPM_USE_PRODUCTION_BUILD = "true"
 
-# تحسين إعدادات Netlify Identity
+# Netlify Identity settings
 [identity]
   settings = true
 
-# تفعيل تسجيل المستخدمين الجدد
+# Enable new user registration
 [identity.registration]
   enabled = true
 
-# إعدادات Git Gateway للـ CMS
+# Git Gateway settings for CMS
 [identity.git_gateway]
   enabled = true
 
-# تحسين إعدادات الأمان
-[identity.settings]
-  roles = ["admin", "editor", "user"]
-  enable_signup = true
-  autoconfirm = false
-  external_providers = ["github", "google"]
-
-# Headers محسنة للأمان والأداء
+# Security and performance headers
 [[headers]]
   for = "/*"
   [headers.values]
@@ -34,38 +27,26 @@
     X-Content-Type-Options = "nosniff"
     X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=()"
-    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://identity.netlify.com https://unpkg.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.netlify.com https://identity.netlify.com; frame-src 'self' https://identity.netlify.com;"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://identity.netlify.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.netlify.com https://identity.netlify.com;"
 
-# إعدادات خاصة لـ Identity
-[[headers]]
-  for = "/.netlify/identity/*"
-  [headers.values]
-    X-Frame-Options = "SAMEORIGIN"
-
-# تخزين مؤقت محسن للأصول
+# Cache optimization for assets
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
-  for = "/*.js"
+  for = "*.js"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
-  for = "/*.css"
+  for = "*.css"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-[[headers]]
-  for = "/*.woff2"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# قواعد إعادة التوجيه المحسنة
+# SPA redirect rules
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -83,18 +64,7 @@
   to = "/admin/index.html"
   status = 200
 
-# Old URL redirects
-[[redirects]]
-  from = "/services"
-  to = "/#services"
-  status = 301
-
-[[redirects]]
-  from = "/contact"
-  to = "/#contact"
-  status = 301
-
-# Form handling
+# Forms handling
 [forms]
   settings = true
 
@@ -102,31 +72,8 @@
 [functions]
   directory = "netlify/functions"
 
-# Dev server configuration
+# Development server
 [dev]
   command = "npm run dev"
   port = 8080
   publish = "dist"
-  framework = "#auto"
-
-# Plugin configuration
-[[plugins]]
-  package = "@netlify/plugin-sitemap"
-
-[[plugins]]
-  package = "netlify-plugin-submit-sitemap"
-  [plugins.inputs]
-    baseUrl = "https://your-domain.com"
-    sitemapPath = "/sitemap.xml"
-    providers = [
-      "google",
-      "bing",
-      "yandex"
-    ]
-
-# Branch deploys
-[context.branch-deploy]
-  command = "npm run build"
-
-[context.deploy-preview]
-  command = "npm run build"
