@@ -338,12 +338,16 @@ const Index = () => {
         }`} role="contentinfo">
           <div className="container mx-auto px-6 text-center">
             <div className="flex justify-center mb-8">
-              <div className={`p-8 rounded-full shadow-xl border-2 transition-all duration-500 hover:scale-105 ${
+              <div className={`p-6 rounded-2xl shadow-xl border-2 transition-all duration-500 hover:scale-105 ${
                 isDarkMode 
-                  ? 'bg-slate-800/60 border-slate-600' 
-                  : 'bg-white border-slate-200'
+                  ? 'bg-gradient-to-br from-amber-500/20 to-orange-600/20 border-amber-500/30' 
+                  : 'bg-gradient-to-br from-amber-50 to-orange-100 border-amber-200'
               }`}>
-                <div className="text-5xl animate-pulse">🚛</div>
+                <img 
+                  src="/lovable-uploads/53c7547b-fc11-4442-b5f6-798e6e1aa08f.png" 
+                  alt="شاحنة السطحة الهيدروليكية" 
+                  className="w-16 h-16 object-contain filter brightness-110 animate-pulse"
+                />
               </div>
             </div>
             <h3 className={`text-4xl font-black mb-4 ${

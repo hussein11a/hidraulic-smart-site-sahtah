@@ -32,7 +32,6 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
     { href: '#home', label: 'الرئيسية' },
     { href: '#services', label: 'خدماتنا' },
     { href: '#features', label: 'مميزاتنا' },
-    { href: '#testimonials', label: 'آراء العملاء' },
     { href: '#contact', label: 'تواصل معنا' }
   ];
 
@@ -59,22 +58,28 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
           <div className="flex items-center justify-between h-20">
             
             {/* Logo */}
-            <div className="flex items-center gap-3">
-              <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                isDarkMode ? 'bg-blue-600' : 'bg-blue-500'
+            <div className="flex items-center gap-4">
+              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center p-2 transition-all duration-300 ${
+                isDarkMode 
+                  ? 'bg-gradient-to-br from-amber-500/20 to-orange-600/20 border-2 border-amber-500/30' 
+                  : 'bg-gradient-to-br from-amber-50 to-orange-100 border-2 border-amber-200'
               }`}>
-                <span className="text-white text-2xl">🚛</span>
+                <img 
+                  src="/lovable-uploads/53c7547b-fc11-4442-b5f6-798e6e1aa08f.png" 
+                  alt="شاحنة السطحة الهيدروليكية" 
+                  className="w-full h-full object-contain filter brightness-110"
+                />
               </div>
               <div>
-                <h2 className={`text-xl font-black ${
+                <h2 className={`text-xl md:text-2xl font-black ${
                   isDarkMode ? 'text-white' : 'text-slate-800'
                 }`}>
                   سطحة هيدروليك
                 </h2>
-                <p className={`text-xs ${
-                  isDarkMode ? 'text-slate-400' : 'text-slate-600'
+                <p className={`text-xs md:text-sm font-semibold ${
+                  isDarkMode ? 'text-amber-400' : 'text-amber-600'
                 }`}>
-                  خدمة احترافية
+                  خدمة احترافية • متاح 24/7
                 </p>
               </div>
             </div>
@@ -85,10 +90,10 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
                 <button
                   key={index}
                   onClick={() => scrollToSection(item.href)}
-                  className={`text-sm font-semibold transition-colors duration-200 hover:scale-105 ${
+                  className={`text-sm font-semibold transition-all duration-200 hover:scale-105 px-3 py-2 rounded-lg ${
                     isDarkMode 
-                      ? 'text-slate-300 hover:text-blue-400' 
-                      : 'text-slate-600 hover:text-blue-600'
+                      ? 'text-slate-300 hover:text-amber-400 hover:bg-slate-800/50' 
+                      : 'text-slate-600 hover:text-amber-600 hover:bg-amber-50'
                   }`}
                 >
                   {item.label}
@@ -103,8 +108,8 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
                 onClick={onToggleTheme}
                 variant="ghost"
                 size="sm"
-                className={`rounded-full p-2 ${
-                  isDarkMode ? 'hover:bg-slate-700' : 'hover:bg-slate-100'
+                className={`rounded-full p-2 transition-all duration-300 ${
+                  isDarkMode ? 'hover:bg-slate-700 hover:text-amber-400' : 'hover:bg-amber-50 hover:text-amber-600'
                 }`}
               >
                 {isDarkMode ? 
@@ -118,7 +123,7 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
                 <Button
                   onClick={onPhoneCall}
                   size="sm"
-                  className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-4"
+                  className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-full px-4 py-2 font-semibold shadow-lg hover:shadow-green-500/30 transition-all duration-300"
                 >
                   <Phone className="w-4 h-4 mr-2" />
                   اتصل
@@ -126,11 +131,10 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
                 <Button
                   onClick={onWhatsApp}
                   size="sm"
-                  variant="outline"
-                  className={`rounded-full px-4 ${
+                  className={`rounded-full px-4 py-2 font-semibold shadow-lg transition-all duration-300 ${
                     isDarkMode 
-                      ? 'border-green-500 text-green-400 hover:bg-green-500 hover:text-white' 
-                      : 'border-green-600 text-green-600 hover:bg-green-600 hover:text-white'
+                      ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white hover:shadow-blue-500/30' 
+                      : 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white hover:shadow-blue-400/30'
                   }`}
                 >
                   <MessageCircle className="w-4 h-4 mr-2" />
@@ -163,14 +167,34 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
           isDarkMode ? 'bg-slate-900/95' : 'bg-white/95'
         } backdrop-blur-md`}>
           <div className="flex flex-col items-center justify-center h-full gap-8">
+            {/* Mobile Logo */}
+            <div className="flex flex-col items-center gap-4 mb-8">
+              <div className={`w-20 h-20 rounded-2xl flex items-center justify-center p-3 ${
+                isDarkMode 
+                  ? 'bg-gradient-to-br from-amber-500/20 to-orange-600/20 border-2 border-amber-500/30' 
+                  : 'bg-gradient-to-br from-amber-50 to-orange-100 border-2 border-amber-200'
+              }`}>
+                <img 
+                  src="/lovable-uploads/53c7547b-fc11-4442-b5f6-798e6e1aa08f.png" 
+                  alt="شاحنة السطحة الهيدروليكية" 
+                  className="w-full h-full object-contain filter brightness-110"
+                />
+              </div>
+              <h2 className={`text-2xl font-black ${
+                isDarkMode ? 'text-white' : 'text-slate-800'
+              }`}>
+                سطحة هيدروليك
+              </h2>
+            </div>
+
             {navItems.map((item, index) => (
               <button
                 key={index}
                 onClick={() => scrollToSection(item.href)}
                 className={`text-2xl font-bold transition-colors duration-200 ${
                   isDarkMode 
-                    ? 'text-slate-200 hover:text-blue-400' 
-                    : 'text-slate-800 hover:text-blue-600'
+                    ? 'text-slate-200 hover:text-amber-400' 
+                    : 'text-slate-800 hover:text-amber-600'
                 }`}
               >
                 {item.label}
@@ -185,7 +209,7 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
                   setIsMobileMenuOpen(false);
                 }}
                 size="lg"
-                className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-8"
+                className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-full px-8 py-3 font-bold shadow-xl"
               >
                 <Phone className="w-5 h-5 mr-3" />
                 اتصل الآن
@@ -196,11 +220,10 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
                   setIsMobileMenuOpen(false);
                 }}
                 size="lg"
-                variant="outline"
-                className={`rounded-full px-8 ${
+                className={`rounded-full px-8 py-3 font-bold shadow-xl ${
                   isDarkMode 
-                    ? 'border-green-500 text-green-400 hover:bg-green-500 hover:text-white' 
-                    : 'border-green-600 text-green-600 hover:bg-green-600 hover:text-white'
+                    ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white' 
+                    : 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white'
                 }`}
               >
                 <MessageCircle className="w-5 h-5 mr-3" />
