@@ -15,7 +15,7 @@ import AccessibilityEnhancer from '@/components/AccessibilityEnhancer';
 import AdvancedPerformanceOptimizer from '@/components/AdvancedPerformanceOptimizer';
 import UXEnhancer from '@/components/UXEnhancer';
 import { usePerformanceOptimization } from '@/hooks/usePerformanceOptimization';
-import { Star, Shield, Clock, Users, Award, Zap, CheckCircle } from 'lucide-react';
+import { Shield, Clock, Users, Award, Zap, CheckCircle } from 'lucide-react';
 
 interface Service {
   id: number;
@@ -76,7 +76,6 @@ const Index = () => {
     }
   });
   const [isLoading, setIsLoading] = useState(true);
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
   // Use performance optimization hook
   usePerformanceOptimization();
@@ -134,15 +133,6 @@ const Index = () => {
     loadData();
   }, []);
 
-  // Testimonials rotation
-  useEffect(() => {
-    const testimonials = [0, 1, 2];
-    const interval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
   const toggleTheme = () => {
     const newTheme = !isDarkMode;
     setIsDarkMode(newTheme);
@@ -179,28 +169,6 @@ const Index = () => {
     { icon: CheckCircle, value: 99, label: 'نسبة نجاح', color: 'text-emerald-500', suffix: '%' }
   ];
 
-  // Testimonials data
-  const testimonials = [
-    {
-      name: 'أحمد محمد',
-      rating: 5,
-      comment: 'خدمة ممتازة وسريعة، وصلوا في خلال 15 دقيقة ونقلوا السيارة بكل احترافية',
-      avatar: '👨'
-    },
-    {
-      name: 'فاطمة العلي',
-      rating: 5,
-      comment: 'تعاملهم راقي جداً والأسعار معقولة، أنصح بهم بشدة',
-      avatar: '👩'
-    },
-    {
-      name: 'محمد السعود',
-      rating: 5,
-      comment: 'فريق محترف ومعدات حديثة، حافظوا على سيارتي تماماً',
-      avatar: '👨‍💼'
-    }
-  ];
-
   // Features data
   const features = [
     {
@@ -222,7 +190,7 @@ const Index = () => {
       color: 'bg-amber-500'
     },
     {
-      icon: Star,
+      icon: Shield,
       title: 'جودة عالية',
       description: 'معدات حديثة ومعايير عالمية',
       color: 'bg-purple-500'
@@ -345,64 +313,6 @@ const Index = () => {
 
           {/* Process Section */}
           <ProcessSection isDarkMode={isDarkMode} />
-
-          {/* Testimonials Section */}
-          <section className={`py-20 ${isDarkMode ? 'bg-slate-900/50' : 'bg-slate-50'}`} id="testimonials" data-animate>
-            <div className="container mx-auto px-6">
-              <div className="text-center mb-16">
-                <h2 className={`text-4xl md:text-6xl font-black mb-6 ${
-                  isDarkMode ? 'text-white' : 'text-slate-800'
-                }`}>
-                  آراء عملائنا
-                </h2>
-                <div className="w-24 h-2 bg-gradient-to-r from-blue-500 to-amber-500 mx-auto rounded-full mb-6"></div>
-                <p className={`text-lg max-w-2xl mx-auto leading-relaxed ${
-                  isDarkMode ? 'text-slate-300' : 'text-slate-600'
-                }`}>
-                  شهادات حقيقية من عملائنا الكرام
-                </p>
-              </div>
-              
-              <div className="max-w-4xl mx-auto">
-                <div className={`p-10 rounded-3xl shadow-xl border-2 text-center transition-all duration-500 ${
-                  isDarkMode
-                    ? 'bg-gradient-to-br from-slate-700/60 to-slate-800/60 border-slate-600'
-                    : 'bg-gradient-to-br from-white to-slate-50 border-slate-200'
-                }`}>
-                  <div className="text-6xl mb-6">{testimonials[currentTestimonial].avatar}</div>
-                  <div className="flex justify-center mb-6">
-                    {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
-                      <Star key={i} className="h-6 w-6 text-yellow-400 fill-current mx-1" />
-                    ))}
-                  </div>
-                  <p className={`text-xl mb-6 italic leading-relaxed ${
-                    isDarkMode ? 'text-slate-300' : 'text-slate-600'
-                  }`}>
-                    "{testimonials[currentTestimonial].comment}"
-                  </p>
-                  <h4 className={`text-2xl font-bold ${
-                    isDarkMode ? 'text-white' : 'text-slate-800'
-                  }`}>
-                    {testimonials[currentTestimonial].name}
-                  </h4>
-                </div>
-                
-                <div className="flex justify-center mt-8 gap-3">
-                  {testimonials.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentTestimonial(index)}
-                      className={`w-4 h-4 rounded-full transition-all duration-300 ${
-                        index === currentTestimonial
-                          ? isDarkMode ? 'bg-amber-400 scale-125' : 'bg-amber-500 scale-125'
-                          : isDarkMode ? 'bg-slate-600 hover:bg-slate-500' : 'bg-slate-300 hover:bg-slate-400'
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
 
           {/* Contact Methods Section */}
           <ContactMethods 

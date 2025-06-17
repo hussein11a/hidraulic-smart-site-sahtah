@@ -105,7 +105,7 @@ const ModernServices: React.FC<ModernServicesProps> = ({ services, isDarkMode })
 
                 {/* Available Badge */}
                 {service.available && (
-                  <div className="text-center mb-4">
+                  <div className="text-center">
                     <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold ${
                       isDarkMode 
                         ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
@@ -116,22 +116,6 @@ const ModernServices: React.FC<ModernServicesProps> = ({ services, isDarkMode })
                     </span>
                   </div>
                 )}
-
-                {/* Service Action Button */}
-                <div className="text-center">
-                  <Button
-                    size="sm"
-                    className={`w-full group transition-all duration-300 font-semibold ${
-                      isDarkMode
-                        ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-blue-500/30'
-                        : 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg hover:shadow-blue-400/40'
-                    } hover:scale-105`}
-                    onClick={handleWhatsApp}
-                  >
-                    <MessageCircle className="w-4 h-4 mr-2 group-hover:animate-pulse" />
-                    اطلب الخدمة
-                  </Button>
-                </div>
               </div>
             </Card>
           ))}
