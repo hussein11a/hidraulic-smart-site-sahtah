@@ -137,15 +137,15 @@ const ModernServices: React.FC<ModernServicesProps> = ({ services, isDarkMode })
           </div>
         </div>
 
-        {/* Enhanced Services Grid with Modern Design */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 mb-28">
+        {/* Enhanced Services Grid - Now showing ALL services in full detail */}
+        <div className="space-y-16 mb-28">
           {services.map((service, index) => (
             <Card
               key={service.id}
               className={`group relative overflow-hidden transition-all duration-700 cursor-pointer transform-gpu ${
                 hoveredService === service.id 
-                  ? 'scale-110 rotate-1 z-10' 
-                  : 'hover:scale-105 hover:-rotate-1'
+                  ? 'scale-105 z-10' 
+                  : 'hover:scale-102'
               } ${
                 isDarkMode
                   ? 'bg-gradient-to-br from-slate-800/95 to-slate-900/95 border-2 border-slate-600/50 hover:border-cyan-400/70 shadow-2xl hover:shadow-cyan-500/50 backdrop-blur-md'
@@ -173,13 +173,13 @@ const ModernServices: React.FC<ModernServicesProps> = ({ services, isDarkMode })
                 } blur-xl`}></div>
               </div>
 
-              <div className="relative p-12 z-10">
+              <div className="relative p-12 z-10 flex items-center gap-12">
                 {/* Enhanced Service Icon with Modern Styling */}
-                <div className="text-center mb-10">
-                  <div className={`w-32 h-32 mx-auto rounded-3xl flex items-center justify-center text-7xl transition-all duration-700 ${
+                <div className="flex-shrink-0">
+                  <div className={`w-40 h-40 rounded-3xl flex items-center justify-center text-8xl transition-all duration-700 ${
                     hoveredService === service.id 
-                      ? 'scale-125 rotate-12' 
-                      : 'group-hover:scale-115 group-hover:rotate-6'
+                      ? 'scale-110 rotate-6' 
+                      : 'group-hover:scale-105 group-hover:rotate-3'
                   } ${
                     isDarkMode 
                       ? 'bg-gradient-to-br from-slate-700/90 to-slate-800/90 shadow-2xl border-2 border-slate-600/60 backdrop-blur-md' 
@@ -189,37 +189,40 @@ const ModernServices: React.FC<ModernServicesProps> = ({ services, isDarkMode })
                   </div>
                 </div>
 
-                {/* Enhanced Service Title with Better Typography */}
-                <h3 className={`text-2xl font-black mb-8 text-center leading-tight group-hover:scale-105 transition-transform duration-500 ${
-                  isDarkMode ? 'text-white drop-shadow-lg' : 'text-slate-800'
-                }`}>
-                  {service.title}
-                </h3>
+                {/* Service Content - Full Details */}
+                <div className="flex-1">
+                  {/* Enhanced Service Title */}
+                  <h3 className={`text-4xl font-black mb-6 leading-tight group-hover:scale-105 transition-transform duration-500 ${
+                    isDarkMode ? 'text-white drop-shadow-lg' : 'text-slate-800'
+                  }`}>
+                    {service.title}
+                  </h3>
 
-                {/* Enhanced Service Description */}
-                <p className={`text-lg leading-relaxed text-center mb-10 font-medium ${
-                  isDarkMode ? 'text-slate-300' : 'text-slate-600'
-                }`}>
-                  {service.description}
-                </p>
+                  {/* Full Service Description - Not truncated */}
+                  <p className={`text-2xl leading-relaxed mb-8 font-medium ${
+                    isDarkMode ? 'text-slate-300' : 'text-slate-600'
+                  }`}>
+                    {service.description}
+                  </p>
 
-                {/* Enhanced Available Badge */}
-                {service.available && (
-                  <div className="text-center mb-8">
-                    <span className={`inline-flex items-center gap-3 px-8 py-4 rounded-2xl text-lg font-black transition-all duration-500 group-hover:scale-110 backdrop-blur-md shadow-2xl ${
-                      isDarkMode 
-                        ? 'bg-gradient-to-r from-emerald-500/30 to-green-500/30 text-emerald-300 border-2 border-emerald-500/50' 
-                        : 'bg-gradient-to-r from-emerald-100/90 to-green-100/90 text-emerald-700 border-2 border-emerald-300/70'
-                    }`}>
-                      <CheckCircle className="w-6 h-6 animate-pulse" />
-                      متاح الآن
-                    </span>
-                  </div>
-                )}
+                  {/* Enhanced Available Badge */}
+                  {service.available && (
+                    <div className="mb-6">
+                      <span className={`inline-flex items-center gap-3 px-8 py-4 rounded-2xl text-xl font-black transition-all duration-500 group-hover:scale-110 backdrop-blur-md shadow-2xl ${
+                        isDarkMode 
+                          ? 'bg-gradient-to-r from-emerald-500/30 to-green-500/30 text-emerald-300 border-2 border-emerald-500/50' 
+                          : 'bg-gradient-to-r from-emerald-100/90 to-green-100/90 text-emerald-700 border-2 border-emerald-300/70'
+                      }`}>
+                        <CheckCircle className="w-6 h-6 animate-pulse" />
+                        متاح الآن
+                      </span>
+                    </div>
+                  )}
+                </div>
 
                 {/* Enhanced Service Number Badge */}
                 <div className="absolute top-8 left-8">
-                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-lg font-black transition-all duration-500 shadow-2xl ${
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black transition-all duration-500 shadow-2xl ${
                     isDarkMode 
                       ? 'bg-gradient-to-br from-amber-500/40 to-orange-500/40 text-amber-300 border-2 border-amber-400/50' 
                       : 'bg-gradient-to-br from-amber-100 to-orange-200 text-amber-700 border-2 border-amber-300'
@@ -230,7 +233,7 @@ const ModernServices: React.FC<ModernServicesProps> = ({ services, isDarkMode })
 
                 {/* Enhanced Corner Accent */}
                 <div className="absolute bottom-8 right-8">
-                  <div className={`w-8 h-8 rounded-full transition-all duration-500 group-hover:scale-125 shadow-xl ${
+                  <div className={`w-12 h-12 rounded-full transition-all duration-500 group-hover:scale-125 shadow-xl ${
                     isDarkMode 
                       ? 'bg-gradient-to-br from-cyan-400 to-purple-500' 
                       : 'bg-gradient-to-br from-blue-500 to-purple-600'
