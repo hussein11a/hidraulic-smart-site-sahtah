@@ -161,6 +161,27 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
         </div>
       </nav>
 
+      {/* Truck Image Below Navigation Bar */}
+      <div className={`fixed top-20 left-0 right-0 z-40 transition-all duration-300 ${
+        isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'
+      }`}>
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex justify-center">
+            <div className={`p-6 rounded-3xl shadow-2xl transition-all duration-700 hover:scale-110 border-4 ${
+              isDarkMode 
+                ? 'bg-gradient-to-br from-slate-700/90 to-slate-800/90 border-cyan-400/50 shadow-cyan-500/30' 
+                : 'bg-gradient-to-br from-white/95 to-blue-50/95 border-blue-300/50 shadow-blue-400/30'
+            }`}>
+              <img 
+                src="/lovable-uploads/53c7547b-fc11-4442-b5f6-798e6e1aa08f.png" 
+                alt="شاحنة السطحة الهيدروليكية" 
+                className="w-24 h-24 object-contain filter brightness-110 animate-pulse"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className={`fixed inset-0 z-40 lg:hidden ${
