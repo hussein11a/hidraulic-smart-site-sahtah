@@ -1,8 +1,8 @@
-
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Phone, MessageCircle, Clock, Shield, Star, CheckCircle, ArrowRight, Sparkles, Zap, Award, ChevronDown, ChevronUp } from 'lucide-react';
+import OptimizedImage from './OptimizedImage';
 
 interface Service {
   id: number;
@@ -77,8 +77,26 @@ const ModernServices: React.FC<ModernServicesProps> = ({ services, isDarkMode })
 
       <div className="container mx-auto px-6 relative z-10">
         
-        {/* Professional Header Section */}
+        {/* Professional Header Section with Truck Image */}
         <div className="text-center mb-24">
+          {/* Truck Image */}
+          <div className="flex justify-center mb-12">
+            <div className={`p-8 rounded-3xl shadow-2xl transition-all duration-700 hover:scale-110 border-4 ${
+              isDarkMode 
+                ? 'bg-gradient-to-br from-slate-700/90 to-slate-800/90 border-cyan-400/50 shadow-cyan-500/30' 
+                : 'bg-gradient-to-br from-white/95 to-blue-50/95 border-blue-300/50 shadow-blue-400/30'
+            } backdrop-blur-md`}>
+              <OptimizedImage
+                src="/lovable-uploads/53c7547b-fc11-4442-b5f6-798e6e1aa08f.png"
+                alt="شاحنة السطحة الهيدروليكية"
+                width={120}
+                height={120}
+                className="w-32 h-32 object-contain filter brightness-110 animate-pulse"
+                priority={true}
+              />
+            </div>
+          </div>
+
           <div className="flex items-center justify-center gap-6 mb-10">
             <div className={`p-4 rounded-2xl ${
               isDarkMode 
@@ -108,7 +126,7 @@ const ModernServices: React.FC<ModernServicesProps> = ({ services, isDarkMode })
               ? 'bg-gradient-to-r from-white via-cyan-200 to-purple-200' 
               : 'bg-gradient-to-r from-slate-900 via-blue-700 to-purple-700'
           } bg-clip-text text-transparent drop-shadow-2xl`}>
-            حلول شاملة ومتطورة
+            سطحة هيدروليك
           </h2>
           
           <div className="flex justify-center items-center gap-6 mb-12">
