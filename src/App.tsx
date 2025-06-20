@@ -1,38 +1,61 @@
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
+import { Suspense, lazy } from "react";
+import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import ErrorBoundary from "./components/ErrorBoundary";
+import { usePerformanceOptimization } from "./hooks/usePerformanceOptimization";
+import CriticalCSS from "./components/CriticalCSS";
+import EnhancedSecurity from "./components/EnhancedSecurity";
+import EnhancedPerformanceOptimizer from "./components/EnhancedPerformanceOptimizer";
+import MetaTags from "./components/MetaTags";
+import SecurityProvider from "./components/SecurityProvider";
+import PerformanceMonitor from "./components/PerformanceMonitor";
+import AdvancedPerformanceOptimizer from "./components/AdvancedPerformanceOptimizer";
+import SEOOptimizer from "./components/SEOOptimizer";
+
+const Index = lazy(() => import("./pages/Index"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
       retry: 1,
-      refetchOnWindowFocus: false,
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      gcTime: 10 * 60 * 1000, // 10 minutes (replaces cacheTime)
     },
   },
 });
 
-const App = () => (
-  <ErrorBoundary>
+const App = () => {
+  usePerformanceOptimization();
+
+  return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="*" element={<Index />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <CriticalCSS />
+      <EnhancedSecurity />
+      <EnhancedPerformanceOptimizer />
+      <MetaTags />
+      <SecurityProvider>
+        <PerformanceMonitor />
+        <AdvancedPerformanceOptimizer />
+        <SEOOptimizer />
+        <TooltipProvider>
+          <Toaster />
+          <BrowserRouter>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Suspense fallback={<div>جاري التحميل...</div>}>
+                    <Index />
+                  </Suspense>
+                }
+              />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </SecurityProvider>
     </QueryClientProvider>
-  </ErrorBoundary>
-);
+  );
+};
 
 export default App;
