@@ -3,7 +3,7 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1200, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.5, maximum-scale=3.0" />
     <title>سطحة هيدروليك السعودية - خدمة نقل السيارات 24 ساعة | أفضل سطحة في الرياض</title>
     
     <!-- Primary Meta Tags -->
@@ -84,6 +84,12 @@
         font-display: swap;
       }
       
+      html {
+        font-size: 16px;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+      
       body {
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -92,7 +98,18 @@
         background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         margin: 0;
         padding: 0;
-        min-width: 1200px; /* Force minimum width for desktop layout */
+        min-width: 100%;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      /* Desktop-first responsive container */
+      .desktop-container {
+        min-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
       }
       
       /* Enhanced loading animation */
@@ -113,6 +130,7 @@
       /* Optimized scrollbar */
       ::-webkit-scrollbar {
         width: 8px;
+        height: 8px;
       }
       
       ::-webkit-scrollbar-track {
@@ -122,6 +140,10 @@
       ::-webkit-scrollbar-thumb {
         background: linear-gradient(45deg, #3b82f6, #f59e0b);
         border-radius: 4px;
+      }
+      
+      ::-webkit-scrollbar-corner {
+        background: rgba(0, 0, 0, 0.05);
       }
       
       /* Enhanced focus indicators for accessibility */
@@ -136,6 +158,24 @@
         max-width: 100%;
         height: auto;
         content-visibility: auto;
+      }
+      
+      /* Professional desktop layout styles */
+      @media screen and (max-width: 1199px) {
+        body {
+          transform-origin: top left;
+          transform: scale(0.8);
+          width: 125%;
+          height: 125%;
+        }
+      }
+      
+      @media screen and (max-width: 767px) {
+        body {
+          transform: scale(0.6);
+          width: 166.67%;
+          height: 166.67%;
+        }
       }
       
       /* Dark mode support */
@@ -154,11 +194,17 @@
           transition-duration: 0.01ms !important;
         }
       }
+      
+      /* Touch optimization */
+      button, a, [role="button"] {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+      }
     </style>
   </head>
 
   <body>
-    <div id="root">
+    <div id="root" class="desktop-container">
       <div style="display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);">
         <div class="loading"></div>
         <p style="margin-top: 1rem; color: #6b7280; font-weight: 500;">جاري التحميل...</p>
