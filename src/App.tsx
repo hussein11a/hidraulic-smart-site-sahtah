@@ -1,61 +1,56 @@
 
 import { Suspense, lazy } from "react";
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { usePerformanceOptimization } from "./hooks/usePerformanceOptimization";
-import CriticalCSS from "./components/CriticalCSS";
-import EnhancedSecurity from "./components/EnhancedSecurity";
-import EnhancedPerformanceOptimizer from "./components/EnhancedPerformanceOptimizer";
-import MetaTags from "./components/MetaTags";
-import SecurityProvider from "./components/SecurityProvider";
-import PerformanceMonitor from "./components/PerformanceMonitor";
-import AdvancedPerformanceOptimizer from "./components/AdvancedPerformanceOptimizer";
-import SEOOptimizer from "./components/SEOOptimizer";
+import PerformanceMonitor from "@/components/PerformanceMonitor";
+import AdvancedPerformanceOptimizer from "@/components/AdvancedPerformanceOptimizer";
+import UXEnhancer from "@/components/UXEnhancer";
+import AccessibilityEnhancer from "@/components/AccessibilityEnhancer";
+import EnhancedSEO from "@/components/EnhancedSEO";
+import SEOOptimizer from "@/components/SEOOptimizer";
+import StructuredData from "@/components/StructuredData";
+import SecurityProvider from "@/components/SecurityProvider";
+import EnhancedPerformanceOptimizer from "@/components/EnhancedPerformanceOptimizer";
 
 const Index = lazy(() => import("./pages/Index"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes
-      retry: 1,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
-const App = () => {
-  usePerformanceOptimization();
-
-  return (
-    <QueryClientProvider client={queryClient}>
-      <CriticalCSS />
-      <EnhancedSecurity />
-      <EnhancedPerformanceOptimizer />
-      <MetaTags />
-      <SecurityProvider>
-        <PerformanceMonitor />
-        <AdvancedPerformanceOptimizer />
-        <SEOOptimizer />
-        <TooltipProvider>
-          <Toaster />
-          <BrowserRouter>
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <SecurityProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <PerformanceMonitor />
+          <AdvancedPerformanceOptimizer />
+          <EnhancedPerformanceOptimizer />
+          <UXEnhancer />
+          <AccessibilityEnhancer />
+          <EnhancedSEO />
+          <SEOOptimizer />
+          <StructuredData 
+            type="service" 
+            data={{
+              name: "خدمة سطحة هيدروليك",
+              description: "نقل السيارات المعطلة والمساعدة على الطريق"
+            }} 
+          />
+          <Suspense fallback={<div>Loading...</div>}>
             <Routes>
-              <Route
-                path="/"
-                element={
-                  <Suspense fallback={<div>جاري التحميل...</div>}>
-                    <Index />
-                  </Suspense>
-                }
-              />
+              <Route path="/" element={<Index />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </SecurityProvider>
-    </QueryClientProvider>
-  );
-};
+          </Suspense>
+        </BrowserRouter>
+      </TooltipProvider>
+    </SecurityProvider>
+  </QueryClientProvider>
+);
 
 export default App;

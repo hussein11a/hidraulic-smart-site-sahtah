@@ -7,26 +7,14 @@ interface SEOOptimizerProps {
   keywords?: string;
   image?: string;
   url?: string;
-  type?: string;
-  author?: string;
-  publishedTime?: string;
-  modifiedTime?: string;
-  section?: string;
-  tags?: string[];
-  locale?: string;
-  siteName?: string;
 }
 
 const SEOOptimizer: React.FC<SEOOptimizerProps> = ({
-  title = "سطحة هيدروليك السعودية - خدمة نقل السيارات 24 ساعة | أفضل سطحة في الرياض",
-  description = "خدمة سطحة هيدروليك احترافية في السعودية ⚡ نقل السيارات المعطلة والمساعدة على الطريق 24/7 🚛 أسرع وصول، أفضل أسعار، خدمة موثوقة في جميع أنحاء المملكة",
-  keywords = "سطحة هيدروليك، نقل سيارات، مساعدة طريق، سطحة سيارات، خدمة 24 ساعة، سطحة الرياض، نقل مركبات، إنقاذ سيارات، سطحة متنقلة، خدمة سطحة، سطحة السعودية، رقم سطحة، سطحة سريعة، سطحة رخيصة، سطحة موثوقة",
-  image = "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=1200&h=630&fit=crop&crop=center&auto=format&q=80",
-  url = "https://your-domain.com/",
-  type = "website",
-  author = "سطحة هيدروليك السعودية",
-  locale = "ar_SA",
-  siteName = "سطحة هيدروليك السعودية"
+  title = "سطحة هيدروليك السعودية - خدمة نقل السيارات 24 ساعة",
+  description = "خدمة سطحة هيدروليك احترافية في السعودية ⚡ نقل السيارات المعطلة والمساعدة على الطريق 24/7",
+  keywords = "سطحة هيدروليك، نقل سيارات، مساعدة طريق، سطحة سيارات، خدمة 24 ساعة",
+  image = "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=1200&h=630",
+  url = "https://your-domain.com/"
 }) => {
   
   useEffect(() => {
@@ -50,17 +38,15 @@ const SEOOptimizer: React.FC<SEOOptimizerProps> = ({
     // Basic meta tags
     updateMetaTag('description', description);
     updateMetaTag('keywords', keywords);
-    updateMetaTag('author', author);
-    updateMetaTag('robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
+    updateMetaTag('robots', 'index, follow, max-image-preview:large');
     
     // Open Graph tags
     updateMetaTag('og:title', title, true);
     updateMetaTag('og:description', description, true);
     updateMetaTag('og:image', image, true);
     updateMetaTag('og:url', url, true);
-    updateMetaTag('og:type', type, true);
-    updateMetaTag('og:locale', locale, true);
-    updateMetaTag('og:site_name', siteName, true);
+    updateMetaTag('og:type', 'website', true);
+    updateMetaTag('og:locale', 'ar_SA', true);
     
     // Twitter tags
     updateMetaTag('twitter:card', 'summary_large_image');
@@ -71,7 +57,6 @@ const SEOOptimizer: React.FC<SEOOptimizerProps> = ({
     // Arabic-specific meta tags
     updateMetaTag('language', 'Arabic');
     updateMetaTag('geo.country', 'Saudi Arabia');
-    updateMetaTag('geo.region', 'SA');
     
     // Canonical URL
     let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
@@ -82,97 +67,9 @@ const SEOOptimizer: React.FC<SEOOptimizerProps> = ({
     }
     canonical.href = url;
     
-    // JSON-LD structured data for current page
-    const structuredData = {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "@id": url + "#webpage",
-      "url": url,
-      "name": title,
-      "description": description,
-      "image": image,
-      "inLanguage": "ar-SA",
-      "isPartOf": {
-        "@id": "https://your-domain.com/#website"
-      },
-      "about": {
-        "@id": "https://your-domain.com/#business"
-      },
-      "mainEntity": {
-        "@type": "Service",
-        "name": "خدمة سطحة هيدروليك",
-        "description": description,
-        "provider": {
-          "@id": "https://your-domain.com/#business"
-        },
-        "areaServed": {
-          "@type": "Country",
-          "name": "السعودية"
-        },
-        "serviceType": "نقل السيارات والمساعدة على الطريق",
-        "hoursAvailable": "Mo-Su 00:00-23:59"
-      },
-      "breadcrumb": {
-        "@id": "https://your-domain.com/#breadcrumb"
-      },
-      "speakable": {
-        "@type": "SpeakableSpecification",
-        "cssSelector": ["h1", "h2", ".highlight"]
-      }
-    };
-    
-    // Update or create JSON-LD script
-    let jsonLdScript = document.querySelector('script[type="application/ld+json"]#page-data') as HTMLScriptElement;
-    if (!jsonLdScript) {
-      jsonLdScript = document.createElement('script');
-      jsonLdScript.type = 'application/ld+json';
-      jsonLdScript.id = 'page-data';
-      document.head.appendChild(jsonLdScript);
-    }
-    jsonLdScript.textContent = JSON.stringify(structuredData);
-    
-  }, [title, description, keywords, image, url, type, author, locale, siteName]);
-
-  // Performance monitoring with proper TypeScript types
-  useEffect(() => {
-    if ('PerformanceObserver' in window) {
-      const observer = new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) {
-          // Monitor LCP
-          if (entry.entryType === 'largest-contentful-paint') {
-            console.log('LCP:', entry.startTime);
-          }
-          
-          // Monitor FID
-          if (entry.entryType === 'first-input') {
-            const fidEntry = entry as PerformanceEventTiming;
-            console.log('FID:', fidEntry.processingStart - fidEntry.startTime);
-          }
-          
-          // Monitor CLS
-          if (entry.entryType === 'layout-shift') {
-            const clsEntry = entry as PerformanceEntry & { value?: number };
-            if (clsEntry.value) {
-              console.log('CLS:', clsEntry.value);
-            }
-          }
-        }
-      });
-
-      try {
-        observer.observe({ 
-          entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'] 
-        });
-      } catch (error) {
-        console.log('Performance observer not supported');
-      }
-
-      return () => observer.disconnect();
-    }
-  }, []);
+  }, [title, description, keywords, image, url]);
 
   return null;
 };
 
 export default SEOOptimizer;
-

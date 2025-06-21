@@ -46,28 +46,6 @@ const EnhancedSEO: React.FC<EnhancedSEOProps> = ({
       "@type": "Country",
       "name": "السعودية"
     },
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "خدمات السطحة",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "نقل السيارات المعطلة",
-            "description": "خدمة نقل السيارات المعطلة بأحدث المعدات الهيدروليكية"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "مساعدة على الطريق",
-            "description": "خدمة المساعدة الفورية على الطريق 24/7"
-          }
-        }
-      ]
-    },
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
@@ -98,25 +76,6 @@ const EnhancedSEO: React.FC<EnhancedSEOProps> = ({
     script.type = 'application/ld+json';
     script.textContent = JSON.stringify(structuredData || defaultStructuredData);
     document.head.appendChild(script);
-
-    // Add breadcrumb structured data
-    const breadcrumbData = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "الرئيسية",
-          "item": canonicalUrl
-        }
-      ]
-    };
-
-    const breadcrumbScript = document.createElement('script');
-    breadcrumbScript.type = 'application/ld+json';
-    breadcrumbScript.textContent = JSON.stringify(breadcrumbData);
-    document.head.appendChild(breadcrumbScript);
 
     return () => {
       const structuredDataScript = document.getElementById('structured-data');
