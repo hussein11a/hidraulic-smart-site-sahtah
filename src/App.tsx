@@ -14,6 +14,8 @@ import SEOOptimizer from "@/components/SEOOptimizer";
 import StructuredData from "@/components/StructuredData";
 import SecurityProvider from "@/components/SecurityProvider";
 import EnhancedPerformanceOptimizer from "@/components/EnhancedPerformanceOptimizer";
+import MetaTags from "@/components/MetaTags";
+import EnhancedSecurity from "@/components/EnhancedSecurity";
 
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -34,6 +36,8 @@ const App = () => (
           <AccessibilityEnhancer />
           <EnhancedSEO />
           <SEOOptimizer />
+          <MetaTags />
+          <EnhancedSecurity />
           <StructuredData 
             type="service" 
             data={{
