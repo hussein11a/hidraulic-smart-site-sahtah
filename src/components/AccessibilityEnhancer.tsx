@@ -1,97 +1,79 @@
 
 import React, { useEffect } from 'react';
 
-interface AccessibilityEnhancerProps {
-  isDarkMode: boolean;
-}
-
-const AccessibilityEnhancer: React.FC<AccessibilityEnhancerProps> = ({ isDarkMode }) => {
-  
+const AccessibilityEnhancer: React.FC = () => {
   useEffect(() => {
     // Enhanced keyboard navigation
-    const handleKeyNavigation = (e: KeyboardEvent) => {
-      // Skip links for keyboard users
-      if (e.key === 'Tab' && !e.shiftKey) {
-        const focusableElements = document.querySelectorAll(
-          'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
-        );
-        
-        if (focusableElements.length > 0) {
-          const firstElement = focusableElements[0] as HTMLElement;
-          const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
-          
-          if (document.activeElement === lastElement) {
-            e.preventDefault();
-            firstElement.focus();
-          }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Tab') {
+        document.body.classList.add('keyboard-navigation');
+      }
+    };
+
+    const handleMouseDown = () => {
+      document.body.classList.remove('keyboard-navigation');
+    };
+
+    // Skip to main content link
+    const addSkipLink = () => {
+      const existingSkipLink = document.getElementById('skip-to-main');
+      if (!existingSkipLink) {
+        const skipLink = document.createElement('a');
+        skipLink.id = 'skip-to-main';
+        skipLink.href = '#main-content';
+        skipLink.textContent = 'تخطي إلى المحتوى الرئيسي';
+        skipLink.className = 'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded z-50';
+        document.body.insertBefore(skipLink, document.body.firstChild);
+      }
+    };
+
+    // ARIA labels for better screen reader support
+    const enhanceARIA = () => {
+      document.querySelectorAll('button:not([aria-label]):not([aria-labelledby])').forEach(button => {
+        const text = button.textContent?.trim();
+        if (text) {
+          button.setAttribute('aria-label', text);
         }
+      });
+
+      document.querySelectorAll('input:not([aria-label]):not([aria-labelledby])').forEach(input => {
+        const label = document.querySelector(`label[for="${input.id}"]`);
+        if (label) {
+          input.setAttribute('aria-labelledby', input.id + '-label');
+          label.id = input.id + '-label';
+        }
+      });
+    };
+
+    // High contrast mode detection
+    const handleHighContrast = () => {
+      const mediaQuery = window.matchMedia('(prefers-contrast: high)');
+      if (mediaQuery.matches) {
+        document.body.classList.add('high-contrast');
       }
     };
 
     // Reduced motion support
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const handleReducedMotion = (e: MediaQueryListEvent) => {
-      if (e.matches) {
-        document.documentElement.style.setProperty('--animation-duration', '0.01s');
-      } else {
-        document.documentElement.style.setProperty('--animation-duration', '0.3s');
+    const handleReducedMotion = () => {
+      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (mediaQuery.matches) {
+        document.body.classList.add('reduced-motion');
       }
     };
 
-    // High contrast support
-    const highContrastQuery = window.matchMedia('(prefers-contrast: high)');
-    const handleHighContrast = (e: MediaQueryListEvent) => {
-      if (e.matches) {
-        document.documentElement.classList.add('high-contrast');
-      } else {
-        document.documentElement.classList.remove('high-contrast');
-      }
-    };
-
-    // Focus management
-    const handleFocusVisible = () => {
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Tab') {
-          document.body.classList.add('keyboard-navigation');
-        }
-      });
-      
-      document.addEventListener('mousedown', () => {
-        document.body.classList.remove('keyboard-navigation');
-      });
-    };
-
-    // Initialize
-    document.addEventListener('keydown', handleKeyNavigation);
-    mediaQuery.addEventListener('change', handleReducedMotion);
-    highContrastQuery.addEventListener('change', handleHighContrast);
-    handleFocusVisible();
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('mousedown', handleMouseDown);
     
-    // Set initial states
-    handleReducedMotion(mediaQuery as any);
-    handleHighContrast(highContrastQuery as any);
-
-    // Add skip link
-    const skipLink = document.createElement('a');
-    skipLink.href = '#main-content';
-    skipLink.textContent = 'انتقل إلى المحتوى الرئيسي';
-    skipLink.className = 'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded z-50';
-    document.body.insertBefore(skipLink, document.body.firstChild);
+    addSkipLink();
+    enhanceARIA();
+    handleHighContrast();
+    handleReducedMotion();
 
     return () => {
-      document.removeEventListener('keydown', handleKeyNavigation);
-      mediaQuery.removeEventListener('change', handleReducedMotion);
-      highContrastQuery.removeEventListener('change', handleHighContrast);
-      if (skipLink.parentNode) {
-        skipLink.parentNode.removeChild(skipLink);
-      }
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('mousedown', handleMouseDown);
     };
   }, []);
-
-  useEffect(() => {
-    // Update ARIA attributes based on theme
-    document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
-  }, [isDarkMode]);
 
   return null;
 };
