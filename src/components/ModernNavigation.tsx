@@ -54,12 +54,12 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
             }`
           : 'bg-transparent'
       }`}>
-        <div className="container mx-auto px-6">
-          <div className="flex items-center justify-between h-20">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16 md:h-20">
             
-            {/* Logo */}
-            <div className="flex items-center gap-4">
-              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center p-2 transition-all duration-300 ${
+            {/* Logo - Compact for Mobile */}
+            <div className="flex items-center gap-2 md:gap-4">
+              <div className={`w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl flex items-center justify-center p-1 md:p-2 transition-all duration-300 ${
                 isDarkMode 
                   ? 'bg-gradient-to-br from-amber-500/20 to-orange-600/20 border-2 border-amber-500/30' 
                   : 'bg-gradient-to-br from-amber-50 to-orange-100 border-2 border-amber-200'
@@ -70,8 +70,8 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
                   className="w-full h-full object-contain filter brightness-110"
                 />
               </div>
-              <div>
-                <h2 className={`text-xl md:text-2xl font-black ${
+              <div className="hidden sm:block">
+                <h2 className={`text-lg md:text-xl lg:text-2xl font-black ${
                   isDarkMode ? 'text-white' : 'text-slate-800'
                 }`}>
                   سطحة هيدروليك
@@ -101,8 +101,8 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
               ))}
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex items-center gap-3">
+            {/* Action Buttons - Compact for Mobile */}
+            <div className="flex items-center gap-1 md:gap-3">
               {/* Theme Toggle */}
               <Button
                 onClick={onToggleTheme}
@@ -113,12 +113,12 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
                 }`}
               >
                 {isDarkMode ? 
-                  <Sun className="w-5 h-5 text-amber-500" /> : 
-                  <Moon className="w-5 h-5 text-slate-600" />
+                  <Sun className="w-4 h-4 md:w-5 md:h-5 text-amber-500" /> : 
+                  <Moon className="w-4 h-4 md:w-5 md:h-5 text-slate-600" />
                 }
               </Button>
 
-              {/* Contact Buttons - Desktop */}
+              {/* Contact Buttons - Desktop Only */}
               <div className="hidden md:flex items-center gap-2">
                 <Button
                   onClick={onPhoneCall}
@@ -147,13 +147,13 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 variant="ghost"
                 size="sm"
-                className={`lg:hidden rounded-full p-2 ${
+                className={`md:hidden rounded-full p-2 ${
                   isDarkMode ? 'hover:bg-slate-700' : 'hover:bg-slate-100'
                 }`}
               >
                 {isMobileMenuOpen ? 
-                  <X className={`w-6 h-6 ${isDarkMode ? 'text-white' : 'text-slate-800'}`} /> : 
-                  <Menu className={`w-6 h-6 ${isDarkMode ? 'text-white' : 'text-slate-800'}`} />
+                  <X className={`w-5 h-5 ${isDarkMode ? 'text-white' : 'text-slate-800'}`} /> : 
+                  <Menu className={`w-5 h-5 ${isDarkMode ? 'text-white' : 'text-slate-800'}`} />
                 }
               </Button>
             </div>
@@ -161,8 +161,8 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
         </div>
       </nav>
 
-      {/* Truck Image Below Navigation Bar */}
-      <div className={`fixed top-20 left-0 right-0 z-40 transition-all duration-300 ${
+      {/* Truck Image Below Navigation Bar - Hidden on Mobile */}
+      <div className={`fixed top-20 left-0 right-0 z-40 transition-all duration-300 hidden md:block ${
         isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}>
         <div className="container mx-auto px-6 py-4">
