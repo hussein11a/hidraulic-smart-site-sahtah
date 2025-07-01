@@ -14,7 +14,9 @@ import EnhancedSEO from '@/components/EnhancedSEO';
 import AccessibilityEnhancer from '@/components/AccessibilityEnhancer';
 import AdvancedPerformanceOptimizer from '@/components/AdvancedPerformanceOptimizer';
 import UXEnhancer from '@/components/UXEnhancer';
+import MobileOptimizer from '@/components/MobileOptimizer';
 import { usePerformanceOptimization } from '@/hooks/usePerformanceOptimization';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { Shield, Clock, Users, Award, Zap, CheckCircle } from 'lucide-react';
 
 interface Service {
@@ -76,6 +78,7 @@ const Index = () => {
     }
   });
   const [isLoading, setIsLoading] = useState(true);
+  const isMobile = useIsMobile();
 
   // Use performance optimization hook
   usePerformanceOptimization();
@@ -209,6 +212,7 @@ const Index = () => {
       <AdvancedPerformanceOptimizer />
       <AccessibilityEnhancer isDarkMode={isDarkMode} />
       <UXEnhancer isDarkMode={isDarkMode} />
+      <MobileOptimizer isDarkMode={isDarkMode} isMobile={isMobile} />
       
       <div className={`min-h-screen transition-all duration-500 ${
         isDarkMode 
@@ -233,25 +237,25 @@ const Index = () => {
           />
 
           {/* Statistics Section */}
-          <section className={`py-20 ${isDarkMode ? 'bg-slate-800/30' : 'bg-white/50'}`} id="statistics" data-animate>
-            <div className="container mx-auto px-6">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <section className={`${isMobile ? 'py-12' : 'py-20'} ${isDarkMode ? 'bg-slate-800/30' : 'bg-white/50'}`} id="statistics" data-animate>
+            <div className="container mx-auto px-4 md:px-6">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
                 {statistics.map((stat, index) => (
                   <div
                     key={index}
-                    className={`text-center p-8 rounded-3xl shadow-xl transition-all duration-500 hover:scale-105 border-2 ${
+                    className={`text-center ${isMobile ? 'p-4' : 'p-8'} rounded-2xl md:rounded-3xl shadow-xl transition-all duration-500 hover:scale-105 border-2 ${
                       isDarkMode
                         ? 'bg-gradient-to-br from-slate-700/60 to-slate-800/60 border-slate-600 hover:border-blue-500/50'
                         : 'bg-gradient-to-br from-white to-slate-50 border-slate-200 hover:border-blue-300'
                     }`}
                   >
                     <stat.icon className={`h-10 w-10 mx-auto mb-4 ${stat.color}`} />
-                    <div className={`text-3xl md:text-4xl font-black mb-2 ${
+                    <div className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-black mb-2 ${
                       isDarkMode ? 'text-white' : 'text-slate-800'
                     }`}>
                       <AnimatedCounter end={stat.value} suffix={stat.suffix} />
                     </div>
-                    <div className={`text-sm font-bold ${
+                    <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-bold ${
                       isDarkMode ? 'text-slate-300' : 'text-slate-600'
                     }`}>
                       {stat.label}
@@ -263,10 +267,10 @@ const Index = () => {
           </section>
 
           {/* Features Section */}
-          <section className={`py-20 ${isDarkMode ? 'bg-slate-900/50' : 'bg-slate-50'}`} id="features" data-animate>
-            <div className="container mx-auto px-6">
-              <div className="text-center mb-16">
-                <h2 className={`text-4xl md:text-6xl font-black mb-6 ${
+          <section className={`${isMobile ? 'py-12' : 'py-20'} ${isDarkMode ? 'bg-slate-900/50' : 'bg-slate-50'}`} id="features" data-animate>
+            <div className="container mx-auto px-4 md:px-6">
+              <div className={`text-center ${isMobile ? 'mb-8' : 'mb-16'}`}>
+                <h2 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-6xl'} font-black mb-6 ${
                   isDarkMode ? 'text-white' : 'text-slate-800'
                 }`}>
                   مميزاتنا الخاصة
@@ -279,11 +283,11 @@ const Index = () => {
                 </p>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ${isMobile ? 'gap-4' : 'gap-8'}`}>
                 {features.map((feature, index) => (
                   <div
                     key={index}
-                    className={`group p-8 rounded-3xl shadow-xl transition-all duration-500 hover:scale-105 border-2 text-center ${
+                    className={`group ${isMobile ? 'p-6' : 'p-8'} rounded-2xl md:rounded-3xl shadow-xl transition-all duration-500 hover:scale-105 border-2 text-center ${
                       isDarkMode
                         ? 'bg-gradient-to-br from-slate-700/60 to-slate-800/60 border-slate-600 hover:border-blue-500/50'
                         : 'bg-gradient-to-br from-white to-slate-50 border-slate-200 hover:border-blue-300'
