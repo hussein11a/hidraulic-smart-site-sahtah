@@ -10,18 +10,26 @@ const MobileOptimizer: React.FC<MobileOptimizerProps> = ({ isDarkMode, isMobile 
   useEffect(() => {
     if (!isMobile) return;
 
-    // Fix viewport height issues on mobile
+    // Enhanced viewport management for mobile
     const setVhProperty = () => {
       const vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
+      
+      // Set safe area insets for modern mobile devices
+      document.documentElement.style.setProperty('--safe-area-inset-top', 'env(safe-area-inset-top, 0px)');
+      document.documentElement.style.setProperty('--safe-area-inset-bottom', 'env(safe-area-inset-bottom, 0px)');
     };
 
-    // Prevent zoom on input focus
+    // Advanced input zoom prevention
     const preventZoom = () => {
       const viewportMeta = document.querySelector('meta[name="viewport"]');
       if (viewportMeta) {
-        viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+        viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover');
       }
+      
+      // Additional zoom prevention for iOS Safari
+      document.addEventListener('gesturestart', (e) => e.preventDefault());
+      document.addEventListener('gesturechange', (e) => e.preventDefault());
     };
 
     // Optimize touch events
@@ -92,46 +100,96 @@ const MobileOptimizer: React.FC<MobileOptimizerProps> = ({ isDarkMode, isMobile 
     };
   }, [isMobile]);
 
-  // Add mobile-specific CSS
+    // Enhanced mobile CSS optimizations
   useEffect(() => {
     if (!isMobile) return;
 
     const style = document.createElement('style');
     style.textContent = `
-      /* Mobile-specific optimizations */
+      /* Advanced mobile optimizations */
       * {
         -webkit-tap-highlight-color: transparent;
         -webkit-touch-callout: none;
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      
+      /* Allow text selection for readable content */
+      p, span, div[role="text"], h1, h2, h3, h4, h5, h6 {
+        -webkit-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        user-select: text;
       }
       
       body {
         -webkit-text-size-adjust: 100%;
         -ms-text-size-adjust: 100%;
+        /* Use safe area for padding */
+        padding-top: var(--safe-area-inset-top);
+        padding-bottom: var(--safe-area-inset-bottom);
       }
       
-      /* Fix mobile input styling */
+      /* Enhanced input styling for mobile */
       input, textarea, select {
         -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
         border-radius: 0;
         font-size: 16px; /* Prevent zoom on iOS */
+        /* Improve input performance */
+        transform: translateZ(0);
+        backface-visibility: hidden;
       }
       
-      /* Improve button touch targets */
-      button, a {
+      /* Improved touch targets */
+      button, a, [role="button"] {
         min-height: 44px;
         min-width: 44px;
+        /* Better tap response */
+        touch-action: manipulation;
       }
       
-      /* Fix sticky positioning issues on mobile */
+      /* Enhanced sticky positioning */
       .mobile-sticky {
         position: -webkit-sticky;
         position: sticky;
+        /* Improve sticky performance */
+        will-change: transform;
+        transform: translateZ(0);
       }
       
-      /* Optimize text rendering on mobile */
-      p, span, div {
+      /* Optimized text rendering */
+      p, span, div, h1, h2, h3, h4, h5, h6 {
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+      }
+      
+      /* Performance optimizations */
+      .animate-element {
+        will-change: transform, opacity;
+        transform: translateZ(0);
+      }
+      
+      /* Reduce motion for accessibility */
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+      
+      /* High contrast mode support */
+      @media (prefers-contrast: high) {
+        * {
+          outline: 2px solid;
+          outline-offset: 2px;
+        }
       }
     `;
     

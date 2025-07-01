@@ -28,13 +28,58 @@ const AdvancedPerformanceOptimizer: React.FC = () => {
       });
     };
 
-    // Critical resource loading
+    // Enhanced critical resource loading
     const loadCriticalResources = () => {
       const criticalCSS = `
-        * { font-display: swap; }
-        body { font-family: 'Tajawal', system-ui, sans-serif; }
-        .loading { opacity: 0; }
-        .loaded { opacity: 1; transition: opacity 0.3s ease; }
+        /* Critical styles for immediate rendering */
+        * { 
+          font-display: swap; 
+          box-sizing: border-box;
+        }
+        
+        body { 
+          font-family: 'Tajawal', system-ui, -apple-system, BlinkMacSystemFont, sans-serif; 
+          margin: 0;
+          padding: 0;
+          line-height: 1.6;
+        }
+        
+        /* Loading states */
+        .loading { 
+          opacity: 0; 
+          transform: translateY(20px);
+        }
+        
+        .loaded { 
+          opacity: 1; 
+          transform: translateY(0);
+          transition: opacity 0.3s ease, transform 0.3s ease; 
+        }
+        
+        /* Critical layout prevention of CLS */
+        img, video { 
+          max-width: 100%; 
+          height: auto; 
+          display: block;
+        }
+        
+        /* Placeholder for async content */
+        .content-placeholder {
+          background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+          background-size: 200% 100%;
+          animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+        
+        /* Performance optimizations */
+        .gpu-accelerated {
+          transform: translateZ(0);
+          will-change: transform;
+        }
       `;
       
       const style = document.createElement('style');
