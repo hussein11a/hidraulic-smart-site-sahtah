@@ -4,14 +4,15 @@ import React, { useEffect } from 'react';
 const AdvancedPerformanceOptimizer: React.FC = () => {
   
   useEffect(() => {
-    // Resource hints for better performance
+    // Enhanced resource hints for better FCP and LCP
     const addResourceHints = () => {
       const hints = [
         { rel: 'dns-prefetch', href: '//fonts.googleapis.com' },
         { rel: 'dns-prefetch', href: '//fonts.gstatic.com' },
         { rel: 'dns-prefetch', href: '//images.unsplash.com' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com', crossOrigin: 'anonymous' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' }
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
+        { rel: 'preload', href: '/lovable-uploads/53c7547b-fc11-4442-b5f6-798e6e1aa08f.png', as: 'image' }
       ];
 
       hints.forEach(hint => {
@@ -28,20 +29,34 @@ const AdvancedPerformanceOptimizer: React.FC = () => {
       });
     };
 
-    // Enhanced critical resource loading
+    // Enhanced critical resource loading with improved FCP
     const loadCriticalResources = () => {
       const criticalCSS = `
-        /* Critical styles for immediate rendering */
+        /* Critical styles for immediate rendering - Optimized for FCP */
         * { 
           font-display: swap; 
           box-sizing: border-box;
         }
         
         body { 
-          font-family: 'Tajawal', system-ui, -apple-system, BlinkMacSystemFont, sans-serif; 
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Tajawal', sans-serif; 
           margin: 0;
           padding: 0;
           line-height: 1.6;
+          font-synthesis: none;
+          text-rendering: optimizeSpeed;
+        }
+        
+        /* Critical above-the-fold styles */
+        .hero-section {
+          min-height: 100vh;
+          contain: layout style paint;
+        }
+        
+        /* Prevent layout shifts */
+        img, video, iframe {
+          aspect-ratio: attr(width) / attr(height);
+          object-fit: cover;
         }
         
         /* Loading states */
@@ -56,11 +71,18 @@ const AdvancedPerformanceOptimizer: React.FC = () => {
           transition: opacity 0.3s ease, transform 0.3s ease; 
         }
         
-        /* Critical layout prevention of CLS */
+        /* Critical layout prevention of CLS - Enhanced */
         img, video { 
           max-width: 100%; 
           height: auto; 
           display: block;
+          contain: layout style;
+        }
+        
+        /* Improve LCP for hero images */
+        .hero-image {
+          content-visibility: auto;
+          contain-intrinsic-size: 1200px 800px;
         }
         
         /* Placeholder for async content */

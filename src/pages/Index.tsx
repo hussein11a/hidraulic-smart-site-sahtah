@@ -16,6 +16,8 @@ import AdvancedPerformanceOptimizer from '@/components/AdvancedPerformanceOptimi
 import UXEnhancer from '@/components/UXEnhancer';
 import MobileOptimizer from '@/components/MobileOptimizer';
 import ResponsivePerformanceManager from '@/components/ResponsivePerformanceManager';
+import CriticalResourceLoader from '@/components/CriticalResourceLoader';
+import LayoutShiftPrevention from '@/components/LayoutShiftPrevention';
 import { usePerformanceOptimization } from '@/hooks/usePerformanceOptimization';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Shield, Clock, Users, Award, Zap, CheckCircle } from 'lucide-react';
@@ -207,6 +209,8 @@ const Index = () => {
 
   return (
     <SecurityProvider>
+      <CriticalResourceLoader />
+      <LayoutShiftPrevention />
       <EnhancedSEO />
       <SEOOptimizer />
       <PerformanceMonitor />
