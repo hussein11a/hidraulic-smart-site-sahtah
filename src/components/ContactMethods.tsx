@@ -19,17 +19,15 @@ const ContactMethods: React.FC<ContactMethodsProps> = ({
       icon: Phone,
       title: 'اتصال مباشر',
       description: 'تواصل معنا عبر الهاتف للحصول على خدمة فورية',
-      action: onPhoneCall,
-      color: 'bg-blue-500',
-      hoverColor: 'hover:bg-blue-600'
+      phone: '+966501234567',
+      color: 'bg-blue-500'
     },
     {
       icon: MessageSquare,
       title: 'واتساب',
       description: 'أرسل رسالة واتساب وسنرد عليك فوراً',
-      action: onWhatsApp,
-      color: 'bg-green-500',
-      hoverColor: 'hover:bg-green-600'
+      phone: '+966501234567',
+      color: 'bg-green-500'
     }
   ];
 
@@ -97,13 +95,30 @@ const ContactMethods: React.FC<ContactMethodsProps> = ({
                 {method.description}
               </p>
               
-              <Button
-                onClick={method.action}
-                className={`w-full py-3 rounded-xl font-bold text-white border-2 transition-all duration-300 hover:scale-105 shadow-lg ${method.color} ${method.hoverColor} border-opacity-50`}
-              >
-                <method.icon className="h-5 w-5 ml-2" />
-                تواصل الآن
-              </Button>
+              <div className={`w-full p-4 rounded-xl border-2 border-dashed transition-all duration-300 text-center ${
+                isDarkMode 
+                  ? 'border-slate-500 bg-slate-800/30' 
+                  : 'border-slate-300 bg-slate-50'
+              }`}>
+                <p className={`text-sm font-medium mb-2 ${
+                  isDarkMode ? 'text-slate-300' : 'text-slate-600'
+                }`}>
+                  رقم الهاتف
+                </p>
+                <p 
+                  className={`text-2xl font-bold select-all cursor-text ${
+                    isDarkMode ? 'text-white' : 'text-slate-800'
+                  }`}
+                  dir="ltr"
+                >
+                  {method.phone}
+                </p>
+                <p className={`text-xs mt-2 ${
+                  isDarkMode ? 'text-slate-400' : 'text-slate-500'
+                }`}>
+                  اضغط لتحديد ونسخ الرقم
+                </p>
+              </div>
             </div>
           ))}
         </div>
