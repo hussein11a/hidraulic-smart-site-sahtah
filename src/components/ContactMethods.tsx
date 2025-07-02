@@ -1,7 +1,8 @@
 
 import React from 'react';
-import { Phone, MessageSquare, Mail, MapPin, Clock } from 'lucide-react';
+import { Phone, MessageSquare, Mail, MapPin, Clock, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 interface ContactMethodsProps {
   isDarkMode: boolean;
@@ -14,6 +15,23 @@ const ContactMethods: React.FC<ContactMethodsProps> = ({
   onPhoneCall, 
   onWhatsApp 
 }) => {
+  const { toast } = useToast();
+
+  const handleCopyPhone = async (phoneNumber: string) => {
+    try {
+      await navigator.clipboard.writeText(phoneNumber);
+      toast({
+        title: "تم النسخ",
+        description: "تم نسخ رقم الهاتف بنجاح",
+      });
+    } catch (error) {
+      toast({
+        title: "خطأ",
+        description: "فشل في نسخ رقم الهاتف",
+        variant: "destructive",
+      });
+    }
+  };
   const contactMethods = [
     {
       icon: Phone,
@@ -95,29 +113,68 @@ const ContactMethods: React.FC<ContactMethodsProps> = ({
                 {method.description}
               </p>
               
-              <div className={`w-full p-4 rounded-xl border-2 border-dashed transition-all duration-300 text-center ${
+              <div className={`w-full p-6 rounded-xl border-2 border-dashed transition-all duration-300 ${
                 isDarkMode 
                   ? 'border-slate-500 bg-slate-800/30' 
                   : 'border-slate-300 bg-slate-50'
               }`}>
-                <p className={`text-sm font-medium mb-2 ${
+                <p className={`text-sm font-medium mb-3 text-center ${
                   isDarkMode ? 'text-slate-300' : 'text-slate-600'
                 }`}>
                   رقم الهاتف
                 </p>
                 <p 
-                  className={`text-2xl font-bold select-all cursor-text ${
+                  className={`text-2xl font-bold select-all cursor-text text-center mb-4 ${
                     isDarkMode ? 'text-white' : 'text-slate-800'
                   }`}
                   dir="ltr"
                 >
                   {method.phone}
                 </p>
-                <p className={`text-xs mt-2 ${
-                  isDarkMode ? 'text-slate-400' : 'text-slate-500'
-                }`}>
-                  اضغط لتحديد ونسخ الرقم
-                </p>
+                
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  {method.title === 'اتصال مباشر' && (
+                    <Button
+                      onClick={onPhoneCall}
+                      className={`flex items-center gap-2 ${
+                        isDarkMode 
+                          ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                          : 'bg-blue-500 hover:bg-blue-600 text-white'
+                      }`}
+                    >
+                      <Phone className="h-4 w-4" />
+                      اتصال مباشر
+                    </Button>
+                  )}
+                  
+                  {method.title === 'واتساب' && (
+                    <Button
+                      onClick={onWhatsApp}
+                      className={`flex items-center gap-2 ${
+                        isDarkMode 
+                          ? 'bg-green-600 hover:bg-green-700 text-white' 
+                          : 'bg-green-500 hover:bg-green-600 text-white'
+                      }`}
+                    >
+                      <MessageSquare className="h-4 w-4" />
+                      واتساب
+                    </Button>
+                  )}
+                  
+                  <Button
+                    onClick={() => handleCopyPhone(method.phone)}
+                    variant="outline"
+                    className={`flex items-center gap-2 ${
+                      isDarkMode 
+                        ? 'border-slate-500 text-slate-300 hover:bg-slate-700' 
+                        : 'border-slate-300 text-slate-600 hover:bg-slate-100'
+                    }`}
+                  >
+                    <Copy className="h-4 w-4" />
+                    نسخ الرقم
+                  </Button>
+                </div>
               </div>
             </div>
           ))}
