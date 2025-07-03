@@ -1,8 +1,9 @@
 
-// Advanced Service Worker for 100% PageSpeed score
-const CACHE_NAME = 'hydraulic-tow-v2';
-const STATIC_CACHE = 'static-v2';
-const DYNAMIC_CACHE = 'dynamic-v2';
+// Ultra-optimized Service Worker for 100% PageSpeed score
+const CACHE_NAME = 'hydraulic-tow-v3';
+const STATIC_CACHE = 'static-v3';
+const DYNAMIC_CACHE = 'dynamic-v3';
+const CRITICAL_CACHE = 'critical-v3';
 
 // Critical resources to cache immediately for LCP optimization
 const CRITICAL_ASSETS = [
@@ -16,11 +17,11 @@ const STATIC_ASSETS = [
   'https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap'
 ];
 
-// Install event - aggressive caching for performance
+// Install event - ultra-aggressive caching for maximum performance
 self.addEventListener('install', (event) => {
   event.waitUntil(
     Promise.all([
-      caches.open(STATIC_CACHE).then(cache => cache.addAll(CRITICAL_ASSETS)),
+      caches.open(CRITICAL_CACHE).then(cache => cache.addAll(CRITICAL_ASSETS)),
       caches.open(STATIC_CACHE).then(cache => cache.addAll(STATIC_ASSETS).catch(() => {})),
       self.skipWaiting()
     ])
@@ -32,27 +33,29 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Images: Cache first, network fallback (for LCP optimization)
+  // Images: Instant cache first for zero LCP delay
   if (request.destination === 'image') {
     event.respondWith(
-      caches.match(request).then(response => {
-        if (response) return response;
-        
-        return fetch(request).then(networkResponse => {
-          if (networkResponse && networkResponse.status === 200) {
-            const responseClone = networkResponse.clone();
-            caches.open(DYNAMIC_CACHE).then(cache => cache.put(request, responseClone));
-          }
-          return networkResponse;
-        }).catch(() => {
-          // Return placeholder if image fails to load
-          return new Response('<svg></svg>', {
-            headers: { 'Content-Type': 'image/svg+xml' }
+      caches.open(CRITICAL_CACHE).then(cache => {
+        return cache.match(request).then(response => {
+          if (response) return response;
+          
+          return fetch(request, { priority: 'high' }).then(networkResponse => {
+            if (networkResponse && networkResponse.status === 200) {
+              const responseClone = networkResponse.clone();
+              cache.put(request, responseClone);
+            }
+            return networkResponse;
+          }).catch(() => {
+            // Return optimized placeholder
+            return new Response('<svg width="400" height="267" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#f3f4f6"/></svg>', {
+              headers: { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'max-age=31536000' }
+            });
           });
         });
       })
     );
-  } 
+  }
   // Fonts: Cache first for immediate render
   else if (url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com') {
     event.respondWith(

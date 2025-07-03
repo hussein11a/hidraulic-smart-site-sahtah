@@ -20,6 +20,7 @@ import CriticalResourceLoader from '@/components/CriticalResourceLoader';
 import LayoutShiftPrevention from '@/components/LayoutShiftPrevention';
 import UltimatePerformanceOptimizer from '@/components/UltimatePerformanceOptimizer';
 import AccessibilityOptimizer from '@/components/AccessibilityOptimizer';
+import UltimatePerformanceBooster from '@/components/UltimatePerformanceBooster';
 import { usePerformanceOptimization } from '@/hooks/usePerformanceOptimization';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Shield, Clock, Users, Award, Zap, CheckCircle } from 'lucide-react';
@@ -223,6 +224,7 @@ const Index = () => {
       <UXEnhancer isDarkMode={isDarkMode} />
       <MobileOptimizer isDarkMode={isDarkMode} isMobile={isMobile} />
       <ResponsivePerformanceManager isDarkMode={isDarkMode} isMobile={isMobile} />
+      <UltimatePerformanceBooster />
       
       <div className={`min-h-screen transition-all duration-500 ${
         isDarkMode 

@@ -2,22 +2,29 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
     
-    <!-- Performance optimizations -->
+    <!-- Ultra-critical resource preloads for instant FCP/LCP -->
+    <link rel="preload" href="/lovable-uploads/53c7547b-fc11-4442-b5f6-798e6e1aa08f.png" as="image" fetchpriority="high" importance="high">
+    <link rel="preload" href="https://fonts.gstatic.com/s/tajawal/v11/Iura6YBj_oCad4k1nzGBC5xLhLE.woff2" as="font" type="font/woff2" crossorigin="anonymous" fetchpriority="high" importance="high">
+    
+    <!-- Immediate DNS resolution -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     
-    <!-- Critical resource preloads -->
-    <link rel="preload" href="/lovable-uploads/53c7547b-fc11-4442-b5f6-798e6e1aa08f.png" as="image" fetchpriority="high">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" as="style">
+    <!-- Optimized font loading with fallback -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'; this.onload=null;">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet"></noscript>
     
-    <!-- Security headers -->
+    <!-- Enhanced security headers -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; connect-src 'self' https:">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
     
     <!-- Web app manifest -->
     <link rel="manifest" href="/manifest.json">
@@ -97,22 +104,29 @@
     <link rel="dns-prefetch" href="//images.unsplash.com" />
     <link rel="dns-prefetch" href="//wa.me" />
     
-    <!-- Critical CSS -->
+    <!-- Ultra-optimized critical CSS for instant rendering -->
     <style>
-      /* Critical path CSS for immediate rendering */
+      /* Zero-delay critical path optimization */
       * {
-        font-family: 'Tajawal', 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+        font-family: 'Tajawal', system-ui, -apple-system, sans-serif;
         font-display: swap;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        contain: layout style;
       }
       
-      body {
+      html, body {
+        height: 100%;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        scroll-behavior: smooth;
-        text-rendering: optimizeLegibility;
+        text-rendering: optimizeSpeed;
         background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         margin: 0;
         padding: 0;
+        contain: layout style paint;
+        overflow-x: hidden;
+        line-height: 1.4;
       }
       
       /* Enhanced loading animation */
