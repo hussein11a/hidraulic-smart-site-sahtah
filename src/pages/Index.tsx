@@ -18,6 +18,8 @@ import MobileOptimizer from '@/components/MobileOptimizer';
 import ResponsivePerformanceManager from '@/components/ResponsivePerformanceManager';
 import CriticalResourceLoader from '@/components/CriticalResourceLoader';
 import LayoutShiftPrevention from '@/components/LayoutShiftPrevention';
+import UltimatePerformanceOptimizer from '@/components/UltimatePerformanceOptimizer';
+import AccessibilityOptimizer from '@/components/AccessibilityOptimizer';
 import { usePerformanceOptimization } from '@/hooks/usePerformanceOptimization';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Shield, Clock, Users, Award, Zap, CheckCircle } from 'lucide-react';
@@ -211,11 +213,13 @@ const Index = () => {
     <SecurityProvider>
       <CriticalResourceLoader />
       <LayoutShiftPrevention />
+      <UltimatePerformanceOptimizer />
       <EnhancedSEO />
       <SEOOptimizer />
       <PerformanceMonitor />
       <AdvancedPerformanceOptimizer />
       <AccessibilityEnhancer isDarkMode={isDarkMode} />
+      <AccessibilityOptimizer isDarkMode={isDarkMode} />
       <UXEnhancer isDarkMode={isDarkMode} />
       <MobileOptimizer isDarkMode={isDarkMode} isMobile={isMobile} />
       <ResponsivePerformanceManager isDarkMode={isDarkMode} isMobile={isMobile} />

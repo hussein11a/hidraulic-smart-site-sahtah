@@ -54,13 +54,41 @@ const LayoutShiftPrevention: React.FC = () => {
       });
     };
 
-    // Reserve space for dynamic content
+    // Reserve space for dynamic content and eliminate all CLS
     const reserveSpaceForContent = () => {
-      const containers = document.querySelectorAll('.container');
+      // Fix floating navigation CLS
+      const floatingNavs = document.querySelectorAll('.fixed.bottom-4.right-4');
+      floatingNavs.forEach(nav => {
+        const el = nav as HTMLElement;
+        el.style.contain = 'layout style paint';
+        el.style.transform = 'translateZ(0)';
+        el.style.willChange = 'auto';
+      });
+      
+      // Reserve space for all containers
+      const containers = document.querySelectorAll('.container, section, article, main');
       containers.forEach(container => {
         const el = container as HTMLElement;
-        el.style.containIntrinsicSize = 'auto 500px';
+        el.style.containIntrinsicSize = 'auto 200px';
         el.style.contentVisibility = 'auto';
+        el.style.contain = 'layout style';
+      });
+      
+      // Fix button layout shifts
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(button => {
+        const el = button as HTMLElement;
+        el.style.contain = 'layout style';
+        if (!el.style.minHeight) {
+          el.style.minHeight = '44px'; // Touch-friendly minimum
+        }
+      });
+      
+      // Prevent text layout shifts
+      const textElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p');
+      textElements.forEach(element => {
+        const el = element as HTMLElement;
+        el.style.contain = 'layout';
       });
     };
 

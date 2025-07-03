@@ -29,78 +29,103 @@ const AdvancedPerformanceOptimizer: React.FC = () => {
       });
     };
 
-    // Enhanced critical resource loading with improved FCP
+    // Enhanced critical resource loading with improved FCP and LCP
     const loadCriticalResources = () => {
       const criticalCSS = `
-        /* Critical styles for immediate rendering - Optimized for FCP */
+        /* Ultra-optimized critical styles for 100% PageSpeed scores */
+        :root {
+          font-synthesis: none;
+          text-rendering: optimizeSpeed;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+        
         * { 
           font-display: swap; 
           box-sizing: border-box;
+          margin: 0;
+          padding: 0;
         }
         
         body { 
           font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Tajawal', sans-serif; 
-          margin: 0;
-          padding: 0;
           line-height: 1.6;
-          font-synthesis: none;
-          text-rendering: optimizeSpeed;
-        }
-        
-        /* Critical above-the-fold styles */
-        .hero-section {
-          min-height: 100vh;
+          overflow-x: hidden;
           contain: layout style paint;
         }
         
-        /* Prevent layout shifts */
-        img, video, iframe {
-          aspect-ratio: attr(width) / attr(height);
-          object-fit: cover;
+        /* Critical above-the-fold optimization */
+        .hero-section {
+          min-height: 100vh;
+          contain: layout style paint;
+          content-visibility: auto;
+          contain-intrinsic-size: 100vw 100vh;
         }
         
-        /* Loading states */
+        /* Prevent all layout shifts */
+        img, video, iframe {
+          width: 100%;
+          height: auto;
+          aspect-ratio: 16/9;
+          object-fit: cover;
+          display: block;
+          contain: layout style size;
+          content-visibility: auto;
+        }
+        
+        /* LCP image optimization */
+        .hero-image, .lcp-image {
+          content-visibility: auto;
+          contain-intrinsic-size: 1200px 800px;
+          transform: translateZ(0);
+          will-change: auto;
+        }
+        
+        /* Ultra-fast loading states */
         .loading { 
           opacity: 0; 
-          transform: translateY(20px);
+          transform: translate3d(0, 10px, 0);
+          will-change: opacity, transform;
         }
         
         .loaded { 
           opacity: 1; 
-          transform: translateY(0);
-          transition: opacity 0.3s ease, transform 0.3s ease; 
+          transform: translate3d(0, 0, 0);
+          transition: opacity 0.2s ease, transform 0.2s ease; 
+          will-change: auto;
         }
         
-        /* Critical layout prevention of CLS - Enhanced */
-        img, video { 
-          max-width: 100%; 
-          height: auto; 
-          display: block;
-          contain: layout style;
-        }
-        
-        /* Improve LCP for hero images */
-        .hero-image {
-          content-visibility: auto;
-          contain-intrinsic-size: 1200px 800px;
-        }
-        
-        /* Placeholder for async content */
+        /* Placeholder skeleton with no shifts */
         .content-placeholder {
           background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
           background-size: 200% 100%;
-          animation: loading 1.5s infinite;
+          animation: shimmer 1s infinite ease-in-out;
+          contain: strict;
         }
         
-        @keyframes loading {
+        @keyframes shimmer {
           0% { background-position: 200% 0; }
           100% { background-position: -200% 0; }
         }
         
-        /* Performance optimizations */
+        /* GPU acceleration for smooth performance */
         .gpu-accelerated {
           transform: translateZ(0);
-          will-change: transform;
+          backface-visibility: hidden;
+          perspective: 1000px;
+        }
+        
+        /* Fixed positioning optimization */
+        .fixed-element {
+          position: fixed;
+          contain: layout style paint;
+          transform: translateZ(0);
+        }
+        
+        /* Scroll performance */
+        .scroll-container {
+          scroll-behavior: smooth;
+          overscroll-behavior: contain;
         }
       `;
       
@@ -109,44 +134,83 @@ const AdvancedPerformanceOptimizer: React.FC = () => {
       document.head.appendChild(style);
     };
 
-    // Image optimization
+    // Ultra-optimized image loading
     const optimizeImages = () => {
+      // Optimize existing images immediately
+      const optimizeExistingImages = () => {
+        document.querySelectorAll('img').forEach(img => {
+          const imgElement = img as HTMLImageElement;
+          
+          // Add critical performance attributes
+          if (!imgElement.loading) {
+            imgElement.loading = 'lazy';
+          }
+          
+          // Set fetchpriority for LCP images
+          if (imgElement.src.includes('53c7547b-fc11-4442-b5f6-798e6e1aa08f.png')) {
+            imgElement.fetchPriority = 'high';
+            imgElement.loading = 'eager';
+            imgElement.decoding = 'sync';
+          } else {
+            imgElement.decoding = 'async';
+          }
+          
+          // Add proper dimensions to prevent CLS
+          if (!imgElement.width || !imgElement.height) {
+            imgElement.style.aspectRatio = '16/9';
+            imgElement.style.width = '100%';
+            imgElement.style.height = 'auto';
+          }
+          
+          // Add containment for performance
+          imgElement.style.contain = 'layout style';
+        });
+      };
+      
+      // Advanced lazy loading with intersection observer
       if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
               const img = entry.target as HTMLImageElement;
               
-              // Convert to WebP if supported
               if (img.dataset.src && !img.src) {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                if (ctx && canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0) {
-                  // WebP is supported
-                  if (img.dataset.src.includes('unsplash.com')) {
-                    img.src = img.dataset.src + '&fm=webp&q=80';
-                  } else {
-                    img.src = img.dataset.src;
-                  }
-                } else {
-                  img.src = img.dataset.src;
+                // Optimize image URLs for better compression
+                let optimizedSrc = img.dataset.src;
+                
+                if (optimizedSrc.includes('unsplash.com')) {
+                  optimizedSrc += '&fm=webp&q=75&auto=format';
                 }
                 
+                img.src = optimizedSrc;
                 img.classList.add('loaded');
                 imageObserver.unobserve(img);
               }
             }
           });
         }, {
-          rootMargin: '50px 0px',
+          rootMargin: '10px 0px',
           threshold: 0.01
         });
 
-        // Observe all images with data-src
+        // Observe all lazy images
         document.querySelectorAll('img[data-src]').forEach(img => {
           imageObserver.observe(img);
         });
       }
+      
+      // Run immediate optimization
+      optimizeExistingImages();
+      
+      // Re-run when new images are added
+      const mutationObserver = new MutationObserver(() => {
+        optimizeExistingImages();
+      });
+      
+      mutationObserver.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
     };
 
     // Service Worker registration for caching
