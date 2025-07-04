@@ -8,6 +8,7 @@ import FloatingNavigation from '@/components/FloatingNavigation';
 import AnimatedCounter from '@/components/AnimatedCounter';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import SecurityProvider from '@/components/SecurityProvider';
+import ErrorBoundaryOptimized from '@/components/ErrorBoundaryOptimized';
 import PerformanceMonitor from '@/components/PerformanceMonitor';
 import SEOOptimizer from '@/components/SEOOptimizer';
 import EnhancedSEO from '@/components/EnhancedSEO';
@@ -20,7 +21,7 @@ import CriticalResourceLoader from '@/components/CriticalResourceLoader';
 import LayoutShiftPrevention from '@/components/LayoutShiftPrevention';
 import UltimatePerformanceOptimizer from '@/components/UltimatePerformanceOptimizer';
 import AccessibilityOptimizer from '@/components/AccessibilityOptimizer';
-import UltimatePerformanceBooster from '@/components/UltimatePerformanceBooster';
+import ConsolidatedPerformanceOptimizer from '@/components/ConsolidatedPerformanceOptimizer';
 import { usePerformanceOptimization } from '@/hooks/usePerformanceOptimization';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Shield, Clock, Users, Award, Zap, CheckCircle } from 'lucide-react';
@@ -115,7 +116,7 @@ const Index = () => {
           }
         }
       } catch (error) {
-        console.log('Using default services data');
+        // Using default services data
         setServices([
           {
             id: 1,
@@ -154,7 +155,7 @@ const Index = () => {
         window.location.href = `tel:${buttonsData.phone.number}`;
       }
     } catch (error) {
-      console.error('خطأ في فتح تطبيق الهاتف:', error);
+      // Error opening phone app
     }
   };
 
@@ -166,7 +167,7 @@ const Index = () => {
         window.open(`https://wa.me/${cleanNumber}?text=${message}`, '_blank', 'noopener,noreferrer');
       }
     } catch (error) {
-      console.error('خطأ في فتح واتساب:', error);
+      // Error opening WhatsApp
     }
   };
 
@@ -211,20 +212,13 @@ const Index = () => {
   }
 
   return (
-    <SecurityProvider>
-      <CriticalResourceLoader />
-      <LayoutShiftPrevention />
-      <UltimatePerformanceOptimizer />
+    <ErrorBoundaryOptimized>
+      <SecurityProvider>
+      <ConsolidatedPerformanceOptimizer />
       <EnhancedSEO />
-      <SEOOptimizer />
-      <PerformanceMonitor />
-      <AdvancedPerformanceOptimizer />
       <AccessibilityEnhancer isDarkMode={isDarkMode} />
-      <AccessibilityOptimizer isDarkMode={isDarkMode} />
       <UXEnhancer isDarkMode={isDarkMode} />
       <MobileOptimizer isDarkMode={isDarkMode} isMobile={isMobile} />
-      <ResponsivePerformanceManager isDarkMode={isDarkMode} isMobile={isMobile} />
-      <UltimatePerformanceBooster />
       
       <div className={`min-h-screen transition-all duration-500 ${
         isDarkMode 
@@ -386,6 +380,7 @@ const Index = () => {
         </footer>
       </div>
     </SecurityProvider>
+    </ErrorBoundaryOptimized>
   );
 };
 

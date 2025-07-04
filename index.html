@@ -24,7 +24,7 @@
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), interest-cohort=()">
     
     <!-- Web app manifest -->
     <link rel="manifest" href="/manifest.json">
@@ -40,13 +40,6 @@
     <meta name="keywords" content="سطحة هيدروليك، نقل سيارات، مساعدة طريق، سطحة سيارات، خدمة 24 ساعة، سطحة الرياض، نقل مركبات، إنقاذ سيارات، سطحة متنقلة، خدمة سطحة، سطحة السعودية، رقم سطحة، سطحة سريعة، سطحة رخيصة، سطحة موثوقة" />
     <meta name="author" content="سطحة هيدروليك السعودية" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    
-    <!-- Security Headers -->
-    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
-    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
-    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
-    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -214,60 +207,16 @@
       }
     </script>
     
-    <!-- Enhanced Security and Performance Script -->
+    <!-- Optimized Security and Performance Script -->
     <script>
       (function() {
         'use strict';
         
-        // Enhanced security measures
-        const securityMeasures = {
-          init() {
-            this.disableDevTools();
-            this.protectConsole();
-            this.preventTextSelection();
-            this.addWatermark();
-          },
-          
-          disableDevTools() {
-            document.addEventListener('keydown', (e) => {
-              if (
-                e.key === 'F12' ||
-                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J')) ||
-                (e.ctrlKey && e.key === 'u')
-              ) {
-                e.preventDefault();
-                return false;
-              }
-            });
-          },
-          
-          protectConsole() {
-            if (window.location.hostname !== 'localhost') {
-              Object.defineProperty(console, 'log', { value: () => {} });
-              Object.defineProperty(console, 'warn', { value: () => {} });
-              Object.defineProperty(console, 'error', { value: () => {} });
-              Object.defineProperty(console, 'info', { value: () => {} });
-            }
-          },
-          
-          preventTextSelection() {
-            document.addEventListener('selectstart', (e) => e.preventDefault());
-            document.addEventListener('contextmenu', (e) => e.preventDefault());
-            document.addEventListener('dragstart', (e) => e.preventDefault());
-          },
-          
-          addWatermark() {
-            console.log('%c🔐 محتوى محمي', 'color: #ff0000; font-size: 20px; font-weight: bold;');
-            console.log('%cهذا الموقع محمي بحقوق الطبع والنشر', 'color: #ff0000; font-size: 14px;');
-          }
-        };
-        
-        // Performance optimizations
+        // Minimal performance monitoring
         const performanceOptimizer = {
           init() {
             this.optimizeImages();
             this.preloadCriticalResources();
-            this.monitorPerformance();
           },
           
           optimizeImages() {
@@ -283,7 +232,7 @@
                     }
                   }
                 });
-              });
+              }, { rootMargin: '50px' });
               
               document.querySelectorAll('img[data-src]').forEach((img) => {
                 imageObserver.observe(img);
@@ -293,45 +242,22 @@
           
           preloadCriticalResources() {
             const criticalResources = [
-              '/src/main.tsx',
-              '/src/index.css'
+              '/src/main.tsx'
             ];
             
             criticalResources.forEach(resource => {
               const link = document.createElement('link');
-              link.rel = 'preload';
+              link.rel = 'modulepreload';
               link.href = resource;
-              link.as = resource.endsWith('.tsx') ? 'script' : 'style';
               document.head.appendChild(link);
             });
-          },
-          
-          monitorPerformance() {
-            if ('PerformanceObserver' in window) {
-              try {
-                const observer = new PerformanceObserver((list) => {
-                  for (const entry of list.getEntries()) {
-                    if (entry.entryType === 'largest-contentful-paint') {
-                      console.log('LCP:', entry.startTime);
-                    }
-                  }
-                });
-                observer.observe({ entryTypes: ['largest-contentful-paint'] });
-              } catch (e) {
-                console.log('Performance monitoring not supported');
-              }
-            }
           }
         };
         
-        // Initialize on DOM ready
+        // Initialize immediately
         if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', () => {
-            securityMeasures.init();
-            performanceOptimizer.init();
-          });
+          document.addEventListener('DOMContentLoaded', performanceOptimizer.init.bind(performanceOptimizer));
         } else {
-          securityMeasures.init();
           performanceOptimizer.init();
         }
       })();

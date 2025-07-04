@@ -1,9 +1,9 @@
 
 // Ultra-optimized Service Worker for 100% PageSpeed score
-const CACHE_NAME = 'hydraulic-tow-v3';
-const STATIC_CACHE = 'static-v3';
-const DYNAMIC_CACHE = 'dynamic-v3';
-const CRITICAL_CACHE = 'critical-v3';
+const CACHE_NAME = 'hydraulic-tow-v4';
+const STATIC_CACHE = 'static-v4';
+const DYNAMIC_CACHE = 'dynamic-v4';
+const CRITICAL_CACHE = 'critical-v4';
 
 // Critical resources to cache immediately for LCP optimization
 const CRITICAL_ASSETS = [
@@ -108,8 +108,7 @@ self.addEventListener('activate', event => {
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('Deleting old cache:', cacheName);
+          if (!cacheName.includes('v4')) {
             return caches.delete(cacheName);
           }
         })
