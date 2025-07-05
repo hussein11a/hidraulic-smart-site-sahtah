@@ -107,13 +107,13 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
   const iconSize = isMobile ? 'h-5 w-5' : 'h-9 w-9';
   const mainIconSize = isMobile ? 'h-6 w-6' : 'h-10 w-10';
   const actionIconSize = isMobile ? 'h-7 w-7' : 'h-12 w-12';
-  const containerPadding = isMobile ? 'bottom-4 right-4' : 'bottom-8 right-8';
+  const containerPadding = isMobile ? 'top-1/2 right-4 -translate-y-1/2' : 'top-1/2 right-8 -translate-y-1/2';
   const buttonGap = isMobile ? 'gap-3' : 'gap-6';
 
   return (
     <>
       {/* Mobile Optimized Floating Action Hub */}
-      <div className={`fixed ${containerPadding} flex flex-col ${buttonGap} z-50`}>
+      <div className={`fixed ${containerPadding} flex flex-col ${buttonGap} z-50 transform`}>
         
         {/* Advanced Quick Navigation Menu */}
         <div className={`transition-all duration-1000 transform ${
