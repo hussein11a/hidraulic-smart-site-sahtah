@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ChevronUp, Phone, MessageSquare } from 'lucide-react';
+import { ChevronUp, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useToast } from '@/hooks/use-toast';
@@ -32,7 +32,6 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
   handleWhatsApp
 }) => {
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [isHovered, setIsHovered] = useState<string | null>(null);
   
   const isMobile = useIsMobile();
   const { toast } = useToast();
@@ -81,148 +80,84 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
     </svg>
   );
 
-  // Responsive sizes
-  const buttonSize = isMobile ? 'w-14 h-14' : 'w-16 h-16';
-  const iconSize = isMobile ? 'h-6 w-6' : 'h-7 w-7';
-  const gap = isMobile ? 'gap-3' : 'gap-4';
-  const containerPadding = isMobile ? 'bottom-6 right-4' : 'bottom-8 right-6';
-
-  // Professional color schemes
-  const getButtonStyles = (type: 'whatsapp' | 'phone' | 'scroll') => {
-    const baseStyles = `group relative ${buttonSize} rounded-full shadow-xl transition-all duration-500 hover:scale-110 border-2 backdrop-blur-sm overflow-hidden`;
-    
-    switch (type) {
-      case 'whatsapp':
-        return `${baseStyles} ${
-          isDarkMode 
-            ? 'bg-gradient-to-br from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 border-green-400/50 text-white' 
-            : 'bg-gradient-to-br from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 border-green-300/50 text-white'
-        } ${isHovered === 'whatsapp' ? 'scale-110 shadow-2xl' : ''}`;
-        
-      case 'phone':
-        return `${baseStyles} ${
-          isDarkMode 
-            ? 'bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 border-blue-400/50 text-white' 
-            : 'bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 border-blue-300/50 text-white'
-        } ${isHovered === 'phone' ? 'scale-110 shadow-2xl' : ''}`;
-        
-      case 'scroll':
-        return `${baseStyles} ${
-          isDarkMode 
-            ? 'bg-gradient-to-br from-slate-700 to-slate-800 hover:from-slate-600 hover:to-slate-700 border-slate-500/50 text-white' 
-            : 'bg-gradient-to-br from-slate-200 to-slate-300 hover:from-slate-100 hover:to-slate-200 border-slate-400/50 text-slate-700'
-        } ${isHovered === 'scroll' ? 'scale-110 shadow-2xl' : ''}`;
-        
-      default:
-        return baseStyles;
-    }
-  };
-
   return (
     <>
-      {/* Professional Floating Navigation Container */}
-      <div className={`fixed ${containerPadding} flex flex-col ${gap} z-50`}>
+      {/* Fixed Floating Buttons Container - Always Visible */}
+      <div className={`fixed ${isMobile ? 'bottom-4 right-4' : 'bottom-6 right-6'} flex flex-col ${isMobile ? 'gap-3' : 'gap-4'} z-50`}>
         
-        {/* WhatsApp Button */}
+        {/* WhatsApp Button - Always Visible */}
         {buttonsData.whatsapp?.enabled && (
-          <div className="relative group">
-            <Button
-              onClick={handleWhatsAppWithToast}
-              onMouseEnter={() => setIsHovered('whatsapp')}
-              onMouseLeave={() => setIsHovered(null)}
-              className={getButtonStyles('whatsapp')}
-            >
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-green-400/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              {/* Icon */}
-              <WhatsAppIcon className={`${iconSize} relative z-10 drop-shadow-lg group-hover:scale-110 transition-transform duration-300`} />
-              
-              {/* Pulse animation */}
-              <div className="absolute inset-0 bg-green-500/30 rounded-full animate-ping opacity-75"></div>
-            </Button>
+          <Button
+            onClick={handleWhatsAppWithToast}
+            className={`
+              group relative ${isMobile ? 'w-14 h-14' : 'w-16 h-16'} 
+              rounded-full shadow-2xl transition-all duration-300 
+              hover:scale-110 border-2 backdrop-blur-sm overflow-hidden
+              ${isDarkMode 
+                ? 'bg-gradient-to-br from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 border-green-400/50 text-white' 
+                : 'bg-gradient-to-br from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 border-green-300/50 text-white'
+              }
+            `}
+            aria-label={buttonsData.whatsapp.text}
+          >
+            {/* Glow Effect */}
+            <div className="absolute inset-0 bg-green-400/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             
-            {/* Tooltip for non-mobile */}
-            {!isMobile && isHovered === 'whatsapp' && (
-              <div className={`absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-2 rounded-lg shadow-lg border whitespace-nowrap z-50 ${
-                isDarkMode 
-                  ? 'bg-slate-800 border-slate-700 text-white' 
-                  : 'bg-white border-slate-200 text-slate-800'
-              }`}>
-                <span className="text-sm font-medium">{buttonsData.whatsapp.text}</span>
-                <div className={`absolute left-full top-1/2 -translate-y-1/2 w-2 h-2 rotate-45 ${
-                  isDarkMode ? 'bg-slate-800 border-r border-b border-slate-700' : 'bg-white border-r border-b border-slate-200'
-                }`}></div>
-              </div>
-            )}
-          </div>
+            {/* Icon */}
+            <WhatsAppIcon className={`${isMobile ? 'h-6 w-6' : 'h-7 w-7'} relative z-10 drop-shadow-lg group-hover:scale-110 transition-transform duration-300`} />
+            
+            {/* Subtle pulse animation */}
+            <div className="absolute inset-0 bg-green-500/20 rounded-full animate-pulse opacity-50"></div>
+          </Button>
         )}
 
-        {/* Phone Button */}
+        {/* Phone Button - Always Visible */}
         {buttonsData.phone?.enabled && (
-          <div className="relative group">
-            <Button
-              onClick={handlePhoneCallWithToast}
-              onMouseEnter={() => setIsHovered('phone')}
-              onMouseLeave={() => setIsHovered(null)}
-              className={getButtonStyles('phone')}
-            >
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-blue-400/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              {/* Icon */}
-              <Phone className={`${iconSize} relative z-10 drop-shadow-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-300`} />
-              
-              {/* Pulse animation */}
-              <div className="absolute inset-0 bg-blue-500/30 rounded-full animate-ping opacity-75"></div>
-            </Button>
+          <Button
+            onClick={handlePhoneCallWithToast}
+            className={`
+              group relative ${isMobile ? 'w-14 h-14' : 'w-16 h-16'} 
+              rounded-full shadow-2xl transition-all duration-300 
+              hover:scale-110 border-2 backdrop-blur-sm overflow-hidden
+              ${isDarkMode 
+                ? 'bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 border-blue-400/50 text-white' 
+                : 'bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 border-blue-300/50 text-white'
+              }
+            `}
+            aria-label={buttonsData.phone.text}
+          >
+            {/* Glow Effect */}
+            <div className="absolute inset-0 bg-blue-400/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             
-            {/* Tooltip for non-mobile */}
-            {!isMobile && isHovered === 'phone' && (
-              <div className={`absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-2 rounded-lg shadow-lg border whitespace-nowrap z-50 ${
-                isDarkMode 
-                  ? 'bg-slate-800 border-slate-700 text-white' 
-                  : 'bg-white border-slate-200 text-slate-800'
-              }`}>
-                <span className="text-sm font-medium">{buttonsData.phone.text}</span>
-                <div className={`absolute left-full top-1/2 -translate-y-1/2 w-2 h-2 rotate-45 ${
-                  isDarkMode ? 'bg-slate-800 border-r border-b border-slate-700' : 'bg-white border-r border-b border-slate-200'
-                }`}></div>
-              </div>
-            )}
-          </div>
+            {/* Icon */}
+            <Phone className={`${isMobile ? 'h-6 w-6' : 'h-7 w-7'} relative z-10 drop-shadow-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-300`} />
+            
+            {/* Subtle pulse animation */}
+            <div className="absolute inset-0 bg-blue-500/20 rounded-full animate-pulse opacity-50"></div>
+          </Button>
         )}
 
-        {/* Scroll to Top Button */}
+        {/* Scroll to Top Button - Shows after scrolling */}
         {showScrollTop && (
-          <div className="relative group">
-            <Button
-              onClick={scrollToTop}
-              onMouseEnter={() => setIsHovered('scroll')}
-              onMouseLeave={() => setIsHovered(null)}
-              className={getButtonStyles('scroll')}
-            >
-              {/* Glow Effect */}
-              <div className={`absolute inset-0 ${isDarkMode ? 'bg-slate-400/20' : 'bg-slate-600/20'} rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
-              
-              {/* Icon */}
-              <ChevronUp className={`${iconSize} relative z-10 drop-shadow-lg group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300 animate-bounce`} />
-            </Button>
+          <Button
+            onClick={scrollToTop}
+            className={`
+              group relative ${isMobile ? 'w-14 h-14' : 'w-16 h-16'} 
+              rounded-full shadow-2xl transition-all duration-300 
+              hover:scale-110 border-2 backdrop-blur-sm overflow-hidden
+              ${isDarkMode 
+                ? 'bg-gradient-to-br from-slate-700 to-slate-800 hover:from-slate-600 hover:to-slate-700 border-slate-500/50 text-white' 
+                : 'bg-gradient-to-br from-slate-200 to-slate-300 hover:from-slate-100 hover:to-slate-200 border-slate-400/50 text-slate-700'
+              }
+            `}
+            aria-label="العودة للأعلى"
+          >
+            {/* Glow Effect */}
+            <div className={`absolute inset-0 ${isDarkMode ? 'bg-slate-400/20' : 'bg-slate-600/20'} rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
             
-            {/* Tooltip for non-mobile */}
-            {!isMobile && isHovered === 'scroll' && (
-              <div className={`absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-2 rounded-lg shadow-lg border whitespace-nowrap z-50 ${
-                isDarkMode 
-                  ? 'bg-slate-800 border-slate-700 text-white' 
-                  : 'bg-white border-slate-200 text-slate-800'
-              }`}>
-                <span className="text-sm font-medium">العودة للأعلى</span>
-                <div className={`absolute left-full top-1/2 -translate-y-1/2 w-2 h-2 rotate-45 ${
-                  isDarkMode ? 'bg-slate-800 border-r border-b border-slate-700' : 'bg-white border-r border-b border-slate-200'
-                }`}></div>
-              </div>
-            )}
-          </div>
+            {/* Icon */}
+            <ChevronUp className={`${isMobile ? 'h-6 w-6' : 'h-7 w-7'} relative z-10 drop-shadow-lg group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300`} />
+          </Button>
         )}
       </div>
     </>
