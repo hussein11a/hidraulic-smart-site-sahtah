@@ -1,8 +1,9 @@
 
-import React, { useState, useEffect } from 'react';
-import { ChevronUp, Phone, MessageSquare, Star, Shield, Menu, X, Zap, Clock, MapPin, Users, Camera, Heart, Sparkles, Navigation, Home, Info, Mail } from 'lucide-react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { ChevronUp, Phone, MessageSquare, Star, Shield, Menu, X, Zap, Clock, MapPin, Users, Camera, Heart, Sparkles, Navigation, Home, Info, Mail, Eye, EyeOff, Volume2, VolumeX, Wifi, WifiOff, Battery, Signal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useToast } from '@/hooks/use-toast';
 
 interface FloatingNavigationProps {
   isDarkMode: boolean;
@@ -31,6 +32,7 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
   handlePhoneCall,
   handleWhatsApp
 }) => {
+  // Advanced State Management
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [pulseAnimation, setPulseAnimation] = useState(true);
@@ -38,24 +40,228 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
   const [isHovering, setIsHovering] = useState(false);
   const [buttonAnimations, setButtonAnimations] = useState<{[key: string]: boolean}>({});
   const [rippleEffect, setRippleEffect] = useState<{[key: string]: boolean}>({});
+  
+  // Smart Behavior States
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('up');
+  const [userActivity, setUserActivity] = useState<'active' | 'idle'>('active');
+  const [currentSection, setCurrentSection] = useState<string>('home');
+  const [connectionStatus, setConnectionStatus] = useState<'online' | 'offline'>('online');
+  const [batteryLevel, setBatteryLevel] = useState<number>(100);
+  const [interactionCount, setInteractionCount] = useState(0);
+  const [performanceScore, setPerformanceScore] = useState(100);
+  const [adaptivePosition, setAdaptivePosition] = useState({ x: 0, y: 0 });
+  const [smartAnimationMode, setSmartAnimationMode] = useState<'normal' | 'reduced' | 'enhanced'>('normal');
+  
+  // Refs for advanced functionality
+  const containerRef = useRef<HTMLDivElement>(null);
+  const lastInteractionRef = useRef<number>(Date.now());
+  const performanceObserverRef = useRef<PerformanceObserver | null>(null);
+  const intersectionObserverRef = useRef<IntersectionObserver | null>(null);
+  
   const isMobile = useIsMobile();
+  const { toast } = useToast();
 
-  // Enhanced animation cycling with smart timing
+  // Smart Scroll Behavior
+  const handleScroll = useCallback(() => {
+    const currentScrollY = window.scrollY;
+    
+    if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      setScrollDirection('down');
+      setIsVisible(false);
+    } else if (currentScrollY < lastScrollY) {
+      setScrollDirection('up');
+      setIsVisible(true);
+    }
+    
+    setLastScrollY(currentScrollY);
+    setShowScrollTop(currentScrollY > 300);
+    
+    // Update user activity
+    setUserActivity('active');
+    lastInteractionRef.current = Date.now();
+  }, [lastScrollY]);
+
+  // Smart Section Detection
+  const detectCurrentSection = useCallback(() => {
+    const sections = ['home', 'services', 'contact'];
+    
+    for (const section of sections) {
+      const element = document.getElementById(section);
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        if (rect.top <= 100 && rect.bottom >= 100) {
+          setCurrentSection(section);
+          break;
+        }
+      }
+    }
+  }, []);
+
+  // Performance Monitoring
+  const initPerformanceMonitoring = useCallback(() => {
+    if ('PerformanceObserver' in window) {
+      performanceObserverRef.current = new PerformanceObserver((list) => {
+        const entries = list.getEntries();
+        const avgTime = entries.reduce((sum, entry) => sum + entry.duration, 0) / entries.length;
+        
+        if (avgTime > 16.67) { // 60fps threshold
+          setSmartAnimationMode('reduced');
+          setPerformanceScore(Math.max(0, 100 - avgTime));
+        } else {
+          setSmartAnimationMode('enhanced');
+          setPerformanceScore(100);
+        }
+      });
+      
+      performanceObserverRef.current.observe({ entryTypes: ['measure'] });
+    }
+  }, []);
+
+  // Battery Status Monitoring
+  const initBatteryMonitoring = useCallback(async () => {
+    if ('getBattery' in navigator) {
+      try {
+        const battery = await (navigator as any).getBattery();
+        setBatteryLevel(Math.round(battery.level * 100));
+        
+        battery.addEventListener('levelchange', () => {
+          const level = Math.round(battery.level * 100);
+          setBatteryLevel(level);
+          
+          if (level < 20) {
+            setSmartAnimationMode('reduced');
+            toast({
+              title: "توفير البطارية",
+              description: "تم تقليل الحركات للحفاظ على البطارية",
+              duration: 3000,
+            });
+          }
+        });
+      } catch (error) {
+        console.log('Battery API not supported');
+      }
+    }
+  }, [toast]);
+
+  // Network Status Monitoring
+  const initNetworkMonitoring = useCallback(() => {
+    const updateConnectionStatus = () => {
+      setConnectionStatus(navigator.onLine ? 'online' : 'offline');
+      
+      if (!navigator.onLine) {
+        toast({
+          title: "اتصال الإنترنت",
+          description: "تم فقدان الاتصال بالإنترنت",
+          variant: "destructive",
+          duration: 5000,
+        });
+      }
+    };
+
+    window.addEventListener('online', updateConnectionStatus);
+    window.addEventListener('offline', updateConnectionStatus);
+    
+    return () => {
+      window.removeEventListener('online', updateConnectionStatus);
+      window.removeEventListener('offline', updateConnectionStatus);
+    };
+  }, [toast]);
+
+  // User Activity Detection
+  const detectUserActivity = useCallback(() => {
+    const checkActivity = () => {
+      if (Date.now() - lastInteractionRef.current > 30000) { // 30 seconds
+        setUserActivity('idle');
+        setSmartAnimationMode('reduced');
+      } else {
+        setUserActivity('active');
+        if (performanceScore > 80) {
+          setSmartAnimationMode('enhanced');
+        }
+      }
+    };
+
+    const interval = setInterval(checkActivity, 5000);
+    return () => clearInterval(interval);
+  }, [performanceScore]);
+
+  // Smart Animation Cycling
   useEffect(() => {
+    if (smartAnimationMode === 'reduced') return;
+    
     const animationCycle = setInterval(() => {
       const buttons = ['whatsapp', 'phone', 'services', 'contact', 'home'];
       const randomButton = buttons[Math.floor(Math.random() * buttons.length)];
-      setButtonAnimations(prev => ({ ...prev, [randomButton]: true }));
       
-      setTimeout(() => {
-        setButtonAnimations(prev => ({ ...prev, [randomButton]: false }));
-      }, 2500);
-    }, 6000);
+      // Smart animation based on current section
+      if (currentSection === randomButton || Math.random() > 0.7) {
+        setButtonAnimations(prev => ({ ...prev, [randomButton]: true }));
+        
+        setTimeout(() => {
+          setButtonAnimations(prev => ({ ...prev, [randomButton]: false }));
+        }, smartAnimationMode === 'enhanced' ? 3000 : 2000);
+      }
+    }, smartAnimationMode === 'enhanced' ? 4000 : 8000);
 
     return () => clearInterval(animationCycle);
+  }, [smartAnimationMode, currentSection]);
+
+  // Initialize Smart Features
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', detectCurrentSection, { passive: true });
+    
+    const mouseMoveHandler = () => {
+      setUserActivity('active');
+      lastInteractionRef.current = Date.now();
+    };
+    
+    window.addEventListener('mousemove', mouseMoveHandler, { passive: true });
+    window.addEventListener('touchstart', mouseMoveHandler, { passive: true });
+    
+    initPerformanceMonitoring();
+    initBatteryMonitoring();
+    const networkCleanup = initNetworkMonitoring();
+    const activityCleanup = detectUserActivity();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', detectCurrentSection);
+      window.removeEventListener('mousemove', mouseMoveHandler);
+      window.removeEventListener('touchstart', mouseMoveHandler);
+      
+      if (performanceObserverRef.current) {
+        performanceObserverRef.current.disconnect();
+      }
+      
+      networkCleanup();
+      activityCleanup();
+    };
+  }, [handleScroll, detectCurrentSection, initPerformanceMonitoring, initBatteryMonitoring, initNetworkMonitoring, detectUserActivity]);
+
+  // Smart Interaction Tracking
+  const trackInteraction = useCallback((action: string) => {
+    setInteractionCount(prev => prev + 1);
+    lastInteractionRef.current = Date.now();
+    setUserActivity('active');
+    
+    // Performance measurement
+    performance.mark(`interaction-${action}-start`);
+    
+    setTimeout(() => {
+      performance.mark(`interaction-${action}-end`);
+      performance.measure(
+        `interaction-${action}`,
+        `interaction-${action}-start`,
+        `interaction-${action}-end`
+      );
+    }, 100);
   }, []);
 
-  const scrollToTop = () => {
+  const scrollToTop = useCallback(() => {
+    trackInteraction('scroll-top');
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
@@ -63,9 +269,10 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
     setActiveButton('scroll');
     triggerRipple('scroll');
     setTimeout(() => setActiveButton(null), 1000);
-  };
+  }, []);
 
-  const scrollToSection = (sectionId: string) => {
+  const scrollToSection = useCallback((sectionId: string) => {
+    trackInteraction(`navigate-${sectionId}`);
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -73,25 +280,80 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
       setActiveButton(sectionId);
       triggerRipple(sectionId);
       setTimeout(() => setActiveButton(null), 1000);
+      
+      toast({
+        title: "التنقل الذكي",
+        description: `تم الانتقال إلى قسم ${sectionId === 'home' ? 'الرئيسية' : sectionId === 'services' ? 'الخدمات' : 'التواصل'}`,
+        duration: 2000,
+      });
     }
-  };
+  }, [toast]);
 
-  const triggerRipple = (buttonId: string) => {
+  const triggerRipple = useCallback((buttonId: string) => {
     setRippleEffect(prev => ({ ...prev, [buttonId]: true }));
     setTimeout(() => {
       setRippleEffect(prev => ({ ...prev, [buttonId]: false }));
     }, 600);
-  };
+  }, []);
 
-  const handleButtonHover = (buttonId: string, isHover: boolean) => {
+  const handleButtonHover = useCallback((buttonId: string, isHover: boolean) => {
     if (isHover) {
       setActiveButton(buttonId);
       setIsHovering(true);
+      trackInteraction(`hover-${buttonId}`);
     } else {
       setActiveButton(null);
       setIsHovering(false);
     }
-  };
+  }, [trackInteraction]);
+
+  // Enhanced Phone Call Handler
+  const handleSmartPhoneCall = useCallback(() => {
+    trackInteraction('phone-call');
+    
+    if (connectionStatus === 'offline') {
+      toast({
+        title: "لا يوجد اتصال",
+        description: "يرجى التحقق من اتصال الإنترنت",
+        variant: "destructive",
+        duration: 3000,
+      });
+      return;
+    }
+    
+    handlePhoneCall();
+    triggerRipple('phone');
+    
+    toast({
+      title: "جاري الاتصال...",
+      description: `الاتصال بـ ${buttonsData.phone.number}`,
+      duration: 3000,
+    });
+  }, [connectionStatus, handlePhoneCall, buttonsData.phone.number, toast, trackInteraction]);
+
+  // Enhanced WhatsApp Handler
+  const handleSmartWhatsApp = useCallback(() => {
+    trackInteraction('whatsapp');
+    
+    if (connectionStatus === 'offline') {
+      toast({
+        title: "لا يوجد اتصال",
+        description: "يرجى التحقق من اتصال الإنترنت",
+        variant: "destructive",
+        duration: 3000,
+      });
+      return;
+    }
+    
+    handleWhatsApp();
+    triggerRipple('whatsapp');
+    
+    toast({
+      title: "فتح واتساب...",
+      description: "جاري تحضير الرسالة",
+      duration: 2000,
+    });
+  }, [connectionStatus, handleWhatsApp, toast, trackInteraction]);
 
   // Official WhatsApp Icon SVG Component
   const WhatsAppIcon = ({ className = "h-6 w-6" }: { className?: string }) => (
@@ -113,7 +375,44 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
   return (
     <>
       {/* Mobile Optimized Floating Action Hub */}
-      <div className={`fixed ${containerPadding} flex flex-col ${buttonGap} z-50 transform`}>
+      <div 
+        ref={containerRef}
+        className={`fixed ${containerPadding} flex flex-col ${buttonGap} z-50 transform transition-all duration-1000 ${
+          isVisible 
+            ? 'opacity-100 translate-x-0 scale-100' 
+            : 'opacity-50 translate-x-8 scale-90'
+        } ${userActivity === 'idle' ? 'blur-sm' : ''}`}
+      >
+        
+        {/* Smart Status Bar */}
+        {!isMobile && (
+          <div className={`mb-2 px-3 py-1 rounded-lg backdrop-blur-xl border ${
+            isDarkMode 
+              ? 'bg-slate-900/80 border-slate-700/50 text-white' 
+              : 'bg-white/80 border-slate-300/50 text-slate-800'
+          } text-xs font-medium transition-all duration-500 ${
+            performanceScore < 80 ? 'border-orange-400 text-orange-600' : 
+            connectionStatus === 'offline' ? 'border-red-400 text-red-600' : 
+            'border-green-400 text-green-600'
+          }`}>
+            <div className="flex items-center gap-2">
+              <div className={`w-2 h-2 rounded-full ${
+                performanceScore < 80 ? 'bg-orange-400' : 
+                connectionStatus === 'offline' ? 'bg-red-400' : 
+                'bg-green-400'
+              } animate-pulse`}></div>
+              <span>
+                {connectionStatus === 'offline' ? 'غير متصل' : 
+                 performanceScore < 80 ? `أداء: ${performanceScore}%` :
+                 userActivity === 'idle' ? 'وضع الخمول' :
+                 `متصل • ${interactionCount} تفاعل`}
+              </span>
+              {batteryLevel < 50 && (
+                <Battery className={`h-3 w-3 ${batteryLevel < 20 ? 'text-red-500' : 'text-orange-500'}`} />
+              )}
+            </div>
+          </div>
+        )}
         
         {/* Advanced Quick Navigation Menu */}
         <div className={`transition-all duration-1000 transform ${
@@ -299,26 +598,27 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
         {/* Ultra Premium WhatsApp Button with Official Icon */}
         {buttonsData.whatsapp?.enabled && (
           <Button
-            onClick={() => {
-              handleWhatsApp();
-              triggerRipple('whatsapp');
-            }}
+            onClick={handleSmartWhatsApp}
             onMouseEnter={() => handleButtonHover('whatsapp', true)}
             onMouseLeave={() => handleButtonHover('whatsapp', false)}
             className={`group relative ${actionButtonSize} rounded-full shadow-3xl transition-all duration-1000 hover:scale-110 ${isMobile ? 'border-3' : 'border-6'} border-white/50 backdrop-blur-xl overflow-hidden ${
               activeButton === 'whatsapp' ? 'scale-110 rotate-6 shadow-4xl' : ''
-            } ${buttonAnimations.whatsapp ? 'animate-bounce' : 'animate-pulse'}`}
+            } ${buttonAnimations.whatsapp ? 'animate-bounce' : smartAnimationMode === 'enhanced' ? 'animate-pulse' : ''}`}
             style={{
-              background: 'linear-gradient(135deg, #25D366 0%, #128C7E 50%, #075E54 100%)',
-              boxShadow: '0 20px 40px -10px rgba(37, 211, 102, 0.6), 0 0 0 1px rgba(255,255,255,0.1), inset 0 1px 0 rgba(255,255,255,0.2)'
+              background: connectionStatus === 'online' 
+                ? 'linear-gradient(135deg, #25D366 0%, #128C7E 50%, #075E54 100%)' 
+                : 'linear-gradient(135deg, #6B7280 0%, #4B5563 50%, #374151 100%)',
+              boxShadow: connectionStatus === 'online' 
+                ? '0 20px 40px -10px rgba(37, 211, 102, 0.6), 0 0 0 1px rgba(255,255,255,0.1), inset 0 1px 0 rgba(255,255,255,0.2)'
+                : '0 20px 40px -10px rgba(107, 114, 128, 0.6), 0 0 0 1px rgba(255,255,255,0.1), inset 0 1px 0 rgba(255,255,255,0.2)'
             }}
           >
             {/* Professional Background Layers */}
             <div className="absolute inset-0 bg-gradient-radial from-green-300/25 via-green-200/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-            <div className="absolute inset-0 bg-green-400/30 animate-ping rounded-full opacity-50"></div>
+            <div className={`absolute inset-0 ${connectionStatus === 'online' ? 'bg-green-400/30' : 'bg-gray-400/30'} animate-ping rounded-full opacity-50`}></div>
             
             {/* Subtle Orbital Ring - Only for desktop */}
-            {!isMobile && (
+            {!isMobile && smartAnimationMode !== 'reduced' && (
               <>
                 <div className="absolute inset-3 border-2 border-white/40 rounded-full animate-spin opacity-60" style={{ animationDuration: '12s' }}></div>
                 <div className="absolute inset-5 border border-white/20 rounded-full animate-spin opacity-40" style={{ animationDirection: 'reverse', animationDuration: '8s' }}></div>
@@ -329,15 +629,26 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
             <WhatsAppIcon className={`${actionIconSize} group-hover:scale-110 group-hover:rotate-6 transition-all duration-700 relative z-10 text-white drop-shadow-2xl`} />
             
             {/* Professional Glow System */}
-            <div className={`absolute ${isMobile ? '-inset-4' : '-inset-8'} bg-gradient-radial from-green-400/50 via-green-300/35 to-transparent rounded-full blur-3xl opacity-70 group-hover:opacity-100 transition-opacity duration-1000`}></div>
+            <div className={`absolute ${isMobile ? '-inset-4' : '-inset-8'} ${connectionStatus === 'online' ? 'bg-gradient-radial from-green-400/50 via-green-300/35' : 'bg-gradient-radial from-gray-400/50 via-gray-300/35'} to-transparent rounded-full blur-3xl opacity-70 group-hover:opacity-100 transition-opacity duration-1000`}></div>
             
-            {/* Professional Notification System */}
-            <div className={`absolute ${isMobile ? '-top-2 -right-2 w-5 h-5' : '-top-3 -right-3 w-8 h-8'} bg-red-500 rounded-full flex items-center justify-center ${isMobile ? 'border-2' : 'border-3'} border-white shadow-xl animate-bounce`}>
-              <span className={`text-white ${isMobile ? 'text-xs' : 'text-xs'} font-bold`}>!</span>
+            {/* Smart Status Indicators */}
+            <div className={`absolute ${isMobile ? '-top-2 -right-2 w-5 h-5' : '-top-3 -right-3 w-8 h-8'} ${connectionStatus === 'online' ? 'bg-green-500' : 'bg-red-500'} rounded-full flex items-center justify-center ${isMobile ? 'border-2' : 'border-3'} border-white shadow-xl ${connectionStatus === 'online' ? 'animate-bounce' : 'animate-pulse'}`}>
+              {connectionStatus === 'online' ? (
+                <Wifi className={`${isMobile ? 'h-2 w-2' : 'h-3 w-3'} text-white`} />
+              ) : (
+                <WifiOff className={`${isMobile ? 'h-2 w-2' : 'h-3 w-3'} text-white`} />
+              )}
             </div>
-            <div className={`absolute ${isMobile ? '-bottom-1 -left-1 w-4 h-4' : '-bottom-2 -left-2 w-6 h-6'} bg-yellow-400 rounded-full flex items-center justify-center border-2 border-white animate-pulse`}>
-              <Sparkles className={`${isMobile ? 'h-2 w-2' : 'h-3 w-3'} text-white`} />
+            
+            {/* Battery & Performance Indicator */}
+            <div className={`absolute ${isMobile ? '-bottom-1 -left-1 w-4 h-4' : '-bottom-2 -left-2 w-6 h-6'} ${batteryLevel > 20 ? 'bg-green-400' : 'bg-orange-400'} rounded-full flex items-center justify-center border-2 border-white animate-pulse`}>
+              <Battery className={`${isMobile ? 'h-2 w-2' : 'h-3 w-3'} text-white`} />
             </div>
+            
+            {/* Activity Ring */}
+            {userActivity === 'active' && smartAnimationMode === 'enhanced' && (
+              <div className="absolute -inset-2 border-2 border-green-400/50 rounded-full animate-pulse"></div>
+            )}
             
             {rippleEffect.whatsapp && (
               <div className="absolute inset-0 bg-white/30 rounded-full animate-ping"></div>
@@ -348,26 +659,27 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
         {/* Ultra Premium Phone Button */}
         {buttonsData.phone?.enabled && (
           <Button
-            onClick={() => {
-              handlePhoneCall();
-              triggerRipple('phone');
-            }}
+            onClick={handleSmartPhoneCall}
             onMouseEnter={() => handleButtonHover('phone', true)}
             onMouseLeave={() => handleButtonHover('phone', false)}
             className={`group relative ${actionButtonSize} rounded-full shadow-3xl transition-all duration-1000 hover:scale-110 ${isMobile ? 'border-3' : 'border-6'} border-white/50 backdrop-blur-xl overflow-hidden ${
               activeButton === 'phone' ? 'scale-110 -rotate-6 shadow-4xl' : ''
-            } ${buttonAnimations.phone ? 'animate-pulse' : 'animate-bounce'}`}
+            } ${buttonAnimations.phone ? 'animate-pulse' : smartAnimationMode === 'enhanced' ? 'animate-bounce' : ''}`}
             style={{
-              background: 'linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FFD23F 100%)',
-              boxShadow: '0 20px 40px -10px rgba(255, 107, 53, 0.6), 0 0 0 1px rgba(255,255,255,0.1), inset 0 1px 0 rgba(255,255,255,0.2)'
+              background: connectionStatus === 'online' 
+                ? 'linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FFD23F 100%)'
+                : 'linear-gradient(135deg, #6B7280 0%, #4B5563 50%, #374151 100%)',
+              boxShadow: connectionStatus === 'online' 
+                ? '0 20px 40px -10px rgba(255, 107, 53, 0.6), 0 0 0 1px rgba(255,255,255,0.1), inset 0 1px 0 rgba(255,255,255,0.2)'
+                : '0 20px 40px -10px rgba(107, 114, 128, 0.6), 0 0 0 1px rgba(255,255,255,0.1), inset 0 1px 0 rgba(255,255,255,0.2)'
             }}
           >
             {/* Professional Background Effects */}
             <div className="absolute inset-0 bg-gradient-radial from-orange-300/25 via-amber-200/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-            <div className="absolute inset-0 bg-orange-400/40 animate-ping rounded-full opacity-50"></div>
+            <div className={`absolute inset-0 ${connectionStatus === 'online' ? 'bg-orange-400/40' : 'bg-gray-400/40'} animate-ping rounded-full opacity-50`}></div>
             
             {/* Professional Call Wave Systems - Only for desktop */}
-            {!isMobile && (
+            {!isMobile && smartAnimationMode !== 'reduced' && (
               <>
                 <div className="absolute inset-2 border-2 border-white/40 rounded-full animate-spin opacity-60" style={{ animationDuration: '10s' }}></div>
                 <div className="absolute inset-4 border border-white/30 rounded-full animate-spin opacity-40" style={{ animationDirection: 'reverse', animationDuration: '6s' }}></div>
@@ -378,15 +690,22 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
             <Phone className={`${actionIconSize} group-hover:scale-110 group-hover:-rotate-6 transition-all duration-700 relative z-10 text-white drop-shadow-2xl`} />
             
             {/* Professional Glow */}
-            <div className={`absolute ${isMobile ? '-inset-4' : '-inset-8'} bg-gradient-radial from-orange-400/60 via-amber-300/45 to-transparent rounded-full blur-3xl opacity-70 group-hover:opacity-100 transition-opacity duration-1000`}></div>
+            <div className={`absolute ${isMobile ? '-inset-4' : '-inset-8'} ${connectionStatus === 'online' ? 'bg-gradient-radial from-orange-400/60 via-amber-300/45' : 'bg-gradient-radial from-gray-400/60 via-gray-300/45'} to-transparent rounded-full blur-3xl opacity-70 group-hover:opacity-100 transition-opacity duration-1000`}></div>
             
-            {/* Professional Status Indicators */}
-            <div className={`absolute ${isMobile ? '-top-1 -left-1 w-4 h-4' : '-top-2 -left-2 w-6 h-6'} bg-green-500 rounded-full animate-pulse ${isMobile ? 'border-2' : 'border-3'} border-white flex items-center justify-center shadow-lg`}>
-              <div className={`${isMobile ? 'w-1 h-1' : 'w-2 h-2'} bg-white rounded-full animate-ping`}></div>
+            {/* Smart Status Indicators */}
+            <div className={`absolute ${isMobile ? '-top-1 -left-1 w-4 h-4' : '-top-2 -left-2 w-6 h-6'} ${connectionStatus === 'online' ? 'bg-green-500' : 'bg-red-500'} rounded-full animate-pulse ${isMobile ? 'border-2' : 'border-3'} border-white flex items-center justify-center shadow-lg`}>
+              <Signal className={`${isMobile ? 'h-1 w-1' : 'h-2 w-2'} text-white`} />
             </div>
-            <div className={`absolute ${isMobile ? '-bottom-2 -right-2 w-5 h-5' : '-bottom-3 -right-3 w-7 h-7'} bg-blue-500 rounded-full ${isMobile ? 'border-2' : 'border-3'} border-white flex items-center justify-center animate-bounce shadow-xl`}>
+            
+            {/* Performance & Section Indicator */}
+            <div className={`absolute ${isMobile ? '-bottom-2 -right-2 w-5 h-5' : '-bottom-3 -right-3 w-7 h-7'} ${currentSection === 'contact' ? 'bg-blue-500' : 'bg-purple-500'} rounded-full ${isMobile ? 'border-2' : 'border-3'} border-white flex items-center justify-center animate-bounce shadow-xl`}>
               <Navigation className={`${isMobile ? 'h-2 w-2' : 'h-3 w-3'} text-white`} />
             </div>
+            
+            {/* Interaction Counter */}
+            {interactionCount > 5 && (
+              <div className="absolute -top-1 -left-1 w-3 h-3 bg-yellow-400 rounded-full animate-ping"></div>
+            )}
             
             {rippleEffect.phone && (
               <div className="absolute inset-0 bg-white/30 rounded-full animate-ping"></div>
