@@ -83,7 +83,7 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
   return (
     <>
       {/* Fixed Floating Buttons Container - Always Visible */}
-      <div className={`fixed ${isMobile ? 'bottom-4 right-4' : 'bottom-6 right-6'} flex flex-col ${isMobile ? 'gap-3' : 'gap-4'} z-50`}>
+      <div className={`fixed ${isMobile ? 'bottom-4 right-4' : 'bottom-6 right-6'} flex flex-col ${isMobile ? 'gap-3' : 'gap-4'} z-[9999]`}>
         
         {/* WhatsApp Button - Always Visible */}
         {buttonsData.whatsapp?.enabled && (
