@@ -362,14 +362,33 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
     </svg>
   );
 
-  // Mobile responsive sizes
+  // Mobile responsive sizes and dynamic positioning
   const navButtonSize = isMobile ? 'w-12 h-12' : 'w-20 h-20';
   const mainButtonSize = isMobile ? 'w-16 h-16' : 'w-24 h-24';
   const actionButtonSize = isMobile ? 'w-16 h-16' : 'w-24 h-24';
   const iconSize = isMobile ? 'h-5 w-5' : 'h-9 w-9';
   const mainIconSize = isMobile ? 'h-6 w-6' : 'h-10 w-10';
   const actionIconSize = isMobile ? 'h-7 w-7' : 'h-12 w-12';
-  const containerPadding = isMobile ? 'bottom-4 right-4' : 'bottom-8 right-8';
+  
+  // Dynamic positioning based on scroll and section
+  const getDynamicPosition = () => {
+    const scrollPercent = Math.min(lastScrollY / (document.body.scrollHeight - window.innerHeight), 1);
+    const baseRight = isMobile ? 16 : 32;
+    const dynamicRight = baseRight + (scrollPercent * 20);
+    const dynamicTop = 20 + (scrollPercent * 60);
+    
+    // Adjust position based on current section
+    let sectionOffset = 0;
+    if (currentSection === 'services') sectionOffset = 10;
+    if (currentSection === 'contact') sectionOffset = 20;
+    
+    return {
+      right: `${dynamicRight + sectionOffset}px`,
+      top: `${dynamicTop + (Math.sin(Date.now() / 2000) * 5)}%`
+    };
+  };
+  
+  const containerPosition = getDynamicPosition();
   const buttonGap = isMobile ? 'gap-3' : 'gap-6';
 
   return (
@@ -377,11 +396,16 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
       {/* Mobile Optimized Floating Action Hub */}
       <div 
         ref={containerRef}
-        className={`fixed ${containerPadding} flex flex-col ${buttonGap} z-50 transform transition-all duration-1000 ${
+        className={`fixed flex flex-col ${buttonGap} z-50 transform transition-all duration-1000 ${
           isVisible 
             ? 'opacity-100 translate-x-0 scale-100' 
             : 'opacity-50 translate-x-8 scale-90'
         } ${userActivity === 'idle' ? 'blur-sm' : ''}`}
+        style={{
+          right: containerPosition.right,
+          top: containerPosition.top,
+          transform: `translateY(-50%) ${isVisible ? 'translateX(0) scale(1)' : 'translateX(32px) scale(0.9)'} ${userActivity === 'idle' ? 'blur(2px)' : ''}`,
+        }}
       >
         
         {/* Smart Status Bar */}
