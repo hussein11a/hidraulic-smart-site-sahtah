@@ -57,19 +57,19 @@ const Index = () => {
     title: 'سطحة هيدروليك',
     subtitle: 'خدمة نقل السيارات الاحترافية - سريع، آمن، موثوق',
     description: 'نحن نقدم خدمات نقل السيارات المعطلة والمساعدة على الطريق بأحدث المعدات الهيدروليكية',
-    phone: '+966501234567',
-    whatsapp: '+966501234567'
+    phone: "+966503269219",
+    whatsapp: "+966503269219",
   });
   const [buttonsData] = useState<ButtonsData>({
     phone: {
       text: 'اتصل الآن',
-      number: '+966501234567',
+      number: '+966503269219',
       enabled: true,
       color: '#1e40af'
     },
     whatsapp: {
       text: 'واتساب',
-      number: '+966501234567',
+      number: '+966503269219',
       message: 'مرحبا، أحتاج خدمة سطحة هيدروليك',
       enabled: true,
       color: '#16a34a'
@@ -374,3 +374,5 @@ const Index = () => {
 };
 
 export default Index;
+
+

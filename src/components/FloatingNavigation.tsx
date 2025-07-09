@@ -113,7 +113,7 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
   return (
     <>
       {/* Mobile Optimized Floating Action Hub */}
-      <div className={`fixed ${containerPadding} flex flex-col ${buttonGap} z-50`}>
+      <div className={`fixed ${containerPadding} flex flex-col ${buttonGap} z-50 bottom-0 right-0`}>
         
         {/* Advanced Quick Navigation Menu */}
         <div className={`transition-all duration-1000 transform ${
