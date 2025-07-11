@@ -2,7 +2,36 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    
+    <!-- Ultra-critical resource preloads for instant FCP/LCP -->
+    <link rel="preload" href="/lovable-uploads/53c7547b-fc11-4442-b5f6-798e6e1aa08f.png" as="image" fetchpriority="high" importance="high">
+    <link rel="preload" href="https://fonts.gstatic.com/s/tajawal/v11/Iura6YBj_oCad4k1nzGBC5xLhLE.woff2" as="font" type="font/woff2" crossorigin="anonymous" fetchpriority="high" importance="high">
+    
+    <!-- Immediate DNS resolution -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Optimized font loading with fallback -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'; this.onload=null;">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet"></noscript>
+    
+    <!-- Enhanced security headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; connect-src 'self' https:">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), interest-cohort=()">
+    
+    <!-- Web app manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Theme colors -->
+    <meta name="theme-color" content="#1e40af" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1e293b" media="(prefers-color-scheme: dark)">
     <title>سطحة هيدروليك السعودية - خدمة نقل السيارات 24 ساعة | أفضل سطحة في الرياض</title>
     
     <!-- Primary Meta Tags -->
@@ -11,13 +40,6 @@
     <meta name="keywords" content="سطحة هيدروليك، نقل سيارات، مساعدة طريق، سطحة سيارات، خدمة 24 ساعة، سطحة الرياض، نقل مركبات، إنقاذ سيارات، سطحة متنقلة، خدمة سطحة، سطحة السعودية، رقم سطحة، سطحة سريعة، سطحة رخيصة، سطحة موثوقة" />
     <meta name="author" content="سطحة هيدروليك السعودية" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    
-    <!-- Security Headers -->
-    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
-    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
-    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
-    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -75,22 +97,29 @@
     <link rel="dns-prefetch" href="//images.unsplash.com" />
     <link rel="dns-prefetch" href="//wa.me" />
     
-    <!-- Critical CSS -->
+    <!-- Ultra-optimized critical CSS for instant rendering -->
     <style>
-      /* Critical path CSS for immediate rendering */
+      /* Zero-delay critical path optimization */
       * {
-        font-family: 'Tajawal', 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+        font-family: 'Tajawal', system-ui, -apple-system, sans-serif;
         font-display: swap;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        contain: layout style;
       }
       
-      body {
+      html, body {
+        height: 100%;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        scroll-behavior: smooth;
-        text-rendering: optimizeLegibility;
+        text-rendering: optimizeSpeed;
         background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         margin: 0;
         padding: 0;
+        contain: layout style paint;
+        overflow-x: hidden;
+        line-height: 1.4;
       }
       
       /* Enhanced loading animation */
@@ -178,60 +207,16 @@
       }
     </script>
     
-    <!-- Enhanced Security and Performance Script -->
+    <!-- Optimized Security and Performance Script -->
     <script>
       (function() {
         'use strict';
         
-        // Enhanced security measures
-        const securityMeasures = {
-          init() {
-            this.disableDevTools();
-            this.protectConsole();
-            this.preventTextSelection();
-            this.addWatermark();
-          },
-          
-          disableDevTools() {
-            document.addEventListener('keydown', (e) => {
-              if (
-                e.key === 'F12' ||
-                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J')) ||
-                (e.ctrlKey && e.key === 'u')
-              ) {
-                e.preventDefault();
-                return false;
-              }
-            });
-          },
-          
-          protectConsole() {
-            if (window.location.hostname !== 'localhost') {
-              Object.defineProperty(console, 'log', { value: () => {} });
-              Object.defineProperty(console, 'warn', { value: () => {} });
-              Object.defineProperty(console, 'error', { value: () => {} });
-              Object.defineProperty(console, 'info', { value: () => {} });
-            }
-          },
-          
-          preventTextSelection() {
-            document.addEventListener('selectstart', (e) => e.preventDefault());
-            document.addEventListener('contextmenu', (e) => e.preventDefault());
-            document.addEventListener('dragstart', (e) => e.preventDefault());
-          },
-          
-          addWatermark() {
-            console.log('%c🔐 محتوى محمي', 'color: #ff0000; font-size: 20px; font-weight: bold;');
-            console.log('%cهذا الموقع محمي بحقوق الطبع والنشر', 'color: #ff0000; font-size: 14px;');
-          }
-        };
-        
-        // Performance optimizations
+        // Minimal performance monitoring
         const performanceOptimizer = {
           init() {
             this.optimizeImages();
             this.preloadCriticalResources();
-            this.monitorPerformance();
           },
           
           optimizeImages() {
@@ -247,7 +232,7 @@
                     }
                   }
                 });
-              });
+              }, { rootMargin: '50px' });
               
               document.querySelectorAll('img[data-src]').forEach((img) => {
                 imageObserver.observe(img);
@@ -257,45 +242,22 @@
           
           preloadCriticalResources() {
             const criticalResources = [
-              '/src/main.tsx',
-              '/src/index.css'
+              '/src/main.tsx'
             ];
             
             criticalResources.forEach(resource => {
               const link = document.createElement('link');
-              link.rel = 'preload';
+              link.rel = 'modulepreload';
               link.href = resource;
-              link.as = resource.endsWith('.tsx') ? 'script' : 'style';
               document.head.appendChild(link);
             });
-          },
-          
-          monitorPerformance() {
-            if ('PerformanceObserver' in window) {
-              try {
-                const observer = new PerformanceObserver((list) => {
-                  for (const entry of list.getEntries()) {
-                    if (entry.entryType === 'largest-contentful-paint') {
-                      console.log('LCP:', entry.startTime);
-                    }
-                  }
-                });
-                observer.observe({ entryTypes: ['largest-contentful-paint'] });
-              } catch (e) {
-                console.log('Performance monitoring not supported');
-              }
-            }
           }
         };
         
-        // Initialize on DOM ready
+        // Initialize immediately
         if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', () => {
-            securityMeasures.init();
-            performanceOptimizer.init();
-          });
+          document.addEventListener('DOMContentLoaded', performanceOptimizer.init.bind(performanceOptimizer));
         } else {
-          securityMeasures.init();
           performanceOptimizer.init();
         }
       })();

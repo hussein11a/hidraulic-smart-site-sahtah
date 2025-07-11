@@ -1,7 +1,8 @@
 
 import React from 'react';
-import { Phone, MessageSquare, Mail, MapPin, Clock } from 'lucide-react';
+import { Phone, MessageSquare, Mail, MapPin, Clock, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 interface ContactMethodsProps {
   isDarkMode: boolean;
@@ -14,22 +15,37 @@ const ContactMethods: React.FC<ContactMethodsProps> = ({
   onPhoneCall, 
   onWhatsApp 
 }) => {
+  const { toast } = useToast();
+
+  const handleCopyPhone = async (phoneNumber: string) => {
+    try {
+      await navigator.clipboard.writeText(phoneNumber);
+      toast({
+        title: "تم النسخ",
+        description: "تم نسخ رقم الهاتف بنجاح",
+      });
+    } catch (error) {
+      toast({
+        title: "خطأ",
+        description: "فشل في نسخ رقم الهاتف",
+        variant: "destructive",
+      });
+    }
+  };
   const contactMethods = [
     {
       icon: Phone,
       title: 'اتصال مباشر',
       description: 'تواصل معنا عبر الهاتف للحصول على خدمة فورية',
-      action: onPhoneCall,
-      color: 'bg-blue-500',
-      hoverColor: 'hover:bg-blue-600'
+      phone: '+966501234567',
+      color: 'bg-blue-500'
     },
     {
       icon: MessageSquare,
       title: 'واتساب',
       description: 'أرسل رسالة واتساب وسنرد عليك فوراً',
-      action: onWhatsApp,
-      color: 'bg-green-500',
-      hoverColor: 'hover:bg-green-600'
+      phone: '+966501234567',
+      color: 'bg-green-500'
     }
   ];
 
@@ -97,13 +113,69 @@ const ContactMethods: React.FC<ContactMethodsProps> = ({
                 {method.description}
               </p>
               
-              <Button
-                onClick={method.action}
-                className={`w-full py-3 rounded-xl font-bold text-white border-2 transition-all duration-300 hover:scale-105 shadow-lg ${method.color} ${method.hoverColor} border-opacity-50`}
-              >
-                <method.icon className="h-5 w-5 ml-2" />
-                تواصل الآن
-              </Button>
+              <div className={`w-full p-6 rounded-xl border-2 border-dashed transition-all duration-300 ${
+                isDarkMode 
+                  ? 'border-slate-500 bg-slate-800/30' 
+                  : 'border-slate-300 bg-slate-50'
+              }`}>
+                <p className={`text-sm font-medium mb-3 text-center ${
+                  isDarkMode ? 'text-slate-300' : 'text-slate-600'
+                }`}>
+                  رقم الهاتف
+                </p>
+                <p 
+                  className={`text-2xl font-bold select-all cursor-text text-center mb-4 ${
+                    isDarkMode ? 'text-white' : 'text-slate-800'
+                  }`}
+                  dir="ltr"
+                >
+                  {method.phone}
+                </p>
+                
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  {method.title === 'اتصال مباشر' && (
+                    <Button
+                      onClick={onPhoneCall}
+                      className={`flex items-center gap-2 ${
+                        isDarkMode 
+                          ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                          : 'bg-blue-500 hover:bg-blue-600 text-white'
+                      }`}
+                    >
+                      <Phone className="h-4 w-4" />
+                      اتصال مباشر
+                    </Button>
+                  )}
+                  
+                  {method.title === 'واتساب' && (
+                    <Button
+                      onClick={onWhatsApp}
+                      className={`flex items-center gap-2 ${
+                        isDarkMode 
+                          ? 'bg-green-600 hover:bg-green-700 text-white' 
+                          : 'bg-green-500 hover:bg-green-600 text-white'
+                      }`}
+                    >
+                      <MessageSquare className="h-4 w-4" />
+                      واتساب
+                    </Button>
+                  )}
+                  
+                  <Button
+                    onClick={() => handleCopyPhone(method.phone)}
+                    variant="outline"
+                    className={`flex items-center gap-2 ${
+                      isDarkMode 
+                        ? 'border-slate-500 text-slate-300 hover:bg-slate-700' 
+                        : 'border-slate-300 text-slate-600 hover:bg-slate-100'
+                    }`}
+                  >
+                    <Copy className="h-4 w-4" />
+                    نسخ الرقم
+                  </Button>
+                </div>
+              </div>
             </div>
           ))}
         </div>

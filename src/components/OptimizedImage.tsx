@@ -65,12 +65,16 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   }
 
   return (
-    <div className={`relative overflow-hidden ${className}`}>
-      {/* Loading skeleton */}
+    <div className={`relative overflow-hidden ${className}`} style={{ aspectRatio: width && height ? `${width}/${height}` : '16/9' }}>
+      {/* Loading skeleton with proper sizing */}
       {!isLoaded && (
         <div 
-          className="absolute inset-0 bg-gradient-to-r from-slate-200 via-slate-300 to-slate-200 animate-pulse"
-          style={{ width, height }}
+          className="absolute inset-0 bg-gradient-to-r from-muted via-muted-foreground/20 to-muted animate-pulse"
+          style={{ 
+            width: width || '100%', 
+            height: height || 'auto',
+            aspectRatio: width && height ? `${width}/${height}` : '16/9'
+          }}
         />
       )}
       
