@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { ChevronUp, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -32,7 +32,11 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
   handleWhatsApp
 }) => {
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   
+  const containerRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
   const { toast } = useToast();
 
@@ -54,24 +58,135 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
     });
   }, []);
 
+  // Initialize position based on screen size
+  useEffect(() => {
+    const updatePosition = () => {
+      const padding = isMobile ? 16 : 24;
+      setPosition({
+        x: window.innerWidth - (isMobile ? 70 : 80) - padding,
+        y: window.innerHeight - 200 - padding
+      });
+    };
+
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    return () => window.removeEventListener('resize', updatePosition);
+  }, [isMobile]);
+
+  // Drag functionality
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (rect) {
+      setDragOffset({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      });
+    }
+  }, []);
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!isDragging) return;
+
+    const padding = 20;
+    const containerSize = isMobile ? 70 : 80;
+    
+    const newX = Math.max(padding, Math.min(
+      window.innerWidth - containerSize - padding,
+      e.clientX - dragOffset.x
+    ));
+    
+    const newY = Math.max(padding, Math.min(
+      window.innerHeight - 200 - padding,
+      e.clientY - dragOffset.y
+    ));
+
+    setPosition({ x: newX, y: newY });
+  }, [isDragging, dragOffset, isMobile]);
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging, handleMouseMove, handleMouseUp]);
+
+  // Touch events for mobile
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (rect && e.touches[0]) {
+      setDragOffset({
+        x: e.touches[0].clientX - rect.left,
+        y: e.touches[0].clientY - rect.top
+      });
+    }
+  }, []);
+
+  const handleTouchMove = useCallback((e: TouchEvent) => {
+    if (!isDragging || !e.touches[0]) return;
+
+    const padding = 20;
+    const containerSize = isMobile ? 70 : 80;
+    
+    const newX = Math.max(padding, Math.min(
+      window.innerWidth - containerSize - padding,
+      e.touches[0].clientX - dragOffset.x
+    ));
+    
+    const newY = Math.max(padding, Math.min(
+      window.innerHeight - 200 - padding,
+      e.touches[0].clientY - dragOffset.y
+    ));
+
+    setPosition({ x: newX, y: newY });
+  }, [isDragging, dragOffset, isMobile]);
+
+  const handleTouchEnd = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('touchmove', handleTouchMove);
+      document.addEventListener('touchend', handleTouchEnd);
+      return () => {
+        document.removeEventListener('touchmove', handleTouchMove);
+        document.removeEventListener('touchend', handleTouchEnd);
+      };
+    }
+  }, [isDragging, handleTouchMove, handleTouchEnd]);
+
   // Enhanced handlers with toast notifications
   const handlePhoneCallWithToast = useCallback(() => {
+    if (isDragging) return; // Prevent action while dragging
     handlePhoneCall();
     toast({
       title: "جاري الاتصال...",
       description: `الاتصال بـ ${buttonsData.phone.number}`,
       duration: 3000,
     });
-  }, [handlePhoneCall, buttonsData.phone.number, toast]);
+  }, [handlePhoneCall, buttonsData.phone.number, toast, isDragging]);
 
   const handleWhatsAppWithToast = useCallback(() => {
+    if (isDragging) return; // Prevent action while dragging
     handleWhatsApp();
     toast({
       title: "فتح واتساب...",
       description: "جاري تحضير الرسالة",
       duration: 2000,
     });
-  }, [handleWhatsApp, toast]);
+  }, [handleWhatsApp, toast, isDragging]);
 
   // WhatsApp Icon Component
   const WhatsAppIcon = ({ className = "h-6 w-6" }: { className?: string }) => (
@@ -85,8 +200,18 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
 
   return (
     <>
-      {/* Fixed Floating Buttons Container - Always Visible */}
-      <div className={`fixed ${containerPadding} flex flex-col ${buttonGap} z-[9999]`}>
+      {/* Draggable Floating Buttons Container */}
+      <div 
+        ref={containerRef}
+        className={`fixed flex flex-col ${buttonGap} z-[9999] select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+        style={{
+          left: `${position.x}px`,
+          top: `${position.y}px`,
+          transition: isDragging ? 'none' : 'all 0.3s ease-out'
+        }}
+        onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
+      >
         
         {/* WhatsApp Button - Always Visible */}
         {buttonsData.whatsapp?.enabled && (
