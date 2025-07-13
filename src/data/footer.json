@@ -1,17 +1,21 @@
-
 {
   "copyright": "خدمة نقل السيارات الاحترافية © 2024",
   "description": "سطحة هيدروليك - خدمتكم راحتنا",
   "links": [
     {
       "text": "اتصل بنا",
-      "url": "tel:+966501234567",
+      "url": "tel:+966503269219",
       "external": false
     },
     {
       "text": "واتساب",
-      "url": "https://wa.me/966501234567",
+      "url": "https://wa.me/966503269219",
       "external": true
     }
-  ]
+  ],
+  "settings": {
+    "enabled": false,
+    "layout": "simple",
+    "background_color": "#3d0505"
+  }
 }
