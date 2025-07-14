@@ -80,9 +80,6 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
     </svg>
   );
 
-  const containerPadding = isMobile ? 'bottom-4 right-4' : 'bottom-6 right-6';
-  const buttonGap = isMobile ? 'gap-3' : 'gap-4';
-
   return (
     <>
       {/* Fixed Floating Buttons Container - Always Visible with Enhanced Positioning */}
@@ -92,7 +89,10 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
           position: 'fixed !important',
           bottom: '1rem !important',
           right: '1rem !important',
-          zIndex: '99999 !important'
+          zIndex: '99999 !important',
+          display: 'flex !important',
+          flexDirection: 'column !important',
+          gap: '0.75rem !important'
         }}
       >
         

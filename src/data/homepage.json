@@ -1,4 +1,3 @@
-
 {
   "hero": {
     "enabled": true,
@@ -10,13 +9,13 @@
     "buttons": [
       {
         "text": "اتصل الآن",
-        "url": "tel:+966501234567",
+        "url": "tel:+966503269219 ",
         "type": "primary",
         "icon": "phone"
       },
       {
         "text": "واتساب",
-        "url": "https://wa.me/966501234567",
+        "url": "https://wa.me/966503269219",
         "type": "secondary",
         "icon": "message-circle"
       }
