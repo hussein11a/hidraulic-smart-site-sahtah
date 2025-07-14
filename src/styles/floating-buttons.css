@@ -1,0 +1,64 @@
+/* Enhanced Floating Buttons CSS - Ensures Always Visible */
+
+/* Force floating buttons to always be visible and fixed */
+.floating-buttons-container {
+  position: fixed !important;
+  bottom: 1rem !important;
+  right: 1rem !important;
+  z-index: 99999 !important;
+  pointer-events: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.75rem !important;
+}
+
+@media (min-width: 768px) {
+  .floating-buttons-container {
+    bottom: 1.5rem !important;
+    right: 1.5rem !important;
+    gap: 1rem !important;
+  }
+}
+
+/* Individual button styling */
+.floating-button {
+  position: relative !important;
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: none !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Prevent any CSS from hiding the buttons */
+.floating-button:not([style*="display: none"]) {
+  display: flex !important;
+}
+
+/* Override any potential hiding animations */
+.floating-button {
+  animation: none !important;
+}
+
+/* Ensure buttons stay on top of everything */
+.floating-buttons-container * {
+  z-index: inherit !important;
+}
+
+/* Prevent scroll-based hiding */
+body.scrolling .floating-button,
+html.scrolling .floating-button {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+/* Force visibility during any scroll events */
+.floating-button.scroll-hidden,
+.floating-button[data-hidden="true"] {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+}
+

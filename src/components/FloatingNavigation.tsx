@@ -85,15 +85,23 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
 
   return (
     <>
-      {/* Fixed Floating Buttons Container - Always Visible */}
-      <div className={`fixed ${containerPadding} flex flex-col ${buttonGap} z-[9999]`}>
+      {/* Fixed Floating Buttons Container - Always Visible with Enhanced Positioning */}
+      <div 
+        className="floating-buttons-container"
+        style={{
+          position: 'fixed !important',
+          bottom: '1rem !important',
+          right: '1rem !important',
+          zIndex: '99999 !important'
+        }}
+      >
         
         {/* WhatsApp Button - Always Visible */}
         {buttonsData.whatsapp?.enabled && (
           <Button
             onClick={handleWhatsAppWithToast}
             className={`
-              group relative ${isMobile ? 'w-14 h-14' : 'w-16 h-16'} 
+              floating-button group relative w-14 h-14 md:w-16 md:h-16
               rounded-full shadow-2xl transition-all duration-300 
               hover:scale-110 border-2 backdrop-blur-sm overflow-hidden
               ${isDarkMode 
@@ -101,6 +109,12 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
                 : 'bg-gradient-to-br from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 border-green-300/50 text-white'
               }
             `}
+            style={{
+              position: 'relative !important',
+              display: 'flex !important',
+              visibility: 'visible !important',
+              opacity: '1 !important'
+            }}
             aria-label={buttonsData.whatsapp.text}
           >
             {/* Glow Effect */}
@@ -119,7 +133,7 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
           <Button
             onClick={handlePhoneCallWithToast}
             className={`
-              group relative ${isMobile ? 'w-14 h-14' : 'w-16 h-16'} 
+              floating-button group relative w-14 h-14 md:w-16 md:h-16
               rounded-full shadow-2xl transition-all duration-300 
               hover:scale-110 border-2 backdrop-blur-sm overflow-hidden
               ${isDarkMode 
@@ -127,6 +141,12 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
                 : 'bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 border-blue-300/50 text-white'
               }
             `}
+            style={{
+              position: 'relative !important',
+              display: 'flex !important',
+              visibility: 'visible !important',
+              opacity: '1 !important'
+            }}
             aria-label={buttonsData.phone.text}
           >
             {/* Glow Effect */}
@@ -145,7 +165,7 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
           <Button
             onClick={scrollToTop}
             className={`
-              group relative ${isMobile ? 'w-14 h-14' : 'w-16 h-16'} 
+              floating-button group relative w-14 h-14 md:w-16 md:h-16
               rounded-full shadow-2xl transition-all duration-300 
               hover:scale-110 border-2 backdrop-blur-sm overflow-hidden
               ${isDarkMode 
@@ -153,6 +173,12 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
                 : 'bg-gradient-to-br from-slate-200 to-slate-300 hover:from-slate-100 hover:to-slate-200 border-slate-400/50 text-slate-700'
               }
             `}
+            style={{
+              position: 'relative !important',
+              display: 'flex !important',
+              visibility: 'visible !important',
+              opacity: '1 !important'
+            }}
             aria-label="العودة للأعلى"
           >
             {/* Glow Effect */}
