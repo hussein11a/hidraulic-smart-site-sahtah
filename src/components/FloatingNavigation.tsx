@@ -144,29 +144,6 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
           </button>
         )}
 
-        {/* Scroll to Top Button - Only shows when scrolling */}
-        {showScrollTop && (
-          <button
-            onClick={scrollToTop}
-            className="group relative w-14 h-14 bg-gray-600 hover:bg-gray-700 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-white hover:scale-105"
-            style={{
-              position: 'relative !important',
-              display: 'flex !important',
-              visibility: 'visible !important',
-              opacity: '1 !important',
-              backgroundColor: '#4B5563',
-              width: '56px',
-              height: '56px',
-              borderRadius: '50%',
-              boxShadow: '0 4px 12px rgba(75, 85, 99, 0.4)',
-              border: 'none',
-              cursor: 'pointer'
-            }}
-            aria-label="العودة للأعلى"
-          >
-            <ChevronUp className="h-7 w-7 text-white" />
-          </button>
-        )}
       </div>
     </>
   );
