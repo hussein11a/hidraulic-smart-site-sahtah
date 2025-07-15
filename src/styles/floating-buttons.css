@@ -1,64 +1,122 @@
-/* Enhanced Floating Buttons CSS - Ensures Always Visible */
-
-/* Force floating buttons to always be visible and fixed */
+/* Enhanced Floating Buttons CSS - Reference Site Style */
 .floating-buttons-container {
   position: fixed !important;
-  bottom: 1rem !important;
-  right: 1rem !important;
-  z-index: 99999 !important;
-  pointer-events: none !important;
+  bottom: 1.5rem !important;
+  right: 1.5rem !important;
+  z-index: 9999 !important;
   display: flex !important;
   flex-direction: column !important;
   gap: 0.75rem !important;
+  pointer-events: none !important;
 }
 
-@media (min-width: 768px) {
+.floating-buttons-container > * {
+  pointer-events: auto !important;
+}
+
+/* WhatsApp Button Styling */
+.floating-buttons-container button[aria-label*="واتساب"] {
+  background-color: #25D366 !important;
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 50% !important;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4) !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+  position: relative !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.floating-buttons-container button[aria-label*="واتساب"]:hover {
+  background-color: #128C7E !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 6px 16px rgba(37, 211, 102, 0.6) !important;
+}
+
+/* Phone Button Styling */
+.floating-buttons-container button[aria-label*="اتصل"] {
+  background-color: #3B82F6 !important;
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 50% !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4) !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+  position: relative !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.floating-buttons-container button[aria-label*="اتصل"]:hover {
+  background-color: #2563EB !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6) !important;
+}
+
+/* Scroll to Top Button Styling */
+.floating-buttons-container button[aria-label*="العودة"] {
+  background-color: #4B5563 !important;
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 50% !important;
+  box-shadow: 0 4px 12px rgba(75, 85, 99, 0.4) !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+  position: relative !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.floating-buttons-container button[aria-label*="العودة"]:hover {
+  background-color: #374151 !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 6px 16px rgba(75, 85, 99, 0.6) !important;
+}
+
+/* Icon Styling */
+.floating-buttons-container button svg {
+  color: white !important;
+  width: 28px !important;
+  height: 28px !important;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
   .floating-buttons-container {
-    bottom: 1.5rem !important;
-    right: 1.5rem !important;
-    gap: 1rem !important;
+    bottom: 1rem !important;
+    right: 1rem !important;
+    gap: 0.5rem !important;
+  }
+  
+  .floating-buttons-container button {
+    width: 50px !important;
+    height: 50px !important;
+  }
+  
+  .floating-buttons-container button svg {
+    width: 24px !important;
+    height: 24px !important;
   }
 }
 
-/* Individual button styling */
-.floating-button {
-  position: relative !important;
-  display: flex !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  pointer-events: auto !important;
-  transform: none !important;
-  transition: all 0.3s ease !important;
-}
-
-/* Prevent any CSS from hiding the buttons */
-.floating-button:not([style*="display: none"]) {
-  display: flex !important;
-}
-
-/* Override any potential hiding animations */
-.floating-button {
-  animation: none !important;
-}
-
-/* Ensure buttons stay on top of everything */
+/* Ensure buttons are always visible */
+.floating-buttons-container,
 .floating-buttons-container * {
-  z-index: inherit !important;
-}
-
-/* Prevent scroll-based hiding */
-body.scrolling .floating-button,
-html.scrolling .floating-button {
-  opacity: 1 !important;
   visibility: visible !important;
-  transform: none !important;
-}
-
-/* Force visibility during any scroll events */
-.floating-button.scroll-hidden,
-.floating-button[data-hidden="true"] {
   opacity: 1 !important;
-  visibility: visible !important;
   display: flex !important;
 }
 

@@ -82,111 +82,90 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
 
   return (
     <>
-      {/* Fixed Floating Buttons Container - Always Visible with Enhanced Positioning */}
+      {/* Fixed Floating Buttons Container - Reference Site Style */}
       <div 
-        className="floating-buttons-container"
+        className="fixed bottom-6 right-6 flex flex-col gap-3 z-[9999]"
         style={{
           position: 'fixed !important',
-          bottom: '1rem !important',
-          right: '1rem !important',
-          zIndex: '99999 !important',
+          bottom: '1.5rem !important',
+          right: '1.5rem !important',
+          zIndex: '9999 !important',
           display: 'flex !important',
           flexDirection: 'column !important',
           gap: '0.75rem !important'
         }}
       >
         
-        {/* WhatsApp Button - Always Visible */}
+        {/* WhatsApp Button - Reference Site Style */}
         {buttonsData.whatsapp?.enabled && (
-          <Button
+          <button
             onClick={handleWhatsAppWithToast}
-            className={`
-              floating-button group relative w-14 h-14 md:w-16 md:h-16
-              rounded-full shadow-2xl transition-all duration-300 
-              hover:scale-110 border-2 backdrop-blur-sm overflow-hidden
-              ${isDarkMode 
-                ? 'bg-gradient-to-br from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 border-green-400/50 text-white' 
-                : 'bg-gradient-to-br from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 border-green-300/50 text-white'
-              }
-            `}
+            className="group relative w-14 h-14 bg-green-500 hover:bg-green-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-white hover:scale-105"
             style={{
               position: 'relative !important',
               display: 'flex !important',
               visibility: 'visible !important',
-              opacity: '1 !important'
+              opacity: '1 !important',
+              backgroundColor: '#25D366',
+              width: '56px',
+              height: '56px',
+              borderRadius: '50%',
+              boxShadow: '0 4px 12px rgba(37, 211, 102, 0.4)',
+              border: 'none',
+              cursor: 'pointer'
             }}
-            aria-label={buttonsData.whatsapp.text}
+            aria-label="تواصل عبر الواتساب"
           >
-            {/* Glow Effect */}
-            <div className="absolute inset-0 bg-green-400/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            
-            {/* Icon */}
-            <WhatsAppIcon className={`${isMobile ? 'h-6 w-6' : 'h-7 w-7'} relative z-10 drop-shadow-lg group-hover:scale-110 transition-transform duration-300`} />
-            
-            {/* Subtle pulse animation */}
-            <div className="absolute inset-0 bg-green-500/20 rounded-full animate-pulse opacity-50"></div>
-          </Button>
+            <WhatsAppIcon className="h-7 w-7 text-white" />
+          </button>
         )}
 
-        {/* Phone Button - Always Visible */}
+        {/* Phone Button - Reference Site Style */}
         {buttonsData.phone?.enabled && (
-          <Button
+          <button
             onClick={handlePhoneCallWithToast}
-            className={`
-              floating-button group relative w-14 h-14 md:w-16 md:h-16
-              rounded-full shadow-2xl transition-all duration-300 
-              hover:scale-110 border-2 backdrop-blur-sm overflow-hidden
-              ${isDarkMode 
-                ? 'bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 border-blue-400/50 text-white' 
-                : 'bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 border-blue-300/50 text-white'
-              }
-            `}
+            className="group relative w-14 h-14 bg-blue-500 hover:bg-blue-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-white hover:scale-105"
             style={{
               position: 'relative !important',
               display: 'flex !important',
               visibility: 'visible !important',
-              opacity: '1 !important'
+              opacity: '1 !important',
+              backgroundColor: '#3B82F6',
+              width: '56px',
+              height: '56px',
+              borderRadius: '50%',
+              boxShadow: '0 4px 12px rgba(59, 130, 246, 0.4)',
+              border: 'none',
+              cursor: 'pointer'
             }}
-            aria-label={buttonsData.phone.text}
+            aria-label="اتصل الآن"
           >
-            {/* Glow Effect */}
-            <div className="absolute inset-0 bg-blue-400/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            
-            {/* Icon */}
-            <Phone className={`${isMobile ? 'h-6 w-6' : 'h-7 w-7'} relative z-10 drop-shadow-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-300`} />
-            
-            {/* Subtle pulse animation */}
-            <div className="absolute inset-0 bg-blue-500/20 rounded-full animate-pulse opacity-50"></div>
-          </Button>
+            <Phone className="h-7 w-7 text-white" />
+          </button>
         )}
 
-        {/* Scroll to Top Button - Shows after scrolling */}
+        {/* Scroll to Top Button - Only shows when scrolling */}
         {showScrollTop && (
-          <Button
+          <button
             onClick={scrollToTop}
-            className={`
-              floating-button group relative w-14 h-14 md:w-16 md:h-16
-              rounded-full shadow-2xl transition-all duration-300 
-              hover:scale-110 border-2 backdrop-blur-sm overflow-hidden
-              ${isDarkMode 
-                ? 'bg-gradient-to-br from-slate-700 to-slate-800 hover:from-slate-600 hover:to-slate-700 border-slate-500/50 text-white' 
-                : 'bg-gradient-to-br from-slate-200 to-slate-300 hover:from-slate-100 hover:to-slate-200 border-slate-400/50 text-slate-700'
-              }
-            `}
+            className="group relative w-14 h-14 bg-gray-600 hover:bg-gray-700 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-white hover:scale-105"
             style={{
               position: 'relative !important',
               display: 'flex !important',
               visibility: 'visible !important',
-              opacity: '1 !important'
+              opacity: '1 !important',
+              backgroundColor: '#4B5563',
+              width: '56px',
+              height: '56px',
+              borderRadius: '50%',
+              boxShadow: '0 4px 12px rgba(75, 85, 99, 0.4)',
+              border: 'none',
+              cursor: 'pointer'
             }}
             aria-label="العودة للأعلى"
           >
-            {/* Glow Effect */}
-            <div className={`absolute inset-0 ${isDarkMode ? 'bg-slate-400/20' : 'bg-slate-600/20'} rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
-            
-            {/* Icon */}
-            <ChevronUp className={`${isMobile ? 'h-6 w-6' : 'h-7 w-7'} relative z-10 drop-shadow-lg group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300`} />
-          </Button>
+            <ChevronUp className="h-7 w-7 text-white" />
+          </button>
         )}
       </div>
     </>
