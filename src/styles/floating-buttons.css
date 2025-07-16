@@ -8,10 +8,13 @@
   flex-direction: column !important;
   gap: 0.75rem !important;
   pointer-events: none !important;
+  /* Fade-in effect on load */
+  animation: fadeIn 1s ease-out forwards;
 }
 
 .floating-buttons-container > * {
   pointer-events: auto !important;
+  transition: all 0.3s ease !important;
 }
 
 /* WhatsApp Button Styling */
@@ -34,8 +37,8 @@
 
 .floating-buttons-container button[aria-label*="واتساب"]:hover {
   background-color: #128C7E !important;
-  transform: scale(1.05) !important;
-  box-shadow: 0 6px 16px rgba(37, 211, 102, 0.6) !important;
+  transform: scale(1.1) rotate(5deg) !important; /* Enhanced scale and rotation */
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6) !important; /* Enhanced shadow */
 }
 
 /* Phone Button Styling */
@@ -58,32 +61,8 @@
 
 .floating-buttons-container button[aria-label*="اتصل"]:hover {
   background-color: #2563EB !important;
-  transform: scale(1.05) !important;
-  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6) !important;
-}
-
-/* Scroll to Top Button Styling */
-.floating-buttons-container button[aria-label*="العودة"] {
-  background-color: #4B5563 !important;
-  width: 56px !important;
-  height: 56px !important;
-  border-radius: 50% !important;
-  box-shadow: 0 4px 12px rgba(75, 85, 99, 0.4) !important;
-  border: none !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  transition: all 0.3s ease !important;
-  cursor: pointer !important;
-  position: relative !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
-.floating-buttons-container button[aria-label*="العودة"]:hover {
-  background-color: #374151 !important;
-  transform: scale(1.05) !important;
-  box-shadow: 0 6px 16px rgba(75, 85, 99, 0.6) !important;
+  transform: scale(1.1) rotate(-5deg) !important; /* Enhanced scale and rotation */
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.6) !important; /* Enhanced shadow */
 }
 
 /* Icon Styling */
@@ -119,4 +98,17 @@
   opacity: 1 !important;
   display: flex !important;
 }
+
+/* Keyframes for fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
