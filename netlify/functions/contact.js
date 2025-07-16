@@ -93,7 +93,7 @@ ${message}
       body: JSON.stringify({
         success: true,
         message: 'تم إرسال طلبك بنجاح! سنتواصل معك في أقرب وقت ممكن.',
-        whatsappUrl: `https://wa.me/966501234567?text=${encodeURIComponent(whatsappMessage)}`
+        whatsappUrl: `https://wa.me/966503269219?text=${encodeURIComponent(whatsappMessage)}`
       })
     };
 
