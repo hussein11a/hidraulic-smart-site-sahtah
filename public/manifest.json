@@ -30,7 +30,7 @@
       "name": "اتصل الآن",
       "short_name": "اتصال",
       "description": "اتصل بخدمة السطحة مباشرة",
-      "url": "tel:+966501234567",
+      "url": "tel:+966503269219",
       "icons": [
         {
           "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>📞</text></svg>",
@@ -42,7 +42,7 @@
       "name": "واتساب",
       "short_name": "واتساب",
       "description": "تواصل عبر الواتساب",
-      "url": "https://wa.me/966501234567",
+      "url": "https://wa.me/966501https://wa.me/966503269219",
       "icons": [
         {
           "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='.9em' font-size='90'>💬</text></svg>",
