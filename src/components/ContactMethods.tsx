@@ -37,14 +37,14 @@ const ContactMethods: React.FC<ContactMethodsProps> = ({
       icon: Phone,
       title: 'اتصال مباشر',
       description: 'تواصل معنا عبر الهاتف للحصول على خدمة فورية',
-      phone: '+966501234567',
+      phone: '+966503269219',
       color: 'bg-blue-500'
     },
     {
       icon: MessageSquare,
       title: 'واتساب',
       description: 'أرسل رسالة واتساب وسنرد عليك فوراً',
-      phone: '+966501234567',
+      phone: '+966503269219',
       color: 'bg-green-500'
     }
   ];
