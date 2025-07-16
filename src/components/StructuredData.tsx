@@ -20,7 +20,7 @@ const StructuredData: React.FC<StructuredDataProps> = ({ type, data }) => {
             "provider": {
               "@type": "LocalBusiness",
               "name": "سطحة هيدروليك السعودية",
-              "telephone": "+966501234567",
+              "telephone": "+966503269219",
               "address": {
                 "@type": "PostalAddress",
                 "addressCountry": "SA",
@@ -33,7 +33,7 @@ const StructuredData: React.FC<StructuredDataProps> = ({ type, data }) => {
             },
             "availableChannel": {
               "@type": "ServiceChannel",
-              "servicePhone": "+966501234567",
+              "servicePhone": "+966503269219",
               "availableLanguage": "Arabic"
             },
             "hoursAvailable": "Mo-Su 00:00-23:59",
