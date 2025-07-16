@@ -144,7 +144,7 @@ const FAQ: React.FC<FAQProps> = ({ isDarkMode }) => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <span className="flex items-center gap-2 text-blue-500 font-semibold">
-                📞 +966501234567
+                📞 +966503269219
               </span>
               <span className="flex items-center gap-2 text-green-500 font-semibold">
                 💬 واتساب متاح
