@@ -99,8 +99,8 @@ npm run build
 **متغيرات البيئة (اختياري)**
 ```bash
 VITE_SITE_URL=https://yoursite.netlify.app
-VITE_PHONE_NUMBER=+966501234567
-VITE_WHATSAPP_NUMBER=+966501234567
+VITE_PHONE_NUMBER=+966503269219
+VITE_WHATSAPP_NUMBER=+966503269219
 ```
 
 **Build Settings في Netlify:**
