@@ -21,7 +21,7 @@ const EnhancedSEO: React.FC<EnhancedSEOProps> = ({
     "name": "سطحة هيدروليك السعودية",
     "description": description,
     "url": canonicalUrl,
-    "telephone": "+966501234567",
+    "telephone": "+966503269219",
     "priceRange": "$$",
     "address": {
       "@type": "PostalAddress",
