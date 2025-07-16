@@ -45,8 +45,8 @@ collections:
             widget: "object"
             collapsed: false
             fields:
-              - {label: "رقم الهاتف", name: "phone", widget: "string", default: "+966501234567"}
-              - {label: "رقم الواتساب", name: "whatsapp", widget: "string", default: "+966501234567"}
+              - {label: "رقم الهاتف", name: "phone", widget: "string", default: "+966503269219"}
+              - {label: "رقم الواتساب", name: "whatsapp", widget: "string", default: "+966503269219"}
               - {label: "البريد الإلكتروني", name: "email", widget: "string", required: false}
               - {label: "العنوان", name: "address", widget: "text", required: false}
               - label: "ساعات العمل"
@@ -225,7 +225,7 @@ collections:
             widget: "object"
             fields:
               - {label: "نص الزر", name: "text", widget: "string", default: "اتصل الآن"}
-              - {label: "رقم الهاتف", name: "number", widget: "string", default: "+966501234567"}
+              - {label: "رقم الهاتف", name: "number", widget: "string", default: "+966503269219"}
               - {label: "مفعل؟", name: "enabled", widget: "boolean", default: true}
               - {label: "لون الزر", name: "color", widget: "color", default: "#3b82f6"}
               - {label: "أيقونة", name: "icon", widget: "string", default: "phone"}
@@ -236,7 +236,7 @@ collections:
             widget: "object"
             fields:
               - {label: "نص الزر", name: "text", widget: "string", default: "واتساب"}
-              - {label: "رقم الواتساب", name: "number", widget: "string", default: "+966501234567"}
+              - {label: "رقم الواتساب", name: "number", widget: "string", default: "+966503269219"}
               - {label: "الرسالة الافتراضية", name: "message", widget: "text", default: "مرحبا، أحتاج خدمة سطحة هيدروليك"}
               - {label: "مفعل؟", name: "enabled", widget: "boolean", default: true}
               - {label: "لون الزر", name: "color", widget: "color", default: "#10b981"}
