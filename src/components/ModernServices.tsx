@@ -24,12 +24,12 @@ const ModernServices: React.FC<ModernServicesProps> = ({ services, isDarkMode })
   const [expandedServices, setExpandedServices] = useState<Set<number>>(new Set());
 
   const handlePhoneCall = () => {
-    window.location.href = 'tel:+966501234567';
+    window.location.href = 'tel:+966503269219';
   };
 
   const handleWhatsApp = () => {
     const message = encodeURIComponent('مرحبا، أحتاج خدمة سطحة هيدروليك');
-    window.open(`https://wa.me/966501234567?text=${message}`, '_blank', 'noopener,noreferrer');
+    window.open(`https://wa.me/9665012https://wa.me/9665012https://wa.me/966503269219?text=${message34567?text=${message34567?text=${message}`, '_blank', 'noopener,noreferrer');
   };
 
   const toggleServiceExpansion = (serviceId: number) => {
