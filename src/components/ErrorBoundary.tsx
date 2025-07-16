@@ -90,10 +90,10 @@ class ErrorBoundary extends Component<Props, State> {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
-                  href="tel:+966501234567"
+                  href="tel:+966503269219"
                   className="text-blue-600 hover:text-blue-700 font-semibold transition-colors"
                 >
-                  📞 +966501234567
+                  📞 +966503269219
                 </a>
                 <a
                   href="https://wa.me/966501234567"
