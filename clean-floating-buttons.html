@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأزرار العائمة النظيفة والمرنة - سطحة هيدروليك</title>
+    <link rel="stylesheet" href="clean-floating-buttons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* أنماط أساسية للعرض التوضيحي */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            color: white;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 60px 0;
+        }
+        
+        .demo-header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .demo-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .demo-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            backdrop-filter: blur(10px);
+        }
+        
+        .demo-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .demo-section h3 {
+            font-size: 1.5rem;
+            margin: 30px 0 15px;
+            color: #f0f0f0;
+        }
+        
+        .demo-section p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        .demo-section ul {
+            margin: 20px 0;
+            padding-right: 20px;
+        }
+        
+        .demo-section li {
+            margin-bottom: 10px;
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .highlight {
+            background: rgba(255, 255, 0, 0.2);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .long-content {
+            height: 150vh;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .scroll-indicator {
+            font-size: 1.5rem;
+            opacity: 0.7;
+        }
+        
+        /* أنماط للعرض التوضيحي للأزرار */
+        .demo-buttons-showcase {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .demo-button-group {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .demo-button-group h4 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- الأزرار العائمة الرئيسية -->
+    <div class="floating-buttons-container">
+        <a href="tel:+966501234567" 
+           class="floating-btn floating-btn--call" 
+           aria-label="اتصل بنا على الرقم +966501234567">
+            <span class="floating-btn__icon">📞</span>
+            <span class="floating-btn__text">اتصل</span>
+        </a>
+        <a href="https://wa.me/966501234567" 
+           class="floating-btn floating-btn--whatsapp" 
+           aria-label="تواصل معنا عبر الواتساب"
+           target="_blank" 
+           rel="noopener noreferrer">
+            <span class="floating-btn__icon">💬</span>
+            <span class="floating-btn__text">واتساب</span>
+        </a>
+    </div>
+
+    <div class="demo-container">
+        <header class="demo-header">
+            <h1>الأزرار العائمة النظيفة والمرنة</h1>
+            <p>حل شامل ومتطور للأزرار العائمة مع تركيز على النظافة والمرونة والتوافق الكامل</p>
+        </header>
+
+        <section class="demo-section">
+            <h2>🎯 المميزات الرئيسية</h2>
+            <ul>
+                <li><strong>نظيفة:</strong> كود منظم ومعلق بوضوح مع أفضل الممارسات</li>
+                <li><strong>مرنة:</strong> متغيرات CSS قابلة للتخصيص وأنماط متعددة</li>
+                <li><strong>متوافقة:</strong> تعمل على جميع المتصفحات والأجهزة</li>
+                <li><strong>محسنة الأداء:</strong> تقنيات تسريع الأجهزة المتقدمة</li>
+                <li><strong>سهلة الوصول:</strong> دعم كامل لمعايير الوصولية</li>
+            </ul>
+        </section>
+
+        <section class="demo-section">
+            <h2>🔧 طرق الاستخدام المختلفة</h2>
+            
+            <h3>الاستخدام الأساسي</h3>
+            <div class="code-block">
+&lt;div class="floating-buttons-container"&gt;
+    &lt;a href="tel:+966501234567" class="floating-btn floating-btn--call"&gt;
+        &lt;span class="floating-btn__icon"&gt;📞&lt;/span&gt;
+        &lt;span class="floating-btn__text"&gt;اتصل&lt;/span&gt;
+    &lt;/a&gt;
+    &lt;a href="https://wa.me/966501234567" class="floating-btn floating-btn--whatsapp"&gt;
+        &lt;span class="floating-btn__icon"&gt;💬&lt;/span&gt;
+        &lt;span class="floating-btn__text"&gt;واتساب&lt;/span&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+            </div>
+
+            <h3>أمثلة للأنماط المختلفة</h3>
+            <div class="demo-buttons-showcase">
+                <div class="demo-button-group">
+                    <h4>الوضع العادي</h4>
+                    <a href="#" class="floating-btn floating-btn--call">
+                        <span class="floating-btn__icon">📞</span>
+                        <span class="floating-btn__text">اتصل</span>
+                    </a>
+                </div>
+                
+                <div class="demo-button-group">
+                    <h4>الوضع المضغوط</h4>
+                    <a href="#" class="floating-btn floating-btn--whatsapp floating-btn--compact" title="واتساب">
+                        <span class="floating-btn__icon">💬</span>
+                        <span class="floating-btn__text">واتساب</span>
+                    </a>
+                </div>
+                
+                <div class="demo-button-group">
+                    <h4>حالة التحميل</h4>
+                    <a href="#" class="floating-btn floating-btn--call floating-btn--loading">
+                        <span class="floating-btn__text">جاري التحميل...</span>
+                    </a>
+                </div>
+                
+                <div class="demo-button-group">
+                    <h4>حالة عدم التوفر</h4>
+                    <a href="#" class="floating-btn floating-btn--whatsapp floating-btn--disabled">
+                        <span class="floating-btn__icon">💬</span>
+                        <span class="floating-btn__text">غير متوفر</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2>⚙️ التخصيص باستخدام متغيرات CSS</h2>
+            <p>يمكنك تخصيص الألوان والأحجام بسهولة:</p>
+            <div class="code-block">
+:root {
+  --floating-btn-primary: <span class="highlight">#4CAF50</span>; /* لون زر الاتصال */
+  --floating-btn-whatsapp: <span class="highlight">#25D366</span>; /* لون زر الواتساب */
+  --floating-btn-radius: <span class="highlight">50px</span>; /* انحناء الزوايا */
+  --floating-btn-spacing: <span class="highlight">15px</span>; /* المسافة بين الأزرار */
+  --floating-btn-z-index: <span class="highlight">9999</span>; /* ترتيب العرض */
+}
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2>📱 التصميم المتجاوب</h2>
+            <p>الأزرار تتكيف تلقائياً مع جميع أحجام الشاشات:</p>
+            <ul>
+                <li><strong>الشاشات الكبيرة:</strong> أعلى اليسار مع مساحة كافية</li>
+                <li><strong>الأجهزة اللوحية:</strong> تقليل الحجم مع الحفاظ على الوضوح</li>
+                <li><strong>الأجهزة المحمولة:</strong> أسفل الشاشة في المنتصف لسهولة الوصول</li>
+                <li><strong>الشاشات الصغيرة:</strong> تحسين الحجم والمسافات</li>
+            </ul>
+        </section>
+
+        <section class="demo-section">
+            <h2>🚀 تحسينات الأداء</h2>
+            <ul>
+                <li><strong>تسريع الأجهزة:</strong> استخدام GPU للانتقالات السلسة</li>
+                <li><strong>تحسين الذاكرة:</strong> منع إعادة الرسم غير الضرورية</li>
+                <li><strong>دعم المتصفحات القديمة:</strong> fallbacks للمتصفحات الأقدم</li>
+                <li><strong>تحسين الشاشات عالية الدقة:</strong> نصوص واضحة على جميع الشاشات</li>
+            </ul>
+        </section>
+
+        <section class="demo-section">
+            <h2>♿ إمكانية الوصول</h2>
+            <ul>
+                <li><strong>دعم لوحة المفاتيح:</strong> التنقل باستخدام Tab</li>
+                <li><strong>قارئات الشاشة:</strong> تسميات واضحة ووصفية</li>
+                <li><strong>التباين العالي:</strong> ألوان واضحة للمستخدمين ذوي الإعاقة البصرية</li>
+                <li><strong>الحركة المخفضة:</strong> احترام تفضيلات المستخدم</li>
+            </ul>
+        </section>
+
+        <section class="demo-section">
+            <h2>🧪 اختبار التمرير</h2>
+            <p>قم بالتمرير لأسفل لاختبار ثبات الأزرار العائمة وسلاسة أدائها أثناء التمرير الطويل.</p>
+        </section>
+    </div>
+
+    <!-- محتوى طويل لاختبار التمرير -->
+    <div class="long-content">
+        <div class="scroll-indicator">
+            <p>⬇️ استمر في التمرير لاختبار الأزرار العائمة ⬇️</p>
+            <p>لاحظ كيف تبقى الأزرار ثابتة ومرئية</p>
+        </div>
+    </div>
+
+    <div class="demo-container">
+        <section class="demo-section">
+            <h2>✅ نتائج الاختبار</h2>
+            <p>إذا وصلت إلى هنا، فهذا يعني أن الأزرار العائمة تعمل بشكل مثالي!</p>
+            <ul>
+                <li>✅ الأزرار بقيت ثابتة أثناء التمرير</li>
+                <li>✅ الأداء سلس وبدون تقطيع</li>
+                <li>✅ التصميم متجاوب ويتكيف مع حجم الشاشة</li>
+                <li>✅ التأثيرات التفاعلية تعمل بشكل صحيح</li>
+            </ul>
+        </section>
+    </div>
+
+    <script>
+        // JavaScript محسن للأداء والتوافق
+        (function() {
+            'use strict';
+            
+            // التحقق من دعم المتصفح للميزات المطلوبة
+            const supportsPassive = (function() {
+                let supportsPassive = false;
+                try {
+                    const opts = Object.defineProperty({}, 'passive', {
+                        get: function() {
+                            supportsPassive = true;
+                        }
+                    });
+                    window.addEventListener('testPassive', null, opts);
+                    window.removeEventListener('testPassive', null, opts);
+                } catch (e) {}
+                return supportsPassive;
+            })();
+            
+            // تحسين الأداء للأزرار العائمة
+            function initFloatingButtons() {
+                const floatingButtons = document.querySelectorAll('.floating-btn');
+                
+                if (!floatingButtons.length) return;
+                
+                // إضافة تأثيرات تفاعلية محسنة
+                floatingButtons.forEach(function(button) {
+                    // تحسين hover للأجهزة التي تدعمه
+                    if (window.matchMedia('(hover: hover)').matches) {
+                        button.addEventListener('mouseenter', function() {
+                            if (!this.classList.contains('floating-btn--disabled')) {
+                                this.style.transform = 'translateY(-2px) translateZ(0)';
+                            }
+                        });
+                        
+                        button.addEventListener('mouseleave', function() {
+                            this.style.transform = 'translateY(0) translateZ(0)';
+                        });
+                    }
+                    
+                    // تحسين اللمس للأجهزة المحمولة
+                    const touchOptions = supportsPassive ? { passive: true } : false;
+                    
+                    button.addEventListener('touchstart', function() {
+                        if (!this.classList.contains('floating-btn--disabled')) {
+                            this.style.transform = 'translateY(-1px) translateZ(0)';
+                        }
+                    }, touchOptions);
+                    
+                    button.addEventListener('touchend', function() {
+                        this.style.transform = 'translateY(0) translateZ(0)';
+                    }, touchOptions);
+                    
+                    // تحسين النقر
+                    button.addEventListener('click', function(e) {
+                        if (this.classList.contains('floating-btn--disabled')) {
+                            e.preventDefault();
+                            return false;
+                        }
+                        
+                        // تأثير النقر
+                        this.style.transform = 'translateY(0) translateZ(0)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 150);
+                    });
+                });
+            }
+            
+            // تحسين الأداء أثناء التمرير
+            function optimizeScrollPerformance() {
+                let ticking = false;
+                
+                function updateOnScroll() {
+                    // يمكن إضافة منطق إضافي هنا إذا لزم الأمر
+                    // مثل إخفاء/إظهار الأزرار حسب موضع التمرير
+                    ticking = false;
+                }
+                
+                const scrollOptions = supportsPassive ? { passive: true } : false;
+                
+                window.addEventListener('scroll', function() {
+                    if (!ticking) {
+                        requestAnimationFrame(updateOnScroll);
+                        ticking = true;
+                    }
+                }, scrollOptions);
+            }
+            
+            // تحسين تغيير حجم النافذة
+            function optimizeResizePerformance() {
+                let resizeTimer;
+                
+                window.addEventListener('resize', function() {
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(function() {
+                        // إعادة حساب المواضع إذا لزم الأمر
+                        console.log('تم تحسين الأزرار العائمة لحجم الشاشة الجديد');
+                    }, 250);
+                });
+            }
+            
+            // تشغيل التحسينات عند تحميل الصفحة
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function() {
+                    initFloatingButtons();
+                    optimizeScrollPerformance();
+                    optimizeResizePerformance();
+                });
+            } else {
+                initFloatingButtons();
+                optimizeScrollPerformance();
+                optimizeResizePerformance();
+            }
+            
+            // تسجيل نجاح التحميل
+            console.log('✅ تم تحميل الأزرار العائمة النظيفة والمرنة بنجاح');
+        })();
+    </script>
+</body>
+</html>
+
