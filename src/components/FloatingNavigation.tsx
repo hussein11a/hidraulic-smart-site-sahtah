@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { ChevronUp, Phone } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useIsMobile } from '@/hooks/use-mobile';
+import React, { useCallback } from 'react';
+import { Phone } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface FloatingNavigationProps {
@@ -31,28 +29,7 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
   handlePhoneCall,
   handleWhatsApp
 }) => {
-  const [showScrollTop, setShowScrollTop] = useState(false);
-  
-  const isMobile = useIsMobile();
-  const { toast } = useToast();
 
-  // Handle scroll to show/hide scroll-to-top button
-  const handleScroll = useCallback(() => {
-    const currentScrollY = window.scrollY;
-    setShowScrollTop(currentScrollY > 300);
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
-
-  const scrollToTop = useCallback(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  }, []);
 
   // Enhanced handlers with toast notifications
   const handlePhoneCallWithToast = useCallback(() => {
