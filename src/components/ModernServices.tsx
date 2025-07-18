@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -28,8 +27,11 @@ const ModernServices: React.FC<ModernServicesProps> = ({ services, isDarkMode })
   };
 
   const handleWhatsApp = () => {
-    const message = encodeURIComponent('مرحبا، أحتاج خدمة سطحة هيدروليك');
-    window.open(`https://wa.me/9665012https://wa.me/9665012https://wa.me/966503269219?text=${message34567?text=${message34567?text=${message}`, '_blank', 'noopener,noreferrer');
+    const message = encodeURIComponent("مرحبا، أحتاج خدمة سطحة هيدروليك");
+    window.open(`https://wa.me/966503269219?text=${message}`, 
+      "_blank", 
+      "noopener,noreferrer"
+    );
   };
 
   const toggleServiceExpansion = (serviceId: number) => {
@@ -44,6 +46,8 @@ const ModernServices: React.FC<ModernServicesProps> = ({ services, isDarkMode })
 
   const getServiceFeatures = (service: Service) => {
     const features = {
+      1: ['سرعة الاستجابة', 'فريق متخصص', 'خدمة 24/7', 'تغطية واسعة'],
+      2: ['نقل آمن ومضمون', 'عناية خاصة بالسيارات الفاخرة', 'معدات متخصصة', 'تأمين شامل أثناء النقل'],
       3: ['نقل آمن ومضمون', 'عناية خاصة بالسيارات الفاخرة', 'معدات متخصصة', 'تأمين شامل أثناء النقل'],
       4: ['متاح على مدار الساعة', 'استجابة فورية', 'فريق دائم الاستعداد', 'تغطية جميع مناطق المملكة'],
       6: ['أدوات تثبيت خاصة', 'حماية كاملة للدراجة', 'نقل احترافي', 'سائقين متخصصين'],
@@ -447,3 +451,5 @@ const ModernServices: React.FC<ModernServicesProps> = ({ services, isDarkMode })
 };
 
 export default ModernServices;
+
+
