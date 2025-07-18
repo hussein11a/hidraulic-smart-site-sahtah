@@ -20,8 +20,10 @@
 /* الحاوي الرئيسي للأزرار العائمة */
 .floating-buttons-container {
   position: fixed;
-  top: 20px;
-  left: 20px;
+  bottom: 20px; /* تغيير من top إلى bottom */
+  right: 20px;  /* تغيير من left إلى right */
+  left: auto;   /* إزالة left */
+  top: auto;    /* إزالة top */
   z-index: var(--floating-btn-z-index);
   display: flex;
   flex-direction: row;
@@ -137,8 +139,10 @@
 /* الأجهزة اللوحية */
 @media (max-width: 1024px) {
   .floating-buttons-container {
-    top: 15px;
-    left: 15px;
+    bottom: 15px; /* تغيير من top إلى bottom */
+    right: 15px;  /* تغيير من left إلى right */
+    left: auto;   /* إزالة left */
+    top: auto;    /* إزالة top */
     gap: 12px;
   }
   
@@ -152,10 +156,11 @@
 /* الأجهزة المحمولة الكبيرة */
 @media (max-width: 768px) {
   .floating-buttons-container {
-    top: auto;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%) translateZ(0);
+    bottom: 20px; /* تغيير من top إلى bottom */
+    right: 50%;   /* تغيير من left إلى right */
+    left: auto;   /* إزالة left */
+    top: auto;    /* إزالة top */
+    transform: translateX(50%) translateZ(0); /* تعديل ليكون في المنتصف من اليمين */
     flex-direction: row;
     justify-content: center;
   }
@@ -351,4 +356,5 @@
   height: 1px;
   overflow: hidden;
 }
+
 
