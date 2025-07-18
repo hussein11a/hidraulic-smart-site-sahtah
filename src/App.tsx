@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import ErrorBoundary from "./components/ErrorBoundary";
+import FloatingButtons from "./components/FloatingButtons"; // استيراد مكون الأزرار العائمة
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,9 +30,13 @@ const App = () => (
             <Route path="*" element={<Index />} />
           </Routes>
         </BrowserRouter>
+        {/* إضافة مكون الأزرار العائمة هنا */}
+        <FloatingButtons phoneNumber="+966501234567" whatsappNumber="966501234567" />
       </TooltipProvider>
     </QueryClientProvider>
   </ErrorBoundary>
 );
 
 export default App;
+
+
