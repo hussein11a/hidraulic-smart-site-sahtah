@@ -30,9 +30,9 @@ const App = () => (
             <Route path="*" element={<Index />} />
           </Routes>
         </BrowserRouter>
-        {/* إضافة مكون الأزرار العائمة هنا */}
-        <FloatingButtons phoneNumber="+966501234567" whatsappNumber="966501234567" />
       </TooltipProvider>
+      {/* نقل مكون الأزرار العائمة هنا لضمان عمل position: fixed بشكل صحيح */}
+      <FloatingButtons phoneNumber="+966501234567" whatsappNumber="966501234567" />
     </QueryClientProvider>
   </ErrorBoundary>
 );
