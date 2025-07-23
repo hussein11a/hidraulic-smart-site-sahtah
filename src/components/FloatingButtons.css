@@ -1,360 +1,114 @@
-/* ===================================
-   الأزرار العائمة النظيفة والمرنة
-   Clean & Flexible Floating Buttons
-   =================================== */
-
-/* المتغيرات CSS للمرونة والقابلية للتخصيص */
-:root {
-  --floating-btn-primary: #4CAF50;
-  --floating-btn-primary-hover: #45a049;
-  --floating-btn-whatsapp: #25D366;
-  --floating-btn-whatsapp-hover: #128C7E;
-  --floating-btn-shadow: rgba(0, 0, 0, 0.15);
-  --floating-btn-shadow-hover: rgba(0, 0, 0, 0.25);
-  --floating-btn-radius: 50px;
-  --floating-btn-spacing: 15px;
-  --floating-btn-z-index: 9999;
-  --floating-btn-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* الحاوي الرئيسي للأزرار العائمة */
+/* Enhanced Floating Buttons CSS - Reference Site Style */
 .floating-buttons-container {
-  position: fixed;
-  bottom: 20px; /* تغيير من top إلى bottom */
-  right: 20px;  /* تغيير من left إلى right */
-  left: auto;   /* إزالة left */
-  top: auto;    /* إزالة top */
-  z-index: var(--floating-btn-z-index);
-  display: flex;
-  flex-direction: row;
-  gap: var(--floating-btn-spacing);
-  
-  /* تحسينات الأداء */
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  
-  /* ضمان عدم التداخل مع المحتوى */
-  pointer-events: none;
+  position: fixed !important;
+  bottom: 1.5rem !important;
+  right: 1.5rem !important;
+  z-index: 9999 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.75rem !important;
+  pointer-events: none !important;
+  /* Fade-in effect on load */
+  animation: fadeIn 1s ease-out forwards;
 }
 
-/* الأزرار العائمة الأساسية */
-.floating-btn {
-  /* إعادة تفعيل pointer events للأزرار */
-  pointer-events: auto;
-  
-  /* التصميم الأساسي */
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 120px;
-  height: 50px;
-  padding: 0 20px;
-  
-  /* الخطوط والنصوص */
-  font-family: 'Tajawal', 'Arial', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-  color: white;
-  white-space: nowrap;
-  
-  /* الحدود والشكل */
-  border: none;
-  border-radius: var(--floating-btn-radius);
-  outline: none;
-  
-  /* الظلال والتأثيرات */
-  box-shadow: 0 4px 12px var(--floating-btn-shadow);
-  cursor: pointer;
-  
-  /* الانتقالات */
-  transition: var(--floating-btn-transition);
-  
-  /* تحسينات الأداء */
-  will-change: transform, box-shadow;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  
-  /* منع تحديد النص */
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+.floating-buttons-container > * {
+  pointer-events: auto !important;
+  transition: all 0.3s ease !important;
 }
 
-/* زر الاتصال */
-.floating-btn--call {
-  background: linear-gradient(135deg, var(--floating-btn-primary), var(--floating-btn-primary-hover));
+/* WhatsApp Button Styling */
+.floating-buttons-container button[aria-label*="واتساب"] {
+  background-color: #25D366 !important;
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 50% !important;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4) !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+  position: relative !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
-.floating-btn--call:hover,
-.floating-btn--call:focus {
-  background: linear-gradient(135deg, var(--floating-btn-primary-hover), var(--floating-btn-primary));
-  transform: translateY(-2px) translateZ(0);
-  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+.floating-buttons-container button[aria-label*="واتساب"]:hover {
+  background-color: #128C7E !important;
+  transform: scale(1.1) rotate(5deg) !important; /* Enhanced scale and rotation */
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6) !important; /* Enhanced shadow */
 }
 
-/* زر الواتساب */
-.floating-btn--whatsapp {
-  background: linear-gradient(135deg, var(--floating-btn-whatsapp), var(--floating-btn-whatsapp-hover));
+/* Phone Button Styling */
+.floating-buttons-container button[aria-label*="اتصل"] {
+  background-color: #3B82F6 !important;
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 50% !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4) !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+  position: relative !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
-.floating-btn--whatsapp:hover,
-.floating-btn--whatsapp:focus {
-  background: linear-gradient(135deg, var(--floating-btn-whatsapp-hover), var(--floating-btn-whatsapp));
-  transform: translateY(-2px) translateZ(0);
-  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+.floating-buttons-container button[aria-label*="اتصل"]:hover {
+  background-color: #2563EB !important;
+  transform: scale(1.1) rotate(-5deg) !important; /* Enhanced scale and rotation */
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.6) !important; /* Enhanced shadow */
 }
 
-/* تأثير الضغط */
-.floating-btn:active {
-  transform: translateY(0) translateZ(0);
-  box-shadow: 0 2px 8px var(--floating-btn-shadow-hover);
+/* Icon Styling */
+.floating-buttons-container button svg {
+  color: white !important;
+  width: 28px !important;
+  height: 28px !important;
 }
 
-/* الأيقونات داخل الأزرار */
-.floating-btn__icon {
-  margin-left: 8px;
-  font-size: 16px;
-  line-height: 1;
-}
-
-/* تحسينات الوصولية */
-.floating-btn:focus-visible {
-  outline: 2px solid #ffffff;
-  outline-offset: 2px;
-}
-
-/* إخفاء outline للماوس */
-.floating-btn:focus:not(:focus-visible) {
-  outline: none;
-}
-
-/* ===================================
-   التصميم المتجاوب
-   Responsive Design
-   =================================== */
-
-/* الأجهزة اللوحية */
-@media (max-width: 1024px) {
-  .floating-buttons-container {
-    bottom: 15px; /* تغيير من top إلى bottom */
-    right: 15px;  /* تغيير من left إلى right */
-    left: auto;   /* إزالة left */
-    top: auto;    /* إزالة top */
-    gap: 12px;
-  }
-  
-  .floating-btn {
-    min-width: 110px;
-    height: 48px;
-    font-size: 13px;
-  }
-}
-
-/* الأجهزة المحمولة الكبيرة */
+/* Mobile Responsive */
 @media (max-width: 768px) {
   .floating-buttons-container {
-    bottom: 20px; /* تغيير من top إلى bottom */
-    right: 50%;   /* تغيير من left إلى right */
-    left: auto;   /* إزالة left */
-    top: auto;    /* إزالة top */
-    transform: translateX(50%) translateZ(0); /* تعديل ليكون في المنتصف من اليمين */
-    flex-direction: row;
-    justify-content: center;
+    bottom: 1rem !important;
+    right: 1rem !important;
+    gap: 0.5rem !important;
   }
   
-  .floating-btn {
-    min-width: 100px;
-    height: 50px;
-    font-size: 14px;
-    /* ضمان سهولة اللمس */
-    min-height: 44px;
-  }
-}
-
-/* الأجهزة المحمولة الصغيرة */
-@media (max-width: 480px) {
-  .floating-buttons-container {
-    bottom: 15px;
-    gap: 10px;
+  .floating-buttons-container button {
+    width: 50px !important;
+    height: 50px !important;
   }
   
-  .floating-btn {
-    min-width: 90px;
-    height: 48px;
-    padding: 0 16px;
-    font-size: 13px;
-  }
-  
-  .floating-btn__icon {
-    margin-left: 6px;
-    font-size: 14px;
+  .floating-buttons-container button svg {
+    width: 24px !important;
+    height: 24px !important;
   }
 }
 
-/* الأجهزة المحمولة الصغيرة جداً */
-@media (max-width: 360px) {
-  .floating-buttons-container {
-    gap: 8px;
+/* Ensure buttons are always visible */
+.floating-buttons-container,
+.floating-buttons-container * {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: flex !important;
+}
+
+/* Keyframes for fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .floating-btn {
-    min-width: 80px;
-    padding: 0 12px;
-    font-size: 12px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-}
-
-/* ===================================
-   تحسينات الأداء المتقدمة
-   Advanced Performance Optimizations
-   =================================== */
-
-/* دعم المتصفحات القديمة */
-@supports not (will-change: transform) {
-  .floating-buttons-container,
-  .floating-btn {
-    -webkit-transform: translateZ(0);
-    -moz-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    transform: translateZ(0);
-  }
-}
-
-/* تحسين للشاشات عالية الدقة */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .floating-btn {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-}
-
-/* تحسين للوضع المظلم */
-@media (prefers-color-scheme: dark) {
-  .floating-btn {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  }
-  
-  .floating-btn:hover,
-  .floating-btn:focus {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-  }
-}
-
-/* تحسين للحركة المخفضة */
-@media (prefers-reduced-motion: reduce) {
-  .floating-btn {
-    transition: none;
-  }
-  
-  .floating-btn:hover,
-  .floating-btn:focus {
-    transform: none;
-  }
-}
-
-/* إخفاء عند الطباعة */
-@media print {
-  .floating-buttons-container {
-    display: none !important;
-  }
-}
-
-/* ===================================
-   حالات خاصة ومتغيرات إضافية
-   Special States & Additional Variants
-   =================================== */
-
-/* حالة التحميل */
-.floating-btn--loading {
-  pointer-events: none;
-  opacity: 0.7;
-}
-
-.floating-btn--loading::after {
-  content: '';
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  border: 2px solid transparent;
-  border-top: 2px solid currentColor;
-  border-radius: 50%;
-  animation: floating-btn-spin 1s linear infinite;
-}
-
-@keyframes floating-btn-spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* حالة عدم التوفر */
-.floating-btn--disabled {
-  opacity: 0.5;
-  pointer-events: none;
-  cursor: not-allowed;
-}
-
-/* متغير مضغوط للمساحات الضيقة */
-.floating-btn--compact {
-  min-width: 50px;
-  width: 50px;
-  height: 50px;
-  padding: 0;
-  border-radius: 50%;
-}
-
-.floating-btn--compact .floating-btn__icon {
-  margin: 0;
-  font-size: 18px;
-}
-
-/* إخفاء النص في الوضع المضغوط */
-.floating-btn--compact .floating-btn__text {
-  display: none;
-}
-
-/* ===================================
-   تحسينات إضافية للتوافق
-   Additional Compatibility Enhancements
-   =================================== */
-
-/* دعم Internet Explorer 11 */
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-  .floating-btn {
-    background-image: none;
-  }
-  
-  .floating-btn--call {
-    background-color: var(--floating-btn-primary);
-  }
-  
-  .floating-btn--whatsapp {
-    background-color: var(--floating-btn-whatsapp);
-  }
-}
-
-/* تحسين للأجهزة ذات الإدخال المحدود */
-@media (hover: none) and (pointer: coarse) {
-  .floating-btn:hover {
-    transform: none;
-    box-shadow: 0 4px 12px var(--floating-btn-shadow);
-  }
-}
-
-/* تحسين لقارئات الشاشة */
-.floating-btn[aria-label] {
-  position: relative;
-}
-
-.floating-btn[aria-label]::before {
-  content: attr(aria-label);
-  position: absolute;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
 }
 
 

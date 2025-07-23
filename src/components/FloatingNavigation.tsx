@@ -29,6 +29,7 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
   handlePhoneCall,
   handleWhatsApp
 }) => {
+  const { toast } = useToast();
 
 
   // Enhanced handlers with toast notifications

@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import ErrorBoundary from "./components/ErrorBoundary";
-import FloatingButtons from "./components/FloatingButtons"; // استيراد مكون الأزرار العائمة
+import FloatingNavigation from "./components/FloatingNavigation";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,7 +32,7 @@ const App = () => (
         </BrowserRouter>
       </TooltipProvider>
       {/* نقل مكون الأزرار العائمة هنا لضمان عمل position: fixed بشكل صحيح */}
-      <FloatingButtons phoneNumber="+966501234567" whatsappNumber="966501234567" />
+      <FloatingNavigation isDarkMode={false} buttonsData={{ phone: { text: "اتصل", number: "+966503269219", enabled: true, color: "#3B82F6" }, whatsapp: { text: "واتساب", number: "966503269219", message: "مرحباً، أود الاستفسار عن خدماتكم.", enabled: true, color: "#25D366" } }} handlePhoneCall={() => { window.location.href = "tel:+966503269219"; }} handleWhatsApp={() => { window.open("https://wa.me/966503269219", "_blank"); }} />
     </QueryClientProvider>
   </ErrorBoundary>
 );
