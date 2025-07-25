@@ -4,7 +4,7 @@ import ModernHero from '@/components/ModernHero';
 import ModernServices from '@/components/ModernServices';
 import ProcessSection from '@/components/ProcessSection';
 import ContactMethods from '@/components/ContactMethods';
-import FloatingNavigation from '@/components/FloatingNavigation';
+// import FloatingNavigation from '@/components/FloatingNavigation'; // تم إزالة هذا الاستيراد
 import LoadingSpinner from '@/components/LoadingSpinner';
 import SecurityProvider from '@/components/SecurityProvider';
 import ErrorBoundaryOptimized from '@/components/ErrorBoundaryOptimized';
@@ -134,12 +134,12 @@ const Index = () => {
         </main>
 
         {/* Floating Navigation */}
-        <FloatingNavigation
+        {/* <FloatingNavigation
           isDarkMode={isDarkMode}
           buttonsData={buttonsData}
           handlePhoneCall={handlePhoneCall}
           handleWhatsApp={handleWhatsApp}
-        />
+        /> */}
 
         {/* Footer */}
         <AppFooter isDarkMode={isDarkMode} />
