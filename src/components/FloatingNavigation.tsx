@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { Phone } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
 
 interface FloatingNavigationProps {
   isDarkMode: boolean;
@@ -29,27 +28,16 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
   handlePhoneCall,
   handleWhatsApp
 }) => {
-  const { toast } = useToast();
 
 
-  // Enhanced handlers with toast notifications
+  // Enhanced handlers without toast notifications
   const handlePhoneCallWithToast = useCallback(() => {
     handlePhoneCall();
-    toast({
-      title: "جاري الاتصال...",
-      description: `الاتصال بـ ${buttonsData.phone.number}`,
-      duration: 3000,
-    });
-  }, [handlePhoneCall, buttonsData.phone.number, toast]);
+  }, [handlePhoneCall]);
 
   const handleWhatsAppWithToast = useCallback(() => {
     handleWhatsApp();
-    toast({
-      title: "فتح واتساب...",
-      description: "جاري تحضير الرسالة",
-      duration: 2000,
-    });
-  }, [handleWhatsApp, toast]);
+  }, [handleWhatsApp]);
 
   // WhatsApp Icon Component
   const WhatsAppIcon = ({ className = "h-6 w-6" }: { className?: string }) => (
