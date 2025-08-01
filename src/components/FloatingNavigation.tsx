@@ -213,18 +213,21 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
   //   return () => clearTimeout(timer);
   // }, [isDragging, isExpanded, lastUsed]);
 
-  // Position calculation with enhanced fixed positioning
+  // Enhanced position calculation with maximum visibility
   const containerStyle: React.CSSProperties = {
     position: 'fixed',
     right: `${position.x}px`,
     bottom: `${position.y}px`,
-    zIndex: 2147483647, // Maximum z-index value
+    zIndex: 2147483647,
     transition: isDragging ? 'none' : 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
     transform: isDragging ? 'scale(1.05)' : 'scale(1)',
     filter: isDragging ? 'drop-shadow(0 20px 40px rgba(0,0,0,0.3))' : 'none',
     pointerEvents: 'auto',
     visibility: 'visible',
-    opacity: 1
+    opacity: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px'
   };
 
   if (isMinimized) {
