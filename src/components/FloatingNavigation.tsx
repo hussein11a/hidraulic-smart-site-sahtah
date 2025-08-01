@@ -202,26 +202,29 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
     savePosition({ x: 24, y: 24 });
   }, [savePosition]);
 
-  // Auto-minimize after inactivity
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!isDragging && !isExpanded) {
-        setIsMinimized(true);
-      }
-    }, 10000);
+  // Auto-minimize disabled to keep buttons always visible
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     if (!isDragging && !isExpanded) {
+  //       setIsMinimized(true);
+  //     }
+  //   }, 10000);
 
-    return () => clearTimeout(timer);
-  }, [isDragging, isExpanded, lastUsed]);
+  //   return () => clearTimeout(timer);
+  // }, [isDragging, isExpanded, lastUsed]);
 
-  // Position calculation
+  // Position calculation with enhanced fixed positioning
   const containerStyle: React.CSSProperties = {
     position: 'fixed',
     right: `${position.x}px`,
     bottom: `${position.y}px`,
-    zIndex: 9999,
+    zIndex: 2147483647, // Maximum z-index value
     transition: isDragging ? 'none' : 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
     transform: isDragging ? 'scale(1.05)' : 'scale(1)',
-    filter: isDragging ? 'drop-shadow(0 20px 40px rgba(0,0,0,0.3))' : 'none'
+    filter: isDragging ? 'drop-shadow(0 20px 40px rgba(0,0,0,0.3))' : 'none',
+    pointerEvents: 'auto',
+    visibility: 'visible',
+    opacity: 1
   };
 
   if (isMinimized) {
@@ -241,9 +244,17 @@ const FloatingNavigation: React.FC<FloatingNavigationProps> = ({
   return (
     <div 
       ref={containerRef}
-      style={containerStyle}
+      style={{
+        ...containerStyle,
+        position: 'fixed !important' as any,
+        zIndex: '2147483647 !important' as any,
+        visibility: 'visible !important' as any,
+        opacity: '1 !important' as any,
+        pointerEvents: 'auto !important' as any
+      }}
       className={cn(
         "flex flex-col gap-3 select-none",
+        "!fixed !z-[2147483647] !visible !opacity-100",
         isDragging && "cursor-grabbing"
       )}
       onMouseDown={handleMouseDown}
