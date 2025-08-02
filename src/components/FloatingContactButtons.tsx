@@ -1,5 +1,6 @@
 import React from 'react';
 import { Phone } from 'lucide-react';
+import './FloatingContactButtons.css';
 
 // WhatsApp Icon component
 const WhatsAppIcon = ({ className = "h-6 w-6" }: { className?: string }) => (
@@ -34,7 +35,7 @@ const FloatingContactButtons: React.FC<FloatingContactButtonsProps> = ({
       {/* WhatsApp Button */}
       <button
         onClick={handleWhatsApp}
-        className="w-14 h-14 bg-[#25D366] hover:bg-[#128C7E] rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-white hover:scale-110 active:scale-95 group"
+        className="w-14 h-14 bg-[#25D366] hover:bg-[#128C7E] rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-white hover:scale-110 active:scale-95 group floating-contact-button whatsapp"
         aria-label="تواصل عبر الواتساب"
       >
         <WhatsAppIcon className="h-7 w-7 group-hover:scale-110 transition-transform duration-200" />
@@ -43,11 +44,12 @@ const FloatingContactButtons: React.FC<FloatingContactButtonsProps> = ({
       {/* Phone Button */}
       <button
         onClick={handlePhoneCall}
-        className="w-14 h-14 bg-[#3B82F6] hover:bg-[#2563EB] rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-white hover:scale-110 active:scale-95 group"
+        className="w-14 h-14 bg-[#3B82F6] hover:bg-[#2563EB] rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-white hover:scale-110 active:scale-95 group floating-contact-button phone"
         aria-label="اتصل الآن"
       >
         <Phone className="h-7 w-7 group-hover:scale-110 transition-transform duration-200" />
       </button>
+
     </div>
   );
 };
