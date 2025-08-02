@@ -27,6 +27,10 @@
 
 .floating-contact-button {
   animation: floatUp 3s ease-in-out infinite;
+  position: relative;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 
 .floating-contact-button.phone {
@@ -37,4 +41,20 @@
 .floating-contact-button.whatsapp {
   animation: floatUp 3s ease-in-out infinite, whatsappPulse 2s infinite;
   animation-delay: 1.5s;
+}
+
+/* إضافة للثبات التام على الشاشة */
+.floating-buttons-container {
+  position: fixed !important;
+  bottom: 1rem !important;
+  right: 1rem !important;
+  z-index: 999999 !important;
+  will-change: auto;
+}
+
+@media (max-width: 768px) {
+  .floating-buttons-container {
+    bottom: 0.75rem !important;
+    right: 0.75rem !important;
+  }
 }

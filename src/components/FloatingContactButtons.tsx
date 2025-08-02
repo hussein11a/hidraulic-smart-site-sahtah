@@ -31,24 +31,26 @@ const FloatingContactButtons: React.FC<FloatingContactButtonsProps> = ({
   };
 
   return (
-    <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-[9999]">
-      {/* WhatsApp Button */}
+    <div className="floating-buttons-container fixed bottom-4 right-4 flex flex-col gap-3 z-[999999] pointer-events-none">
+      <div className="pointer-events-auto">{/* WhatsApp Button */}
       <button
         onClick={handleWhatsApp}
-        className="w-14 h-14 bg-[#25D366] hover:bg-[#128C7E] rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-white hover:scale-110 active:scale-95 group floating-contact-button whatsapp"
+        className="w-12 h-12 md:w-14 md:h-14 bg-[#25D366] hover:bg-[#128C7E] rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-white hover:scale-110 active:scale-95 group floating-contact-button whatsapp"
         aria-label="تواصل عبر الواتساب"
       >
-        <WhatsAppIcon className="h-7 w-7 group-hover:scale-110 transition-transform duration-200" />
+        <WhatsAppIcon className="h-6 w-6 md:h-7 md:w-7 group-hover:scale-110 transition-transform duration-200" />
       </button>
+      </div>
 
-      {/* Phone Button */}
+      <div className="pointer-events-auto">{/* Phone Button */}
       <button
         onClick={handlePhoneCall}
-        className="w-14 h-14 bg-[#3B82F6] hover:bg-[#2563EB] rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-white hover:scale-110 active:scale-95 group floating-contact-button phone"
+        className="w-12 h-12 md:w-14 md:h-14 bg-[#3B82F6] hover:bg-[#2563EB] rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-white hover:scale-110 active:scale-95 group floating-contact-button phone"
         aria-label="اتصل الآن"
       >
-        <Phone className="h-7 w-7 group-hover:scale-110 transition-transform duration-200" />
+        <Phone className="h-6 w-6 md:h-7 md:w-7 group-hover:scale-110 transition-transform duration-200" />
       </button>
+      </div>
 
     </div>
   );
