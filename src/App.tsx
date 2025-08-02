@@ -32,9 +32,9 @@ const App = () => (
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
-      {/* Floating Contact Buttons */}
-      <FloatingContactButtons />
     </QueryClientProvider>
+    {/* Floating Contact Buttons - خارج جميع العناصر الأخرى للثبات التام */}
+    <FloatingContactButtons />
   </ErrorBoundary>
 );
 
