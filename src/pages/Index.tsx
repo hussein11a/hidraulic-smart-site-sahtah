@@ -20,7 +20,7 @@ import { usePerformanceOptimization } from '@/hooks/usePerformanceOptimization';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useServiceData } from '@/hooks/useServiceData';
 import { useTheme } from '@/hooks/useTheme';
-import { useContactHandlers } from '@/hooks/useContactHandlers';
+
 
 interface SiteData {
   title: string;
@@ -30,21 +30,6 @@ interface SiteData {
   whatsapp: string;
 }
 
-interface ButtonsData {
-  phone: {
-    text: string;
-    number: string;
-    enabled: boolean;
-    color: string;
-  };
-  whatsapp: {
-    text: string;
-    number: string;
-    message: string;
-    enabled: boolean;
-    color: string;
-  };
-}
 
 const Index = () => {
   const [siteData] = useState<SiteData>({
@@ -54,26 +39,18 @@ const Index = () => {
     phone: "+966503269219",
     whatsapp: "+966503269219",
   });
-  const [buttonsData] = useState<ButtonsData>({
-    phone: {
-      text: 'اتصل الآن',
-      number: '+966503269219',
-      enabled: true,
-      color: '#1e40af'
-    },
-    whatsapp: {
-      text: 'واتساب',
-      number: '+966503269219',
-      message: 'مرحبا، أحتاج خدمة سطحة هيدروليك',
-      enabled: true,
-      color: '#16a34a'
-    }
-  });
   
   const isMobile = useIsMobile();
   const { services, isLoading } = useServiceData();
   const { isDarkMode, toggleTheme } = useTheme();
-  const { handlePhoneCall, handleWhatsApp } = useContactHandlers(buttonsData);
+  
+  const handlePhoneCall = () => {
+    window.location.href = "tel:+966503269219";
+  };
+
+  const handleWhatsApp = () => {
+    window.open("https://wa.me/966503269219?text=مرحبا، أحتاج خدمة سطحة هيدروليك", "_blank");
+  };
 
   // Use performance optimization hook
   usePerformanceOptimization();
@@ -133,13 +110,6 @@ const Index = () => {
           />
         </main>
 
-        {/* Floating Navigation */}
-        {/* <FloatingNavigation
-          isDarkMode={isDarkMode}
-          buttonsData={buttonsData}
-          handlePhoneCall={handlePhoneCall}
-          handleWhatsApp={handleWhatsApp}
-        /> */}
 
         {/* Footer */}
         <AppFooter isDarkMode={isDarkMode} />

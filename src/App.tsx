@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import ErrorBoundary from "./components/ErrorBoundary";
-import SimpleFloatingButtons from "./components/SimpleFloatingButtons";
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,8 +31,6 @@ const App = () => (
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
-      {/* الأزرار العائمة المبسطة - دائمة الظهور */}
-      <SimpleFloatingButtons buttonsData={{ phone: { text: "اتصل", number: "+966503269219", enabled: true, color: "#3B82F6" }, whatsapp: { text: "واتساب", number: "+966503269219", message: "مرحباً، أود الاستفسار عن خدماتكم.", enabled: true, color: "#25D366" } }} handlePhoneCall={() => { window.location.href = "tel:+966503269219"; }} handleWhatsApp={() => { window.open("https://wa.me/966503269219", "_blank"); }} />
     </QueryClientProvider>
   </ErrorBoundary>
 );
