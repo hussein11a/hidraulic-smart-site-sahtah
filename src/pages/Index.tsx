@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ModernNavigation from '@/components/ModernNavigation';
 import ModernHero from '@/components/ModernHero';
 import ModernServices from '@/components/ModernServices';
@@ -12,11 +12,18 @@ import EnhancedSEO from '@/components/EnhancedSEO';
 import AccessibilityEnhancer from '@/components/AccessibilityEnhancer';
 import UXEnhancer from '@/components/UXEnhancer';
 import MobileOptimizer from '@/components/MobileOptimizer';
-import ConsolidatedPerformanceOptimizer from '@/components/ConsolidatedPerformanceOptimizer';
+import UltimatePerformanceBooster from '@/components/Modern/UltimatePerformanceBooster';
 import Statistics from '@/components/Statistics';
 import Features from '@/components/Features';
 import AppFooter from '@/components/AppFooter';
-import { usePerformanceOptimization } from '@/hooks/usePerformanceOptimization';
+import ChatBot from '@/components/AI/ChatBot';
+import VoiceSearch from '@/components/Interactive/VoiceSearch';
+import AdvancedAnimations from '@/components/Modern/AdvancedAnimations';
+import SmartLoader from '@/components/Modern/SmartLoader';
+import RealTimeAnalytics from '@/components/Analytics/RealTimeAnalytics';
+import DynamicPricingCalculator from '@/components/Advanced/DynamicPricingCalculator';
+import AdvancedTracking from '@/components/Modern/AdvancedTracking';
+import SmartNotifications from '@/components/Interactive/SmartNotifications';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useServiceData } from '@/hooks/useServiceData';
 import { useTheme } from '@/hooks/useTheme';
@@ -52,21 +59,36 @@ const Index = () => {
     window.open("https://wa.me/966503269219?text=مرحبا، أحتاج خدمة سطحة هيدروليك", "_blank");
   };
 
-  // Use performance optimization hook
-  usePerformanceOptimization();
+  const [showLoader, setShowLoader] = useState(true);
 
-  if (isLoading) {
-    return <LoadingSpinner isDarkMode={isDarkMode} />;
+  useEffect(() => {
+    const timer = setTimeout(() => setShowLoader(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading || showLoader) {
+    return <SmartLoader isDarkMode={isDarkMode} />;
   }
 
   return (
     <ErrorBoundaryOptimized>
       <SecurityProvider>
-      <ConsolidatedPerformanceOptimizer />
+      <UltimatePerformanceBooster />
       <EnhancedSEO />
       <AccessibilityEnhancer isDarkMode={isDarkMode} />
       <UXEnhancer isDarkMode={isDarkMode} />
       <MobileOptimizer isDarkMode={isDarkMode} isMobile={isMobile} />
+      <AdvancedAnimations isDarkMode={isDarkMode} />
+      <RealTimeAnalytics isDarkMode={isDarkMode} />
+      <VoiceSearch 
+        isDarkMode={isDarkMode}
+        onPhoneCall={handlePhoneCall}
+        onWhatsApp={handleWhatsApp}
+      />
+      <ChatBot isDarkMode={isDarkMode} />
+      <DynamicPricingCalculator isDarkMode={isDarkMode} />
+      <AdvancedTracking isDarkMode={isDarkMode} />
+      <SmartNotifications isDarkMode={isDarkMode} />
       
       <div className={`min-h-screen transition-all duration-500 ${
         isDarkMode 
